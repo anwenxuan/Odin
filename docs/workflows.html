@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workflows — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-purple" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H4L5 4L6 10L7 8H10" stroke-linecap="round"/></svg>Workflow Engine</div>
+    <h1>Workflows</h1>
+    <div class="doc-meta"><span>3 built-in workflows</span><span class="separator"></span><span>DAG layering</span><span class="separator"></span><span>YAML-defined</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- Overview -->
+    <h2 id="overview">What is a Workflow?</h2>
+
+    <p>A <strong>Workflow</strong> is a directed acyclic graph (DAG) of analysis steps, defined in YAML. Each step references a <code>Skill</code> and defines its inputs through variable resolution. The <code>PipelineExecutor</code> loads a workflow definition, groups steps into DAG layers, and executes them with maximum parallelism.</p>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>Workflows live in <code>workflows/</code> as YAML files. You can add custom workflows by placing a new YAML file in that directory — no code changes required.</p>
+    </div>
+
+    <h3>Workflow YAML Structure</h3>
+    <div class="code-block">
+      <div class="filename">workflows/vulnerability_research.yaml</div>
+      <pre><code>id: vulnerability_research
+name: Full Vulnerability Research
+version: "1.0"
+description: >
+  Comprehensive 11-step security analysis workflow.
+  Covers entry points, call graph, auth logic, input flows,
+  sink detection, attack surfaces, and PoC generation.
+
+steps:
+  - id: repo_discovery
+    skill: repo_map
+    with_params:
+      deep_scan: true
+
+  - id: entrypoints_detection
+    skill: entrypoints_detection
+    depends_on: [repo_discovery]
+
+  - id: sink_detection
+    skill: sink_detection
+    depends_on: [repo_discovery]
+
+  - id: dependency_analysis
+    skill: dependency_analysis
+    depends_on: [repo_discovery]
+    # ... continues ...</code></pre>
+    </div>
+
+    <!-- Three Built-in Workflows -->
+    <h2 id="built-in">Three Built-in Workflows</h2>
+
+    <!-- codebase_research -->
+    <h3 id="wf-codebase">codebase_research</h3>
+    <p><strong>5 steps · Fast</strong> — Best for quickly understanding a new codebase structure, its entry points, and key components.</p>
+
+    <div class="dag-flow" style="flex-wrap:wrap; gap:6px;">
+      <span class="dag-step cyan">repo_discovery</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step purple">entrypoints_detection</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step green">call_graph_trace</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step amber">data_structure_extraction</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step cyan active">report_generation</span>
+    </div>
+
+    <div class="callout success" style="margin-top:16px;">
+      <div class="callout-icon">✓</div>
+      <p>Typical run time: <strong>1–2 minutes</strong> with OpenAI API. Perfect for PR reviews and quick security checks.</p>
+    </div>
+
+    <!-- architecture_analysis -->
+    <h3 id="wf-architecture">architecture_analysis</h3>
+    <p><strong>7 steps · Deep</strong> — Best for deep architecture understanding, module relationships, data flows, and design pattern identification.</p>
+
+    <div class="dag-flow" style="flex-wrap:wrap; gap:6px;">
+      <span class="dag-step cyan">repo_discovery</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step purple">entrypoints_detection</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step green">call_graph_trace</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step amber">data_structure_extraction</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step purple">auth_logic_detection</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step green">dependency_analysis</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step cyan active">report_generation</span>
+    </div>
+
+    <div class="callout info" style="margin-top:16px;">
+      <div class="callout-icon">ℹ</div>
+      <p>Typical run time: <strong>3–5 minutes</strong>. Includes auth flow analysis and dependency mapping.</p>
+    </div>
+
+    <!-- vulnerability_research -->
+    <h3 id="wf-vuln">vulnerability_research</h3>
+    <p><strong>11 steps · Comprehensive</strong> — Full chain: discovery → entry points → call graph → auth → input flows → sinks → dependencies → attack surfaces → hypotheses → PoC → report.</p>
+
+    <div class="arch-diagram" style="padding:24px 20px;">
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 1</div>
+        <div class="arch-layer-content"><span class="arch-node cyan" style="font-size:11px;">repo_discovery</span></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 2</div>
+        <div class="arch-layer-content" style="gap:6px;">
+          <span class="arch-node purple" style="font-size:11px;">entrypoints</span>
+          <span class="arch-node purple" style="font-size:11px;">sink_detection</span>
+          <span class="arch-node purple" style="font-size:11px;">dep_analysis</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 3</div>
+        <div class="arch-layer-content" style="gap:6px;">
+          <span class="arch-node green" style="font-size:11px;">call_graph</span>
+          <span class="arch-node green" style="font-size:11px;">auth_detection</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 4</div>
+        <div class="arch-layer-content"><span class="arch-node amber" style="font-size:11px;">input_flow_analysis</span></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 5</div>
+        <div class="arch-layer-content"><span class="arch-node cyan" style="font-size:11px;">attack_surface_mapping</span></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 6</div>
+        <div class="arch-layer-content"><span class="arch-node purple" style="font-size:11px;">vuln_hypothesis</span></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 7</div>
+        <div class="arch-layer-content"><span class="arch-node green" style="font-size:11px;">exploit_generation</span></div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="font-size:9px; width:70px;">Layer 8</div>
+        <div class="arch-layer-content"><span class="arch-node cyan" style="font-size:11px; border-color:var(--accent-cyan);">report_generation</span></div>
+      </div>
+    </div>
+
+    <div class="callout warning" style="margin-top:8px;">
+      <div class="callout-icon">⚠</div>
+      <p>Typical run time: <strong>5–10 minutes</strong>. Generates CWE-tagged vulnerability hypotheses with proof-of-concept concepts.</p>
+    </div>
+
+    <!-- DAG Layering -->
+    <h2 id="dag-layering">DAG Layering & Parallel Execution</h2>
+
+    <p>The <code>PipelineExecutor</code> uses <strong>Kahn's algorithm</strong> to topologically sort workflow steps into layers. Steps in the same layer have no mutual dependencies and therefore can execute in parallel via <code>ThreadPoolExecutor</code>.</p>
+
+    <h3>Layering Algorithm</h3>
+    <div class="code-block">
+      <div class="filename">core/pipeline_executor.py</div>
+      <pre><code>def _group_by_dag_level(self, definition: WorkflowDefinition) -> list[ExecutionLayer]:
+    """
+    Kahn's algorithm variant — O(V+E) topological sort.
+
+    1. Compute in-degree for each step (number of dependencies)
+    2. Find all steps with in-degree 0 → add as next layer
+    3. Remove those steps from the graph, update in-degrees
+    4. Repeat until all steps are assigned to a layer
+    """
+    step_map = {s.id: s for s in definition.steps}
+    in_degree = {s.id: 0 for s in definition.steps}
+
+    for step in definition.steps:
+        for dep in step.depends_on:
+            if dep in in_degree:
+                in_degree[step.id] += 1
+
+    layers = []
+    completed = set()
+
+    while len(completed) < len(definition.steps):
+        ready = [s for s in definition.steps
+                 if s.id not in completed and in_degree[s.id] == 0]
+        layers.append(ExecutionLayer(stage=len(layers)+1,
+                                     step_ids=[s.id for s in ready],
+                                     steps=ready))
+        for s in ready:
+            completed.add(s.id)
+            for other in definition.steps:
+                if s.id in other.depends_on:
+                    in_degree[other.id] -= 1
+
+    return layers</code></pre>
+    </div>
+
+    <h3>Parallel Execution</h3>
+    <div class="code-block">
+      <div class="filename">core/pipeline_executor.py</div>
+      <pre><code>def _run_layer_parallel(self, layer: ExecutionLayer, ...) -> dict[str, ParallelStepResult]:
+    if len(layer.steps) == 1:
+        # Single step — run directly
+        return {layer.steps[0].id: self._execute_single_step(...)}
+
+    # Multiple steps — run in ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=min(len(layer.steps), self.max_workers)) as pool:
+        futures = {
+            step.id: pool.submit(self._execute_single_step, step=step, ...)
+            for step in layer.steps
+        }
+        results = {sid: f.result() for sid, f in futures.items()}
+    return results</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p><strong>Performance impact:</strong> In <code>vulnerability_research</code>, Layer 2 has 3 steps that run concurrently. On a 3-core machine, this layer completes ~3× faster than sequential execution.</p>
+    </div>
+
+    <!-- Variable Resolution -->
+    <h2 id="variables">Variable Resolution</h2>
+
+    <p>Workflow step inputs support two variable substitution syntaxes:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Syntax</th><th>Source</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><code>${inputs.x}</code></td><td>Workflow-level inputs</td><td><code>"repo_path": "${inputs.repo_path}"</code></td></tr>
+          <tr><td><code>${steps.S.outputs.y}</code></td><td>Previous step outputs</td><td><code>"module_map": "${steps.repo_discovery.outputs.modules}"</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Example: Passing Step Outputs</h3>
+    <div class="code-block">
+      <div class="filename">workflows/vulnerability_research.yaml (excerpt)</div>
+      <pre><code>steps:
+  - id: repo_discovery
+    skill: repo_map
+    with_params:
+      deep_scan: true
+      # Output: { modules: [...], tech_stack: {...} }
+
+  - id: entrypoints_detection
+    skill: entrypoints_detection
+    depends_on: [repo_discovery]
+    with_params:
+      # Pass the tech stack from repo_discovery to focus the analysis
+      detected_stack: "${steps.repo_discovery.outputs.tech_stack}"
+      # Also use the workflow-level repo_path input
+      repo_path: "${inputs.repo_path}"
+
+  - id: call_graph_trace
+    skill: call_graph_trace
+    depends_on: [entrypoints_detection, sink_detection]
+    with_params:
+      # Receive entrypoints list from entrypoints_detection skill
+      entrypoints: "${steps.entrypoints_detection.outputs.entrypoints}"
+      # Receive sink list from sink_detection skill
+      sinks: "${steps.sink_detection.outputs.sinks}"</code></pre>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠</div>
+      <p>Variables are serialized as JSON before substitution. If <code>${steps.repo_discovery.outputs.modules}</code> resolves to a list <code>["auth", "api", "core"]</code>, it becomes the JSON string <code>"[\"auth\", \"api\", \"core\"]</code> and the tool receives it as a Python list.</p>
+    </div>
+
+    <!-- Creating Custom Workflows -->
+    <h2 id="custom">Creating Custom Workflows</h2>
+
+    <p>Add a YAML file under <code>workflows/</code>. The PipelineExecutor automatically discovers and loads it:</p>
+
+    <div class="code-block">
+      <div class="filename">workflows/my_custom_analysis.yaml</div>
+      <pre><code>id: my_custom_analysis
+name: My Custom Analysis Workflow
+version: "1.0"
+description: >
+  Custom workflow that focuses on specific areas
+  of interest for our codebase.
+
+# Global inputs — can be overridden via CLI --focus-paths
+default_inputs:
+  focus_paths: []
+  max_depth: 5
+
+steps:
+  # Step 1: Discovery
+  - id: discover
+    skill: repo_map
+    with_params:
+      deep_scan: false
+
+  # Step 2: Entry points (depends on discovery)
+  - id: find_entries
+    skill: entrypoints_detection
+    depends_on: [discover]
+    with_params:
+      repo_path: "${inputs.repo_path}"
+
+  # Step 3: Call graph (parallel with auth detection)
+  - id: trace_calls
+    skill: call_graph_trace
+    depends_on: [find_entries]
+    with_params:
+      entrypoints: "${steps.find_entries.outputs.entrypoints}"
+
+  - id: find_auth
+    skill: auth_logic_detection
+    depends_on: [find_entries]
+    with_params:
+      focus_paths: "${inputs.focus_paths}"
+
+  # Step 4: Final report (depends on all previous)
+  - id: summarize
+    skill: report_generation
+    depends_on: [trace_calls, find_auth]
+    with_params:
+      title: "Custom Analysis Report"
+      include_diagrams: true</code></pre>
+    </div>
+
+    <p>Then run it:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>python odin.py analyze ./my-repo --workflow my_custom_analysis --provider openai</code></pre>
+    </div>
+
+    <div class="callout success">
+      <div class="callout-icon">✓</div>
+      <p>No code changes needed. Simply drop the YAML file into <code>workflows/</code> and Odin discovers it automatically on the next run.</p>
+    </div>
+
+    <!-- Workflow Selection Guide -->
+    <h2 id="selection">Workflow Selection Guide</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Scenario</th><th>Recommended Workflow</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Quick code review for a PR</td>
+            <td><code>codebase_research</code></td>
+            <td>5 steps, 1–2 min, gives overview without deep diving</td>
+          </tr>
+          <tr>
+            <td>Onboarding to understand a new codebase</td>
+            <td><code>architecture_analysis</code></td>
+            <td>7 steps with auth & dependency analysis, comprehensive understanding</td>
+          </tr>
+          <tr>
+            <td>Security audit before production release</td>
+            <td><code>vulnerability_research</code></td>
+            <td>11 steps, full chain from entry points to PoC concepts</td>
+          </tr>
+          <tr>
+            <td>Analyzing a specific module only</td>
+            <td><code>codebase_research</code> + <code>--focus-paths</code></td>
+            <td>Narrow scope to specific directories for faster results</td>
+          </tr>
+          <tr>
+            <td>Continuous monitoring in CI/CD</td>
+            <td><code>codebase_research</code> + <code>--output</code></td>
+            <td>Generate reports in CI pipelines with artifact storage</td>
+          </tr>
+          <tr>
+            <td>Deep dive into authentication flows</td>
+            <td><code>architecture_analysis</code> + <code>--focus-paths auth/</code></td>
+            <td>Focus architecture analysis on the auth subsystem</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="index.html" style="color:var(--accent-cyan);">Documentation</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono);">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>

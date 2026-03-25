@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-amber" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3L10.5 5.5L5.5 10.5L3 8L8 3Z"/><path d="M7.5 3.5L10.5 6.5"/></svg>Tool Reference</div>
+    <h1>Tools</h1>
+    <div class="doc-meta"><span>8 built-in tools</span><span class="separator"></span><span>@tool decorator</span><span class="separator"></span><span>Security boundaries</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- Overview -->
+    <h2 id="overview">Tool Executor Layer</h2>
+
+    <p>The Tool layer is the foundation of Odin's capabilities — it gives the LLM real "hands" to interact with the codebase. Every tool follows the <code>Tool</code> Protocol interface and returns a <code>ToolResult</code>, regardless of internal success or failure. This uniform interface makes the system robust and debuggable.</p>
+
+    <p>Tools are exposed to the LLM in <strong>OpenAI Function Calling format</strong>, which means the LLM can request specific tools with arguments just like calling an API function.</p>
+
+    <h3>Core Interfaces</h3>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--accent-cyan); margin-top:0;">ToolResult</h4>
+        <p style="font-size:14px;">The universal return type for all tool executions.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">tools/base.py</div>
+          <pre><code>@dataclass
+class ToolResult:
+    success: bool
+    output: str = ""       # Human-readable output
+    error: str | None = None
+    metadata: dict = field(default_factory=dict)
+
+    @classmethod
+    def ok(cls, output: str, **meta):
+        return cls(success=True, output=output, **meta)
+
+    @classmethod
+    def err(cls, error: str, **meta):
+        return cls(success=False, error=error, **meta)</code></pre>
+        </div>
+      </div>
+      <div>
+        <h4 style="color:var(--accent-purple); margin-top:0;">ToolContext</h4>
+        <p style="font-size:14px;">Runtime context passed to every tool execution.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">tools/base.py</div>
+          <pre><code>@dataclass
+class ToolContext:
+    repo_path: Path | None = None   # Repository root
+    session_id: str = ""
+    run_id: str = ""
+    skill_id: str = ""
+    custom: dict = field(default_factory=dict)
+
+    def resolve_path(self, rel_path: str) -> Path | None:
+        # Prevents path traversal — rejects paths
+        # that escape the repo root
+        p = (self.repo_path / rel_path).resolve()
+        p.relative_to(self.repo_path.resolve())
+        return p</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Built-in Tools -->
+    <h2 id="builtin">Built-in Tools</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Function</th><th>Safety</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>read_file</code></td><td>Read file content with line range</td><td><span class="tag tag-green">Safe</span></td></tr>
+          <tr><td><code>list_dir</code></td><td>Directory tree with file type icons</td><td><span class="tag tag-green">Safe</span></td></tr>
+          <tr><td><code>search_code</code></td><td>Regex search with context lines</td><td><span class="tag tag-green">Safe</span></td></tr>
+          <tr><td><code>run_shell</code></td><td>Safe shell commands (whitelist)</td><td><span class="tag tag-amber">Whitelisted</span></td></tr>
+          <tr><td><code>git_clone</code></td><td>Clone remote repo to temp directory</td><td><span class="tag tag-green">Safe</span></td></tr>
+          <tr><td><code>git_log</code></td><td>View commit history</td><td><span class="tag tag-green">Safe</span></td></tr>
+          <tr><td><code>git_diff</code></td><td>View file changes between commits</td><td><span class="tag tag-green">Safe</span></td></tr>
+          <tr><td><code>detect_lang</code></td><td>Detect programming language & framework</td><td><span class="tag tag-green">Safe</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- read_file -->
+    <h3 id="tool-read-file">read_file</h3>
+    <p>Reads the content of a file, optionally limited to a specific line range. This is the most frequently used tool — the LLM reads source files to extract evidence.</p>
+
+    <div class="code-block">
+      <div class="filename">tools/builtin/read_file.py</div>
+      <pre><code>@tool
+class ReadFileTool:
+    name = "read_file"
+    description = (
+        "Read the content of a file. "
+        "Use line_start and line_end to read specific sections. "
+        "Always use this before analyzing any code."
+    )
+    input_schema = {
+        "type": "object",
+        "properties": {
+            "path": {"type": "string", "description": "File path (relative or absolute)"},
+            "line_start": {"type": "integer", "description": "Start line (1-indexed, inclusive)"},
+            "line_end": {"type": "integer", "description": "End line (1-indexed, inclusive)"},
+        },
+        "required": ["path"]
+    }
+
+    def execute(self, args: dict, ctx: ToolContext) -> ToolResult:
+        resolved = ctx.resolve_path(args["path"])
+        if not resolved:
+            return ToolResult.err("Path traversal blocked: cannot read outside repo")
+        # ... file reading logic ...</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p><strong>Path safety:</strong> <code>ctx.resolve_path()</code> uses <code>Path.relative_to()</code> to ensure the resolved path never escapes the repository root. Attempts to read <code>../../etc/passwd</code> are blocked and return an error.</p>
+    </div>
+
+    <!-- search_code -->
+    <h3 id="tool-search-code">search_code</h3>
+    <p>Performs regex search across all files in the repository with configurable context lines. The LLM uses this to find functions, classes, patterns, and specific code constructs.</p>
+
+    <div class="code-block">
+      <div class="filename">tools/builtin/search_code.py</div>
+      <pre><code>@tool
+class SearchCodeTool:
+    name = "search_code"
+    description = (
+        "Search for regex patterns in code files. "
+        "Returns matching lines with surrounding context. "
+        "Useful for finding function definitions, imports, security patterns."
+    )
+    input_schema = {
+        "type": "object",
+        "properties": {
+            "pattern": {
+                "type": "string",
+                "description": "Regex pattern to search for"
+            },
+            "file_pattern": {
+                "type": "string",
+                "description": "File glob pattern (e.g. '*.py', 'src/**/*.js')"
+            },
+            "context": {
+                "type": "integer",
+                "description": "Number of context lines before/after matches (default: 3)"
+            },
+            "case_sensitive": {"type": "boolean", "default": False},
+        },
+        "required": ["pattern"]
+    }</code></pre>
+    </div>
+
+    <p>Common regex patterns the LLM uses:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Pattern</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><code>def \w+\(.*\):</code></td><td>Find all function definitions</td></tr>
+          <tr><td><code>class \w+</code></td><td>Find all class definitions</td></tr>
+          <tr><td><code>import | from .+ import</code></td><td>Find import statements</td></tr>
+          <tr><td><code>exec\(|eval\(|compile\(</code></td><td>Find dangerous code execution patterns</td></tr>
+          <tr><td><code>@app\.(get|post|put|delete)</code></td><td>Find FastAPI route handlers</td></tr>
+          <tr><td><code>query\s*\(|execute\s*\(</code></td><td>Find database query patterns</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- run_shell -->
+    <h3 id="tool-run-shell">run_shell</h3>
+    <p>Executes safe shell commands from a strict whitelist. This tool is designed to allow the LLM to use standard Unix utilities without the risk of arbitrary command execution.</p>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠</div>
+      <p><strong>Security: Strict command whitelist.</strong> Only pre-approved commands can run. The LLM cannot execute arbitrary shell commands, scripts, or pipes. This is a critical security boundary.</p>
+    </div>
+
+    <p><strong>Approved commands:</strong></p>
+    <div class="grid-3" style="grid-template-columns: repeat(4, 1fr);">
+      <div>
+        <p style="font-size:13px; color:var(--text-muted); margin:0;">Git</p>
+        <p style="font-size:12px; font-family:var(--font-mono); margin:4px 0 0;">git, git-log, git-diff, git-show, git-blame</p>
+      </div>
+      <div>
+        <p style="font-size:13px; color:var(--text-muted); margin:0;">File ops</p>
+        <p style="font-size:12px; font-family:var(--font-mono); margin:4px 0 0;">ls, cat, head, tail, wc, stat, file</p>
+      </div>
+      <div>
+        <p style="font-size:13px; color:var(--text-muted); margin:0;">Search</p>
+        <p style="font-size:12px; font-family:var(--font-mono); margin:4px 0 0;">grep, find, rg, cut, sort, uniq</p>
+      </div>
+      <div>
+        <p style="font-size:13px; color:var(--text-muted); margin:0;">Analysis</p>
+        <p style="font-size:12px; font-family:var(--font-mono); margin:4px 0 0;">md5sum, sha256sum, strings, objdump, nm</p>
+      </div>
+    </div>
+
+    <!-- git tools -->
+    <h3 id="tool-git">Git Operations</h3>
+
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--accent-cyan); margin-top:0;">git_clone</h4>
+        <p style="font-size:14px;">Clones a remote repository into a temporary directory with optional branch selection and shallow clone support.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">tools/builtin/git_ops.py</div>
+          <pre><code>input_schema = {
+    "properties": {
+        "url": {"type": "string"},
+        "branch": {"type": "string"},
+        "depth": {
+            "type": "integer",
+            "description": "Shallow clone depth (default: 1)"
+        }
+    },
+    "required": ["url"]
+}</code></pre>
+        </div>
+      </div>
+      <div>
+        <h4 style="color:var(--accent-purple); margin-top:0;">git_log & git_diff</h4>
+        <p style="font-size:14px;">View commit history and file changes. Essential for understanding the codebase's history and recent modifications.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">tools/builtin/git_ops.py</div>
+          <pre><code># git_log
+input_schema = {
+    "properties": {
+        "n": {"type": "integer", "description": "Number of commits"},
+        "file": {"type": "string", "description": "File path for per-file history"},
+        "format": {"type": "string", "description": "Commit format string"}
+    }
+}
+# git_diff
+input_schema = {
+    "properties": {
+        "commit_a": {"type": "string"},
+        "commit_b": {"type": "string"},
+        "file": {"type": "string"}
+    }
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- detect_lang -->
+    <h3 id="tool-detect-lang">detect_lang</h3>
+    <p>Detects the programming language and framework stack used in the repository by analyzing file extensions, package files, and configuration files.</p>
+
+    <div class="code-block">
+      <div class="filename">tools/builtin/detect_lang.py</div>
+      <pre><code>@tool
+class DetectLangTool:
+    name = "detect_lang"
+    description = (
+        "Detect the programming language(s) and framework(s) "
+        "used in this codebase. Returns a list of languages "
+        "with confidence scores and detected frameworks."
+    )
+    input_schema = {
+        "type": "object",
+        "properties": {
+            "path": {
+                "type": "string",
+                "description": "Directory path to analyze (default: repo root)"
+            }
+        }
+    }
+    # Output:
+    # {
+    #   "languages": [
+    #     {"lang": "Python", "confidence": 0.95, "files": 42},
+    #     {"lang": "JavaScript", "confidence": 0.6, "files": 8}
+    #   ],
+    #   "frameworks": ["FastAPI", "Pydantic"],
+    #   "package_managers": ["pip", "npm"]
+    # }</code></pre>
+    </div>
+
+    <!-- Adding Custom Tools -->
+    <h2 id="custom">Adding Custom Tools</h2>
+
+    <p>Add new tools using the <code>@tool</code> decorator. The tool is automatically discovered and registered by <code>ToolExecutor.auto_load_builtin()</code>.</p>
+
+    <div class="code-block">
+      <div class="filename">tools/builtin/my_custom_tool.py</div>
+      <pre><code>from tools.base import tool, ToolResult, ToolContext
+
+@tool
+class MyCustomTool:
+    """
+    Custom tool for analyzing specific file types.
+    Add @tool decorator to auto-register.
+    """
+    name = "my_custom_tool"
+    description = (
+        "A brief description of what this tool does. "
+        "Be specific about inputs and when to use it."
+    )
+
+    input_schema = {
+        "type": "object",
+        "properties": {
+            "path": {
+                "type": "string",
+                "description": "Path to the target file"
+            },
+            "option": {
+                "type": "string",
+                "description": "An optional configuration",
+                "enum": ["option_a", "option_b"]
+            }
+        },
+        "required": ["path"]
+    }
+
+    def execute(self, args: dict, ctx: ToolContext) -> ToolResult:
+        path = args["path"]
+        option = args.get("option", "default")
+
+        # Use ctx.resolve_path() for security
+        resolved = ctx.resolve_path(path)
+        if not resolved:
+            return ToolResult.err("Invalid path")
+
+        try:
+            # Your tool logic here
+            result = do_something(resolved, option)
+            return ToolResult.ok(
+                output=f"Analysis complete: {result}",
+                metadata={"file": str(resolved), "option": option}
+            )
+        except Exception as exc:
+            return ToolResult.err(f"Error: {exc}")</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>Custom tools are automatically added to the LLM's function calling list. The LLM will decide when to use your tool based on its description — make descriptions clear and actionable.</p>
+    </div>
+
+    <!-- Tool Security -->
+    <h2 id="security">Security Model</h2>
+
+    <p>Odin implements multiple layers of security to prevent misuse:</p>
+
+    <div class="card-grid">
+      <div class="card" style="cursor:default;">
+        <div class="card-icon green">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L3 6V14L10 18L17 14V6Z"/><path d="M7 10L9 12L13 8" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Path Traversal Prevention</h3>
+        <p>All file operations use <code>ctx.resolve_path()</code> which rejects any path that escapes the repository root.</p>
+      </div>
+      <div class="card" style="cursor:default;">
+        <div class="card-icon amber">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L3 6V14L10 18L17 14V6Z"/><path d="M7 10H13" stroke-linecap="round"/><path d="M7 13H13" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Command Whitelist</h3>
+        <p><code>run_shell</code> only executes pre-approved commands. The LLM cannot run arbitrary shell code.</p>
+      </div>
+      <div class="card" style="cursor:default;">
+        <div class="card-icon cyan">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L3 6V14L10 18L17 14V6Z"/><circle cx="10" cy="10" r="2"/></svg>
+        </div>
+        <h3>Tool Call Logging</h3>
+        <p>Every tool execution is logged with session ID, tool name, arguments, and result — enabling full audit trails.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="index.html" style="color:var(--accent-cyan);">Documentation</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono);">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>
