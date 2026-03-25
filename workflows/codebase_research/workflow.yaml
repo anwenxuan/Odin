@@ -1,0 +1,68 @@
+id: codebase_research
+version: 1.0.0
+description: >
+  Fast codebase understanding workflow. Produces a repository map,
+  entry points overview, call graph, key data structures, and a research report.
+inputs_schema:
+  type: object
+  required: [repo_url]
+  properties:
+    repo_url: { type: string }
+    focus_paths:
+      type: array
+      items: { type: string }
+
+steps:
+  - id: repo_discovery
+    skill: repo_map
+    with:
+      repo_path: ${inputs.repo_path}
+      focus_paths: ${inputs.focus_paths}
+
+  - id: entrypoints_detection
+    skill: entrypoints_detection
+    depends_on: [repo_discovery]
+    with:
+      repo_path: ${steps.repo_discovery.outputs.repo_path}
+      module_map: ${steps.repo_discovery.outputs.modules}
+
+  - id: call_graph_trace
+    skill: call_graph_trace
+    depends_on: [entrypoints_detection]
+    with:
+      repo_path: ${steps.repo_discovery.outputs.repo_path}
+      entrypoints: ${steps.entrypoints_detection.outputs.entrypoints}
+      max_depth: 6
+
+  - id: data_structure_extraction
+    skill: data_structure_extraction
+    depends_on: [repo_discovery]
+    with:
+      repo_path: ${steps.repo_discovery.outputs.repo_path}
+      target_paths: ${inputs.focus_paths}
+
+  - id: report_generation
+    skill: report_generation
+    depends_on:
+      - repo_discovery
+      - entrypoints_detection
+      - call_graph_trace
+      - data_structure_extraction
+    with:
+      skill_outputs:
+        repo_map: ${steps.repo_discovery.outputs}
+        entrypoints_detection: ${steps.entrypoints_detection.outputs}
+        call_graph_trace: ${steps.call_graph_trace.outputs}
+        data_structure_extraction: ${steps.data_structure_extraction.outputs}
+      repo_info:
+        repo_url: ${inputs.repo_url}
+      workflow_id: codebase_research
+
+outputs:
+  report_markdown: ${steps.report_generation.outputs.report_markdown}
+  finding_index: ${steps.report_generation.outputs.finding_index}
+  modules: ${steps.repo_discovery.outputs.modules}
+  entrypoints: ${steps.entrypoints_detection.outputs.entrypoints}
+  call_graph_summary: ${steps.call_graph_trace.outputs.summary}
+  entities: ${steps.data_structure_extraction.outputs.entities}
+  metadata: ${steps.report_generation.outputs.metadata}

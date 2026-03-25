@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["entrypoints", "auth_flows", "sinks"],
+  "properties": {
+    "entrypoints": { "type": "array" },
+    "auth_flows": { "type": "array" },
+    "sinks": { "type": "array" },
+    "attack_surfaces": {
+      "type": "array",
+      "description": "Optional pre-computed attack surfaces from attack_surface_mapping"
+    }
+  }
+}

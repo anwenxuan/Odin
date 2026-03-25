@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["repo_path", "modules", "language_stats", "key_paths", "evidence_refs"],
+  "properties": {
+    "repo_path": {
+      "type": "string",
+      "description": "Absolute path to the repository on disk (same as input)"
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "language", "files_count"],
+        "properties": {
+          "name": { "type": "string" },
+          "path": { "type": "string" },
+          "language": { "type": "string" },
+          "files_count": { "type": "integer", "minimum": 0 },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "language_stats": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "key_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to the most important/central modules."
+    },
+    "architecture_hints": {
+      "type": "object",
+      "properties": {
+        "pattern": { "type": "string" },
+        "frameworks": { "type": "array", "items": { "type": "string" } },
+        "has_microservices": { "type": "boolean" },
+        "has_monorepo": { "type": "boolean" }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    }
+  }
+}

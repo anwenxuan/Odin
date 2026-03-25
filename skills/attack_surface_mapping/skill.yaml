@@ -1,0 +1,15 @@
+id: attack_surface_mapping
+version: 1.0.0
+name: Attack Surface Mapping
+description: Map the attack surface by correlating entry points, auth flows, and dangerous sinks.
+owner: core-team
+tags: [security, attack-surface, risk]
+runtime:
+  model_profile: reasoning-default
+  timeout_sec: 90
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

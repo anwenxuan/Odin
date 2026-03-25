@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["report_markdown", "finding_index", "metadata"],
+  "properties": {
+    "report_markdown": { "type": "string" },
+    "finding_index": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "skill_id": { "type": "string" },
+          "title": { "type": "string" },
+          "confidence": { "type": "number" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "repo": { "type": "string" },
+        "commit": { "type": "string" },
+        "workflow_id": { "type": "string" },
+        "total_skills_run": { "type": "integer" },
+        "total_evidence_refs": { "type": "integer" },
+        "confidence_avg": { "type": "number" }
+      }
+    }
+  }
+}

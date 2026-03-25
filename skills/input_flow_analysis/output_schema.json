@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["flows", "sources", "sinks", "evidence_refs"],
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "location", "evidence_refs"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "location": { "type": "string" },
+          "sanitization": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "sink", "path", "taint_level", "evidence_refs"],
+        "properties": {
+          "source": { "type": "string" },
+          "sink": { "type": "string" },
+          "path": { "type": "array", "items": { "type": "string" } },
+          "sanitizations": { "type": "array", "items": { "type": "string" } },
+          "taint_level": { "type": "string", "enum": ["none", "low", "medium", "high"] },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "sinks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

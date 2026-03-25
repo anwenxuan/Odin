@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["sinks", "categories", "evidence_refs"],
+  "properties": {
+    "sinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["identifier", "category", "file_path", "line_start", "confidence", "evidence_refs"],
+        "properties": {
+          "identifier": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": ["sql_execution", "command_execution", "deserialization", "eval", "file_operation", "network_request", "crypto"]
+          },
+          "file_path": { "type": "string" },
+          "line_start": { "type": "integer" },
+          "context": { "type": "string" },
+          "risk_description": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

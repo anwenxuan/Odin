@@ -1,0 +1,18 @@
+id: call_graph_trace
+version: 1.0.0
+name: Call Graph Trace
+description: Trace caller-callee relationships from target entry points.
+owner: core-team
+tags:
+  - analysis
+  - call-graph
+  - security
+runtime:
+  model_profile: reasoning-default
+  timeout_sec: 90
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

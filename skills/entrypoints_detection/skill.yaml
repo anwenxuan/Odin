@@ -1,0 +1,15 @@
+id: entrypoints_detection
+version: 1.0.0
+name: Entrypoints Detection
+description: Identify service entry points (HTTP handlers, CLI mains, message consumers).
+owner: core-team
+tags: [discovery, entrypoints, security]
+runtime:
+  model_profile: default
+  timeout_sec: 60
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

@@ -1,0 +1,293 @@
+
+你是一名 AI Agent 系统架构师（AI Agent Systems Architect）和开发者平台架构师（Developer Platform Architect）。
+
+你的任务是为一个开源项目设计一个完整的工程蓝图。
+
+项目名称：
+
+AI Code Research System
+
+------------------------------------------------
+项目目标
+------------------------------------------------
+
+该系统的目标是：
+
+使 AI Agent 能够对 GitHub 仓库进行系统化研究和分析，包括：
+
+- 源代码结构理解
+- 调用图（Call Graph）追踪
+- 数据结构提取
+- 系统架构分析
+- 安全漏洞研究
+- 攻击面识别
+
+------------------------------------------------
+关键架构要求
+------------------------------------------------
+
+该系统不能依赖单个巨大 Prompt。
+
+系统必须采用：
+
+Skill-based Architecture（基于技能的架构）
+
+核心原则：
+
+- 系统核心必须保持极简
+- 所有分析能力必须以 Skill（技能）的形式实现
+- 研究任务通过 Workflow（工作流）组合执行
+
+------------------------------------------------
+示例 Workflow
+------------------------------------------------
+
+漏洞研究 Workflow
+
+repo_discovery
+→ entrypoints_detection
+→ call_graph_trace
+→ input_flow_analysis
+→ vulnerability_hypothesis
+→ exploit_generation
+
+------------------------------------------------
+你的任务
+------------------------------------------------
+
+设计一个完整工程架构。
+
+输出必须是：
+
+可落地实现的工程设计，
+而不是概念讨论。
+
+------------------------------------------------
+SECTION 1 — 系统架构
+------------------------------------------------
+
+设计 AI Code Research System 的整体系统架构。
+
+系统核心必须保持最小，只包含以下组件：
+
+Skill Loader  
+Workflow Orchestrator  
+Memory System  
+Prompt Runner  
+
+请解释每个组件的职责。
+
+------------------------------------------------
+SECTION 2 — 项目目录结构
+------------------------------------------------
+
+设计一个清晰的开源项目结构。
+
+项目必须包含：
+
+core  
+skills  
+workflows  
+prompts  
+memory  
+examples  
+
+请给出完整目录树。
+
+例如：
+
+ai-code-research
+│
+├── core
+├── skills
+├── workflows
+└── prompts
+
+------------------------------------------------
+SECTION 3 — Skill 设计规范
+------------------------------------------------
+
+定义 Skill（技能）的标准结构。
+
+每个 Skill 必须包含：
+
+skill metadata  
+prompt definition  
+input schema  
+output schema  
+
+请提供：
+
+1 Skill 设计规则  
+2 Skill 文件夹结构  
+3 一个 Skill 示例  
+
+例如：
+
+skills/call_graph/
+
+skill.yaml  
+prompt.md  
+input_schema.json  
+output_schema.json  
+
+------------------------------------------------
+SECTION 4 — Workflow 设计
+------------------------------------------------
+
+Workflow 用于组合多个 Skill。
+
+设计一个 Workflow 定义格式。
+
+例如：
+
+workflow.yaml
+
+需要包含：
+
+steps  
+skills  
+inputs  
+outputs  
+
+请提供一个示例：
+
+漏洞研究 Workflow。
+
+------------------------------------------------
+SECTION 5 — Prompt 模板系统
+------------------------------------------------
+
+设计一个 Prompt Template 系统，
+确保输出一致性。
+
+Prompt 结构应该包括：
+
+system_prompt  
+task_prompt  
+constraints  
+
+请解释该设计如何实现：
+
+- 防止幻觉（hallucinations）
+- 强制结构化输出
+- 要求提供证据引用
+
+------------------------------------------------
+SECTION 6 — Evidence（证据）系统
+------------------------------------------------
+
+为源码研究设计一个证据模型。
+
+使用概念：
+
+Minimum Evidence Unit (MEU)
+最小证据单元
+
+可能字段包括：
+
+file_path  
+function_name  
+line_number  
+call_relation  
+
+请解释：
+
+系统如何强制每个结论至少引用一个 MEU。
+
+------------------------------------------------
+SECTION 7 — 核心 Skills（MVP）
+------------------------------------------------
+
+设计一个最小但强大的技能集合（10–15 个 Skill）。
+
+例如：
+
+repo_map  
+entrypoints_detection  
+call_graph_trace  
+data_structure_extraction  
+auth_logic_detection  
+input_flow_analysis  
+dependency_analysis  
+attack_surface_mapping  
+vulnerability_hypothesis  
+exploit_generation  
+
+对于每个 Skill，请提供：
+
+Purpose（用途）  
+Input（输入）  
+Output（输出）
+
+------------------------------------------------
+SECTION 8 — Workflow 示例
+------------------------------------------------
+
+设计三个 Workflow：
+
+1 Codebase Research（代码库研究）
+
+2 Architecture Analysis（架构分析）
+
+3 Vulnerability Research（漏洞研究）
+
+解释每个 Workflow 的 Skill 组合方式。
+
+------------------------------------------------
+SECTION 9 — 执行流程示例
+------------------------------------------------
+
+假设系统收到一个 GitHub 仓库。
+
+描述完整执行流程：
+
+step 1 repo discovery  
+step 2 entrypoint detection  
+step 3 call graph analysis  
+step 4 security analysis  
+step 5 research report generation  
+
+------------------------------------------------
+SECTION 10 — 研究报告结构
+------------------------------------------------
+
+设计一个标准研究报告结构。
+
+例如：
+
+Repository Overview  
+Core Modules  
+Entry Points  
+Execution Paths  
+Key Data Structures  
+Attack Surfaces  
+Vulnerability Hypotheses  
+Evidence  
+Next Research Steps  
+
+------------------------------------------------
+SECTION 11 — 设计原则
+------------------------------------------------
+
+系统必须遵守以下规则：
+
+1 Skills 必须是原子能力
+
+2 Workflows 控制研究流程
+
+3 每个结论必须引用代码证据
+
+4 所有输出必须结构化
+
+------------------------------------------------
+输出要求
+------------------------------------------------
+
+必须包含：
+
+- 清晰结构
+- 目录树
+- Skill 示例
+- Workflow 示例
+- Prompt 模板示例

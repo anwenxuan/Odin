@@ -1,0 +1,15 @@
+id: data_structure_extraction
+version: 1.0.0
+name: Data Structure Extraction
+description: Extract key data structures, entity models, and field definitions.
+owner: core-team
+tags: [analysis, data-model]
+runtime:
+  model_profile: default
+  timeout_sec: 60
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

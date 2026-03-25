@@ -1,0 +1,15 @@
+id: input_flow_analysis
+version: 1.0.0
+name: Input Flow Analysis
+description: Trace how external inputs flow through the system to sensitive operations.
+owner: core-team
+tags: [security, taint-analysis, data-flow]
+runtime:
+  model_profile: reasoning-default
+  timeout_sec: 90
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

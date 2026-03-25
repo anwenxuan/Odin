@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["call_edges", "entrypoints"],
+  "properties": {
+    "call_edges": {
+      "type": "array",
+      "description": "Output from call_graph_trace skill"
+    },
+    "entrypoints": {
+      "type": "array",
+      "description": "Output from entrypoints_detection skill"
+    }
+  }
+}

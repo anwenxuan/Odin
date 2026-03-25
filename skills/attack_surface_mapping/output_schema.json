@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["attack_surfaces", "risk_levels", "evidence_refs"],
+  "properties": {
+    "attack_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["surface_id", "type", "description", "entrypoint", "sink", "auth_coverage", "evidence_refs"],
+        "properties": {
+          "surface_id": { "type": "string" },
+          "type": { "type": "string" },
+          "description": { "type": "string" },
+          "entrypoint": { "type": "string" },
+          "sink": { "type": "string" },
+          "auth_coverage": { "type": "string", "enum": ["fully_authenticated", "partial", "none"] },
+          "input_params": { "type": "array", "items": { "type": "string" } },
+          "risk_description": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "risk_levels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "surface_id": { "type": "string" },
+          "risk_level": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+          "score": { "type": "number", "minimum": 0, "maximum": 10 }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total_surfaces": { "type": "integer" },
+        "critical_count": { "type": "integer" },
+        "high_count": { "type": "integer" }
+      }
+    },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

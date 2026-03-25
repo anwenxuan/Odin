@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["entrypoints", "framework_hints", "evidence_refs"],
+  "properties": {
+    "entrypoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "identifier", "confidence", "evidence_refs"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["http_handler", "cli_main", "message_consumer", "websocket", "cron", "worker", "file_processor"]
+          },
+          "identifier": { "type": "string" },
+          "file_path": { "type": "string" },
+          "line_start": { "type": "integer" },
+          "route": { "type": "string" },
+          "method": { "type": "string" },
+          "parameters": { "type": "array", "items": { "type": "string" } },
+          "auth_required": { "type": "boolean" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "framework_hints": {
+      "type": "object",
+      "properties": {
+        "web_framework": { "type": "string" },
+        "cli_framework": { "type": "string" },
+        "message_broker": { "type": "string" }
+      }
+    },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}
