@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-purple" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="2"/><path d="M6 1.5V2.5M6 9.5V10.5M1.5 6H2.5M9.5 6H10.5M2.5 2.5L3.3 3.3M8.7 8.7L9.5 9.5M9.5 2.5L8.7 3.3M3.3 8.7L2.5 9.5"/></svg>Configuration Reference</div>
+    <h1>Configuration</h1>
+    <div class="doc-meta"><span>Environment variables</span><span class="separator"></span><span>LLM adapters</span><span class="separator"></span><span>API server</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- .env Setup -->
+    <h2 id="env-file">Setting Up Your Environment</h2>
+
+    <p>Copy the example environment file and configure it for your setup:</p>
+
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>cp .env.example .env</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">.env</div>
+      <pre><code># ─── LLM Provider Configuration ───────────────────────────
+# Choose ONE provider — set API key for that provider:
+
+# OpenAI (recommended: gpt-4o-mini for cost efficiency)
+OPENAI_API_KEY=sk-...
+
+# OR Anthropic Claude
+# ANTHROPIC_API_KEY=sk-ant-...
+
+# ─── Provider & Model Selection ─────────────────────────────
+ODIN_PROVIDER=openai
+ODIN_MODEL=gpt-4o-mini
+
+# ─── Model Parameters ──────────────────────────────────────
+ODIN_TEMPERATURE=0.0
+ODIN_MAX_TOKENS=4096
+
+# ─── Workflow Configuration ────────────────────────────────
+MAX_CALL_GRAPH_DEPTH=8
+WORKFLOW_TIMEOUT_SEC=300
+MAX_ITERATIONS_PER_STEP=20
+
+# ─── Persistence ──────────────────────────────────────────
+EVIDENCE_STORE_PATH=./data/evidence
+MEMORY_STORE_PATH=./data/memory
+RAG_PERSIST_DIR=./data/rag</code></pre>
+    </div>
+
+    <!-- Environment Variables -->
+    <h2 id="env-vars">Environment Variables</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>OPENAI_API_KEY</code></td>
+            <td>—</td>
+            <td>OpenAI API key. Required if <code>ODIN_PROVIDER=openai</code></td>
+          </tr>
+          <tr>
+            <td><code>ANTHROPIC_API_KEY</code></td>
+            <td>—</td>
+            <td>Anthropic API key. Required if <code>ODIN_PROVIDER=anthropic</code></td>
+          </tr>
+          <tr>
+            <td><code>ODIN_PROVIDER</code></td>
+            <td><code>openai</code></td>
+            <td>LLM provider: <code>openai</code>, <code>anthropic</code>, <code>ollama</code>, <code>mock</code></td>
+          </tr>
+          <tr>
+            <td><code>ODIN_MODEL</code></td>
+            <td><code>gpt-4o-mini</code></td>
+            <td>Model name. See model recommendations below.</td>
+          </tr>
+          <tr>
+            <td><code>ODIN_TEMPERATURE</code></td>
+            <td><code>0.0</code></td>
+            <td>LLM temperature (0.0–1.0). Use 0.0 for deterministic code analysis.</td>
+          </tr>
+          <tr>
+            <td><code>ODIN_MAX_TOKENS</code></td>
+            <td><code>4096</code></td>
+            <td>Maximum tokens in LLM response.</td>
+          </tr>
+          <tr>
+            <td><code>MAX_CALL_GRAPH_DEPTH</code></td>
+            <td><code>8</code></td>
+            <td>Maximum depth for call graph tracing.</td>
+          </tr>
+          <tr>
+            <td><code>WORKFLOW_TIMEOUT_SEC</code></td>
+            <td><code>300</code></td>
+            <td>Overall timeout per workflow (seconds).</td>
+          </tr>
+          <tr>
+            <td><code>MAX_ITERATIONS_PER_STEP</code></td>
+            <td><code>20</code></td>
+            <td>Max LLM → tool iterations per SkillAgent step.</td>
+          </tr>
+          <tr>
+            <td><code>EVIDENCE_STORE_PATH</code></td>
+            <td><code>./data/evidence</code></td>
+            <td>Path to SQLite evidence database.</td>
+          </tr>
+          <tr>
+            <td><code>MEMORY_STORE_PATH</code></td>
+            <td><code>./data/memory</code></td>
+            <td>Path to SQLite memory database.</td>
+          </tr>
+          <tr>
+            <td><code>RAG_PERSIST_DIR</code></td>
+            <td><code>./data/rag</code></td>
+            <td>Path to SQLite FTS5 RAG index directory.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LLM Providers -->
+    <h2 id="llm-providers">LLM Provider Configuration</h2>
+
+    <h3>OpenAI</h3>
+    <p>OpenAI's GPT-4o and GPT-4o-mini are the recommended providers for most use cases. <code>gpt-4o-mini</code> offers the best cost-to-performance ratio for code analysis.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Model</th><th>Speed</th><th>Cost</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><code>gpt-4o</code></td><td><span class="tag tag-amber">Medium</span></td><td><span class="tag tag-amber">High</span></td><td>Complex reasoning, large codebases</td></tr>
+          <tr><td><code>gpt-4o-mini</code></td><td><span class="tag tag-green">Fast</span></td><td><span class="tag tag-green">Low</span></td><td><strong>Recommended default</strong></td></tr>
+          <tr><td><code>gpt-4-turbo</code></td><td><span class="tag tag-amber">Medium</span></td><td><span class="tag tag-amber">Medium</span></td><td>Legacy support</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">.env</div>
+      <pre><code>export OPENAI_API_KEY=sk-...
+export ODIN_PROVIDER=openai
+export ODIN_MODEL=gpt-4o-mini
+export ODIN_TEMPERATURE=0.0
+export ODIN_MAX_TOKENS=4096</code></pre>
+    </div>
+
+    <h3>Anthropic Claude</h3>
+    <p>Claude models excel at long-context analysis and can handle large codebases in a single context window.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Model</th><th>Speed</th><th>Context</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><code>claude-sonnet-4-20250514</code></td><td><span class="tag tag-green">Fast</span></td><td>200K</td><td>Recommended default for Claude</td></tr>
+          <tr><td><code>claude-3.5-sonnet-20241022</code></td><td><span class="tag tag-green">Fast</span></td><td>200K</td><td>Long codebase analysis</td></tr>
+          <tr><td><code>claude-3-opus</code></td><td><span class="tag tag-amber">Slow</span></td><td>200K</td><td>Maximum reasoning depth</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">.env</div>
+      <pre><code>export ANTHROPIC_API_KEY=sk-ant-...
+export ODIN_PROVIDER=anthropic
+export ODIN_MODEL=claude-sonnet-4-20250514
+export ODIN_MAX_TOKENS=4096</code></pre>
+    </div>
+
+    <h3>Ollama (Local)</h3>
+    <p>Run Odin entirely locally using Ollama. No API keys or internet required.</p>
+
+    <div class="code-block">
+      <div class="filename">.env</div>
+      <pre><code>export ODIN_PROVIDER=ollama
+export ODIN_MODEL=llama3
+# Or any Ollama model:
+# export ODIN_MODEL=codellama
+# export ODIN_MODEL=mistral
+# export ODIN_MODEL=qwen2.5-coder</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>Ensure Ollama is running locally: <code>ollama serve</code> (usually runs automatically when installed). The default Ollama endpoint is <code>http://localhost:11434/v1</code>.</p>
+    </div>
+
+    <h3>Mock Mode (No API Key)</h3>
+    <p>Use the Mock adapter for testing without any API costs. Returns simulated tool calls and responses.</p>
+
+    <div class="code-block">
+      <div class="filename">.env</div>
+      <pre><code>export ODIN_PROVIDER=mock
+# No API key needed for mock mode</code></pre>
+    </div>
+
+    <!-- LLM Adapter Code -->
+    <h2 id="llm-code">Programmatic LLM Configuration</h2>
+
+    <p>Configure LLM adapters directly in Python code:</p>
+
+    <div class="code-block">
+      <div class="filename">config_llm.py</div>
+      <pre><code>from agent.llm_adapter import create_adapter
+
+# OpenAI (default)
+llm = create_adapter(
+    "openai",
+    default_model="gpt-4o-mini",
+    default_temperature=0.0,
+    default_max_tokens=4096,
+    # Optional: custom base URL for proxies or compatible APIs
+    # base_url="https://api.openai.com/v1",
+)
+
+# Anthropic
+llm = create_adapter(
+    "anthropic",
+    default_model="claude-sonnet-4-20250514",
+    default_max_tokens=4096,
+)
+
+# Ollama (local)
+llm = create_adapter(
+    "ollama",
+    base_url="http://localhost:11434/v1",
+    default_model="llama3",
+    api_key="ollama",  # Ollama doesn't need real keys
+)
+
+# Mock (testing)
+llm = create_adapter("mock")</code></pre>
+    </div>
+
+    <!-- Loop Configuration -->
+    <h2 id="loop-config">Agent Loop Configuration</h2>
+
+    <p>The <code>LoopConfig</code> controls how the AgentLoop executes skill analysis:</p>
+
+    <div class="code-block">
+      <div class="filename">agent/state.py</div>
+      <pre><code>from agent.state import LoopConfig
+
+loop_config = LoopConfig(
+    # Max LLM → tool iterations per SkillAgent run
+    max_iterations=20,
+
+    # Require every conclusion to cite MEU evidence_refs
+    evidence_required=True,
+
+    # Require the final LLM output to be valid JSON
+    # Falls back to text extraction if False
+    require_final_json=True,
+
+    # Continue workflow if individual steps fail
+    # When False, first failure aborts the entire workflow
+    allow_fallback_on_error=True,
+
+    # Print verbose tool execution logs
+    verbose=False,
+
+    # Per-step timeout in seconds (used by ThreadPoolExecutor)
+    timeout_per_step_sec=120,
+)</code></pre>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Config</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>max_iterations</code></td><td><code>20</code></td><td>Max iterations before AgentLoop gives up on a skill</td></tr>
+          <tr><td><code>evidence_required</code></td><td><code>true</code></td><td>Enforce MEU evidence citations in conclusions</td></tr>
+          <tr><td><code>require_final_json</code></td><td><code>true</code></td><td>Reject non-JSON final outputs</td></tr>
+          <tr><td><code>allow_fallback_on_error</code></td><td><code>true</code></td><td>Continue on step failure instead of aborting</td></tr>
+          <tr><td><code>verbose</code></td><td><code>false</code></td><td>Print detailed execution logs</td></tr>
+          <tr><td><code>timeout_per_step_sec</code></td><td><code>120</code></td><td>Timeout per pipeline step</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pipeline Configuration -->
+    <h2 id="pipeline-config">Pipeline Configuration</h2>
+
+    <p>The <code>PipelineExecutor</code> controls parallel execution of workflow steps:</p>
+
+    <div class="code-block">
+      <div class="filename">core/pipeline_executor.py</div>
+      <pre><code>from core.pipeline_executor import PipelineExecutor
+
+executor = PipelineExecutor(
+    skill_registry=registry,
+    llm_adapter=llm,
+    tool_executor=tool_executor,
+    evidence_store=evidence_store,
+    memory_store=memory_store,
+    loop_config=loop_config,
+
+    # Maximum concurrent threads per layer
+    # Default: 4
+    # Set to number of CPU cores for max parallelism
+    max_workers_per_layer=4,
+)</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p><strong>Performance tip:</strong> Set <code>max_workers_per_layer</code> to the number of available CPU cores for optimal parallel step execution.</p>
+    </div>
+
+    <!-- Storage Configuration -->
+    <h2 id="storage-config">Storage Configuration</h2>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-top:0;">EvidenceStore</h3>
+        <p style="font-size:14px;">Stores MEUs (Minimum Evidence Units) with code citations.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">memory/evidence_store.py</div>
+          <pre><code>evidence_store = EvidenceStore(
+    persist_path=Path("./data/evidence")
+)
+# Uses SQLite under the hood
+# Auto-creates directory if missing</code></pre>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">MemoryStore</h3>
+        <p style="font-size:14px;">Stores ResearchArtifacts and Conclusions.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">memory/memory_store.py</div>
+          <pre><code>memory_store = MemoryStore(
+    persist_path=Path("./data/memory")
+)
+# Stores artifacts with evidence cross-references
+# Supports querying by skill, run, or tag</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-top:0;">RAGStore</h3>
+        <p style="font-size:14px;">SQLite FTS5 full-text search over reports.</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">rag/store.py</div>
+          <pre><code>rag = RAGStore(
+    persist_dir=Path("./data/rag"),
+    # Chunk size for text splitting
+    chunk_size=512,
+    # Number of relevant chunks to retrieve
+    top_k=5,
+)</code></pre>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">CLI Override</h3>
+        <p style="font-size:14px;">Override storage paths via environment variables:</p>
+        <div class="code-block" style="margin:0;">
+          <div class="filename">.env</div>
+          <pre><code>EVIDENCE_STORE_PATH=/var/odin/evidence
+MEMORY_STORE_PATH=/var/odin/memory
+RAG_PERSIST_DIR=/var/odin/rag</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Server Config -->
+    <h2 id="api-config">API Server Configuration</h2>
+
+    <p>The FastAPI server can be configured via environment variables or command line:</p>
+
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code># Basic server start
+python -m uvicorn cli.commands.serve:app --reload --port 8080
+
+# With host binding
+python -m uvicorn cli.commands.serve:app --host 0.0.0.0 --port 8080
+
+# With workers (production)
+python -m uvicorn cli.commands.serve:app --workers 4 --port 8080</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>API server inherits all LLM configuration from environment variables. Set <code>OPENAI_API_KEY</code> or <code>ANTHROPIC_API_KEY</code> before starting the server.</p>
+    </div>
+
+    <!-- Complete Example -->
+    <h2 id="complete-example">Complete Configuration Example</h2>
+
+    <p>Here is a complete production configuration:</p>
+
+    <div class="code-block">
+      <div class="filename">.env.production</div>
+      <pre><code># ─── LLM ─────────────────────────────────────────────────
+OPENAI_API_KEY=sk-prod-...
+ODIN_PROVIDER=openai
+ODIN_MODEL=gpt-4o-mini
+ODIN_TEMPERATURE=0.0
+ODIN_MAX_TOKENS=4096
+
+# ─── Analysis ─────────────────────────────────────────────
+MAX_ITERATIONS_PER_STEP=20
+MAX_CALL_GRAPH_DEPTH=8
+WORKFLOW_TIMEOUT_SEC=600
+
+# ─── Storage (production paths) ─────────────────────────────
+EVIDENCE_STORE_PATH=/var/odin/evidence
+MEMORY_STORE_PATH=/var/odin/memory
+RAG_PERSIST_DIR=/var/odin/rag
+
+# ─── API Server ─────────────────────────────────────────────
+# HOST=0.0.0.0
+# PORT=8080
+# workers=4</code></pre>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="index.html" style="color:var(--accent-cyan)">Documentation</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono)">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>

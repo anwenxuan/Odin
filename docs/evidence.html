@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Model — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-green" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 1H10L11 6L5 11L1 6L2 1H5Z"/><path d="M5 4L7 6L5 8" stroke-linecap="round"/></svg>Evidence Model</div>
+    <h1>Evidence Model</h1>
+    <div class="doc-meta"><span>MEU data model</span><span class="separator"></span><span>Confidence levels</span><span class="separator"></span><span>Runtime enforcement</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- Why Evidence Matters -->
+    <h2 id="why">Why Evidence Matters</h2>
+
+    <p>Odin enforces a strict policy: <strong>every conclusion must be backed by at least one Minimum Evidence Unit (MEU)</strong>. This is not a guideline — it is enforced at runtime. If a Skill's output references a claim without a corresponding evidence citation, the framework rejects it.</p>
+
+    <div class="callout success">
+      <div class="callout-icon">✓</div>
+      <p><strong>The principle:</strong> "No conclusion without evidence." Every vulnerability hypothesis, architectural insight, or data flow description must cite specific lines of code from the analyzed repository.</p>
+    </div>
+
+    <p>This approach provides three guarantees:</p>
+    <ul>
+      <li><strong>Traceability</strong> — Every finding can be traced back to exact source code lines</li>
+      <li><strong>Reproducibility</strong> — Given the same repo and version, the same evidence will be found</li>
+      <li><strong>Verifiability</strong> — Human reviewers can verify each evidence citation independently</li>
+    </ul>
+
+    <!-- MEU -->
+    <h2 id="meu">Minimum Evidence Unit (MEU)</h2>
+
+    <p>The <code>MinimumEvidenceUnit</code> is the atomic evidence building block. Each MEU captures a precise code citation with full provenance metadata:</p>
+
+    <div class="code-block">
+      <div class="filename">memory/models.py</div>
+      <pre><code>@dataclass
+class MinimumEvidenceUnit:
+    # Identity
+    meu_id: str                        # MEU-abc123def4
+    repo: str                          # owner/repo
+    commit: str                       # Git commit SHA
+
+    # Code location
+    file_path: str                     # Relative to repo root
+    symbol: str                        # Function/class/variable name
+    line_start: int | None = None     # 1-indexed inclusive
+    line_end: int | None = None       # 1-indexed inclusive
+    snippet: str                       # Raw source text
+
+    # Semantic annotation
+    evidence_type: EvidenceType       # CODE_SNIPPET, CONFIG, etc.
+    language: str                      # python, javascript, go...
+    framework: str                     # django, express, gin...
+
+    # Relationship (optional)
+    relation: CallRelation | None = None  # For call graph evidence
+
+    # Provenance
+    extracted_by: str                  # Skill that extracted this
+    confidence: float = 1.0           # 0.0 to 1.0
+    tags: list[str] = field(default_factory=list)
+    custom: dict = field(default_factory=dict)
+    timestamp: str                    # UTC ISO timestamp</code></pre>
+    </div>
+
+    <!-- MEU JSON Example -->
+    <h2 id="meu-example">Complete MEU Example</h2>
+
+    <p>Here is a realistic MEU extracted from a Flask application:</p>
+
+    <div class="code-block">
+      <div class="filename">example_meu.json</div>
+      <pre><code>{
+  "meu_id": "MEU-a1b2c3d4e5f6",
+  "repo": "example/flask-api",
+  "commit": "7f3a9b2c1d4e5f678901234567890ab",
+
+  "file_path": "src/auth/login.py",
+  "symbol": "validate_token",
+  "line_start": 42,
+  "line_end": 58,
+  "snippet": "def validate_token(token: str) -> bool:\n    try:\n        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])\n        return payload.get('sub') is not None\n    except jwt.ExpiredSignatureError:\n        return False",
+
+  "evidence_type": "code_snippet",
+  "language": "python",
+  "framework": "flask",
+
+  "relation": {
+    "type": "call_relation",
+    "caller": "authenticate_request",
+    "callee": "validate_token",
+    "direction": "caller_to_callee",
+    "guard": null,
+    "taint_level": "none",
+    "description": "validate_token is called from authenticate_request without null guard"
+  },
+
+  "extracted_by": "auth_logic_detection@1.0",
+  "confidence": 0.95,
+  "tags": ["authentication", "jwt", "security-critical"],
+
+  "timestamp": "2025-03-25T10:30:00Z"
+}</code></pre>
+    </div>
+
+    <!-- Evidence Types -->
+    <h2 id="evidence-types">Evidence Types</h2>
+
+    <p>MEUs can represent different kinds of evidence, each with different confidence implications:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Description</th><th>Confidence</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>CODE_SNIPPET</code></td>
+            <td>Direct source code excerpt</td>
+            <td><span class="tag tag-green">High (1.0)</span></td>
+          </tr>
+          <tr>
+            <td><code>CONFIG</code></td>
+            <td>Configuration file content</td>
+            <td><span class="tag tag-green">High (0.95)</span></td>
+          </tr>
+          <tr>
+            <td><code>DEPENDENCY</code></td>
+            <td>Dependency declaration (package.json, requirements.txt)</td>
+            <td><span class="tag tag-green">High (0.95)</span></td>
+          </tr>
+          <tr>
+            <td><code>SCHEMA</code></td>
+            <td>Data structure or API schema definition</td>
+            <td><span class="tag tag-cyan">High (0.9)</span></td>
+          </tr>
+          <tr>
+            <td><code>API_SPEC</code></td>
+            <td>API specification (OpenAPI, protobuf)</td>
+            <td><span class="tag tag-cyan">High (0.9)</span></td>
+          </tr>
+          <tr>
+            <td><code>DOC</code></td>
+            <td>Documentation comment or README excerpt</td>
+            <td><span class="tag tag-amber">Medium (0.7)</span></td>
+          </tr>
+          <tr>
+            <td><code>INFERRED</code></td>
+            <td>Inferred from patterns (requires human verification)</td>
+            <td><span class="tag tag-amber">Medium (0.6)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Confidence Levels -->
+    <h2 id="confidence">Confidence Levels</h2>
+
+    <p>Conclusions carry a confidence score from 0.0 to 1.0. Odin maps these to human-readable levels:</p>
+
+    <div class="arch-diagram" style="padding:32px;">
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="color:var(--accent-green);">HIGH</div>
+        <div class="arch-layer-content">
+          <span class="arch-node green" style="font-size:13px;">≥ 0.8</span>
+          <span style="color:var(--text-secondary); font-size:13px; padding-left:8px;">Direct evidence from code analysis. High certainty, minimal assumptions.</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="color:var(--accent-cyan);">MEDIUM</div>
+        <div class="arch-layer-content">
+          <span class="arch-node" style="background:var(--accent-cyan-dim); color:var(--accent-cyan); border-color:rgba(0,212,255,0.3); font-size:13px;">0.5–0.8</span>
+          <span style="color:var(--text-secondary); font-size:13px; padding-left:8px;">Some inference required. Reasonable confidence with supporting context.</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="color:var(--accent-amber);">LOW</div>
+        <div class="arch-layer-content">
+          <span class="arch-node" style="background:var(--accent-amber-dim); color:var(--accent-amber); border-color:rgba(245,158,11,0.25); font-size:13px;">0.4–0.5</span>
+          <span style="color:var(--text-secondary); font-size:13px; padding-left:8px;">Significant inference. May require manual verification.</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label" style="color:var(--accent-red);">UNCERTAIN</div>
+        <div class="arch-layer-content">
+          <span class="arch-node" style="background:rgba(239,68,68,0.1); color:#ef4444; border-color:rgba(239,68,68,0.3); font-size:13px;">&lt; 0.4</span>
+          <span style="color:var(--text-secondary); font-size:13px; padding-left:8px;">High uncertainty. Requires manual review. Must include uncertainty_note.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ResearchArtifact -->
+    <h2 id="artifacts">ResearchArtifact</h2>
+
+    <p>A <code>ResearchArtifact</code> wraps the complete output of a single Skill execution, including all extracted MEUs:</p>
+
+    <div class="code-block">
+      <div class="filename">memory/models.py</div>
+      <pre><code>@dataclass
+class ResearchArtifact:
+    artifact_id: str          # Globally unique
+    run_id: str               # WorkflowRun ID
+    skill_id: str             # Which skill produced this
+    skill_version: str
+    kind: ArtifactKind        # MODULE_MAP, ENTRY_POINTS, CALL_GRAPH...
+
+    # The actual output
+    content: dict[str, Any]   # Skill's raw JSON output
+
+    # Summary
+    summary: str = ""          # One-sentence summary
+
+    # Evidence tracking
+    evidence_refs: list[str]  # MEU IDs cited in this artifact
+    tags: list[str] = field(default_factory=list)
+
+    created_at: str           # UTC ISO timestamp</code></pre>
+    </div>
+
+    <!-- Conclusion -->
+    <h2 id="conclusion">Conclusion</h2>
+
+    <p>A <code>Conclusion</code> is a claim backed by evidence. It is the primary output of Skills that produce analytical findings:</p>
+
+    <div class="code-block">
+      <div class="filename">memory/models.py</div>
+      <pre><code>@dataclass
+class Conclusion:
+    claim: str                      # The finding statement
+    category: str = ""               # architecture | security | data | behavior
+    confidence: float = 0.5          # 0.0 to 1.0
+    evidence_refs: list[str] = field(default_factory=list)  # MUST be non-empty!
+    tags: list[str] = field(default_factory=list)
+    uncertainty_note: str = ""      # Required when confidence < 0.4
+
+    def validate(self) -> list[str]:
+        """Runtime validation — enforces evidence policy."""
+        errors = []
+        if not self.claim.strip():
+            errors.append("Conclusion claim cannot be empty.")
+        if not self.evidence_refs:
+            errors.append(
+                "Conclusion has no evidence_refs. "
+                "Every conclusion must reference at least one MEU."
+            )
+        if not (0.0 <= self.confidence <= 1.0):
+            errors.append(f"Confidence must be in [0,1], got {self.confidence}.")
+        if self.confidence < 0.4 and not self.uncertainty_note.strip():
+            errors.append(
+                f"Confidence={self.confidence} < 0.4 requires uncertainty_note."
+            )
+        return errors</code></pre>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠</div>
+      <p><strong>Runtime enforcement:</strong> The <code>validate()</code> method is called automatically by the framework. If a Conclusion has no <code>evidence_refs</code>, the Skill output is rejected and the step fails. This prevents "hallucinated" conclusions.</p>
+    </div>
+
+    <!-- RAGStore -->
+    <h2 id="rag-store">RAGStore — Full-Text Search</h2>
+
+    <p>The <code>RAGStore</code> provides semantic retrieval over historical analysis reports using SQLite FTS5:</p>
+
+    <div class="code-block">
+      <div class="filename">rag/store.py</div>
+      <pre><code>from rag.store import RAGStore
+
+rag = RAGStore(persist_dir="./data/rag")
+
+# Index a completed report
+rag.index_report(
+    run_id="run_abc123",
+    report_text="This codebase contains SQL injection vulnerabilities...",
+    repo_url="https://github.com/owner/repo",
+    tags=["security", "sql-injection"]
+)
+
+# Retrieve relevant context for a new analysis
+context = rag.get_context_for_prompt(
+    "authentication vulnerability in JWT token handling"
+)
+# Returns: chunks of text from previous reports most relevant to the query</code></pre>
+    </div>
+
+    <p>RAGStore automatically enriches new analyses with context from previous runs, enabling Odin to:</p>
+    <ul>
+      <li>Avoid duplicate analysis work on the same codebase</li>
+      <li>Cross-reference findings across different versions</li>
+      <li>Build institutional memory of analyzed repositories</li>
+    </ul>
+
+    <!-- Storage -->
+    <h2 id="storage">Storage Backend</h2>
+
+    <p>All evidence is persisted locally using SQLite:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Store</th><th>Backend</th><th>Path</th></tr></thead>
+        <tbody>
+          <tr><td>EvidenceStore</td><td>SQLite</td><td><code>data/evidence/</code></td></tr>
+          <tr><td>MemoryStore</td><td>SQLite</td><td><code>data/memory/</code></td></tr>
+          <tr><td>RAGStore</td><td>SQLite + FTS5</td><td><code>data/rag/</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>All stores use <strong>SQLite</strong> — no external database dependencies required. This makes Odin easy to deploy and fully self-contained.</p>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="index.html" style="color:var(--accent-cyan)">Documentation</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono)">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>

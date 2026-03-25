@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Server — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-green" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 3L1.5 6L4 9M8 3L10.5 6L8 9M7 2L5 10" stroke-linecap="round"/></svg>API Server</div>
+    <h1>API Server</h1>
+    <div class="doc-meta"><span>FastAPI</span><span class="separator"></span><span>POST /analyze</span><span class="separator"></span><span>Team collaboration</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- Overview -->
+    <h2 id="overview">FastAPI Server</h2>
+
+    <p>Odin ships with a FastAPI HTTP server for team collaboration. Instead of running CLI commands locally, team members can submit analysis requests via the REST API, making it ideal for integration with CI/CD pipelines, dashboards, and shared research workflows.</p>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>The API server uses the same analysis engine as the CLI. Set your <code>OPENAI_API_KEY</code> or <code>ANTHROPIC_API_KEY</code> environment variable before starting the server.</p>
+    </div>
+
+    <h3>Starting the Server</h3>
+
+    <div class="code-block">
+      <div class="filename">cli/commands/serve.py</div>
+      <pre><code># Basic start
+python -m uvicorn cli.commands.serve:app --reload --port 8080
+
+# With explicit host/port
+python -m uvicorn cli.commands.serve:app --host 0.0.0.0 --port 8080
+
+# Production with multiple workers
+python -m uvicorn cli.commands.serve:app --workers 4 --port 8080 --host 0.0.0.0</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>The server runs on port <code>8080</code> by default. Use <code>--reload</code> only in development — it enables auto-reload on code changes.</p>
+    </div>
+
+    <!-- Endpoints -->
+    <h2 id="endpoints">API Endpoints</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-green">POST</span></td><td><code>/analyze</code></td><td>Submit a new repository analysis</td></tr>
+          <tr><td><span class="tag tag-cyan">GET</span></td><td><code>/runs/{run_id}</code></td><td>Get analysis status and result by run ID</td></tr>
+          <tr><td><span class="tag tag-cyan">GET</span></td><td><code>/runs</code></td><td>List recent analysis runs</td></tr>
+          <tr><td><span class="tag tag-cyan">GET</span></td><td><code>/skills</code></td><td>List available Skills</td></tr>
+          <tr><td><span class="tag tag-cyan">GET</span></td><td><code>/workflows</code></td><td>List available Workflows</td></tr>
+          <tr><td><span class="tag tag-green">GET</span></td><td><code>/health</code></td><td>Health check</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- POST /analyze -->
+    <h2 id="post-analyze">POST /analyze</h2>
+
+    <p>Submit a new repository analysis. The request is queued and processed asynchronously. Returns a <code>run_id</code> immediately that you can poll with <code>GET /runs/{run_id}</code>.</p>
+
+    <div class="code-block">
+      <div class="filename">Request</div>
+      <pre><code>POST /analyze
+Content-Type: application/json
+
+{
+  "repo_url": "https://github.com/owner/repo",
+  "workflow": "vulnerability_research",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "focus_paths": ["src/auth", "src/api"],
+  "max_iterations": 20
+}</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">Response — 202 Accepted</div>
+      <pre><code>{
+  "run_id": "run_abc123def456",
+  "status": "queued",
+  "message": "Analysis queued. Poll GET /runs/run_abc123def456 for status.",
+  "workflow": "vulnerability_research",
+  "repo_url": "https://github.com/owner/repo"
+}</code></pre>
+    </div>
+
+    <h3>Request Body Fields</h3>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>repo_url</code></td><td>string</td><td><span class="tag tag-green">Yes</span></td><td>GitHub URL or local path</td></tr>
+          <tr><td><code>workflow</code></td><td>string</td><td><span class="tag tag-green">Yes</span></td><td><code>vulnerability_research</code>, <code>codebase_research</code>, <code>architecture_analysis</code></td></tr>
+          <tr><td><code>provider</code></td><td>string</td><td>No</td><td>LLM provider (default: from env)</td></tr>
+          <tr><td><code>model</code></td><td>string</td><td>No</td><td>Model name (default: <code>gpt-4o-mini</code>)</td></tr>
+          <tr><td><code>focus_paths</code></td><td>array[string]</td><td>No</td><td>Paths to focus analysis on</td></tr>
+          <tr><td><code>max_iterations</code></td><td>integer</td><td>No</td><td>Max iterations per step (default: 20)</td></tr>
+          <tr><td><code>branch</code></td><td>string</td><td>No</td><td>Git branch (GitHub repos only)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GET /runs/{run_id} -->
+    <h2 id="get-runs">GET /runs/{run_id}</h2>
+
+    <p>Poll the status of a submitted analysis. Returns the current status, progress, and final report when complete.</p>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK (in progress)</div>
+      <pre><code>{
+  "run_id": "run_abc123def456",
+  "status": "running",
+  "workflow": "vulnerability_research",
+  "progress": {
+    "current_step": "sink_detection",
+    "completed_steps": 3,
+    "total_steps": 11,
+    "current_layer": 2
+  },
+  "started_at": "2025-03-25T10:30:00Z"
+}</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK (completed)</div>
+      <pre><code>{
+  "run_id": "run_abc123def456",
+  "status": "succeeded",
+  "workflow": "vulnerability_research",
+  "progress": {
+    "completed_steps": 11,
+    "total_steps": 11
+  },
+  "report": "# Odin Code Research Report\n\n## Steps\n### ✓ repo_discovery\n...",
+  "report_format": "markdown",
+  "evidence_stats": {
+    "total_meus": 47,
+    "by_type": {
+      "code_snippet": 35,
+      "config": 8,
+      "dependency": 4
+    }
+  },
+  "started_at": "2025-03-25T10:30:00Z",
+  "finished_at": "2025-03-25T10:38:00Z",
+  "duration_seconds": 480
+}</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK (failed)</div>
+      <pre><code>{
+  "run_id": "run_abc123def456",
+  "status": "failed",
+  "workflow": "vulnerability_research",
+  "error": "Step 'entrypoints_detection' failed: Skill 'entrypoints_detection' not found in registry",
+  "progress": {
+    "completed_steps": 1,
+    "total_steps": 11
+  },
+  "started_at": "2025-03-25T10:30:00Z",
+  "finished_at": "2025-03-25T10:31:00Z"
+}</code></pre>
+    </div>
+
+    <!-- GET /runs -->
+    <h2 id="get-runs-list">GET /runs</h2>
+
+    <p>List recent analysis runs with optional pagination.</p>
+
+    <div class="code-block">
+      <div class="filename">Request</div>
+      <pre><code>GET /runs?limit=10&offset=0&status=succeeded</code></pre>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK</div>
+      <pre><code>{
+  "runs": [
+    {
+      "run_id": "run_abc123def456",
+      "workflow": "vulnerability_research",
+      "status": "succeeded",
+      "repo_url": "https://github.com/owner/repo",
+      "started_at": "2025-03-25T10:30:00Z",
+      "finished_at": "2025-03-25T10:38:00Z"
+    },
+    {
+      "run_id": "run_def456ghi789",
+      "workflow": "codebase_research",
+      "status": "running",
+      "repo_url": "https://github.com/owner/other-repo",
+      "started_at": "2025-03-25T11:00:00Z"
+    }
+  ],
+  "total": 24,
+  "limit": 10,
+  "offset": 0
+}</code></pre>
+    </div>
+
+    <!-- GET /skills -->
+    <h2 id="get-skills">GET /skills</h2>
+
+    <p>Returns all registered Skills with their metadata.</p>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK</div>
+      <pre><code>{
+  "skills": [
+    {
+      "id": "repo_map",
+      "name": "Repository Map Builder",
+      "version": "1.0",
+      "description": "Build a comprehensive module map of the codebase..."
+    },
+    {
+      "id": "entrypoints_detection",
+      "name": "Entry Points Detection",
+      "version": "1.0",
+      "description": "Find all HTTP handlers, CLI commands, and message listeners..."
+    }
+    // ... all 12 skills
+  ],
+  "total": 12
+}</code></pre>
+    </div>
+
+    <!-- GET /workflows -->
+    <h2 id="get-workflows">GET /workflows</h2>
+
+    <p>Returns all registered Workflows with their step definitions.</p>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK</div>
+      <pre><code>{
+  "workflows": [
+    {
+      "id": "codebase_research",
+      "name": "Codebase Research",
+      "version": "1.0",
+      "description": "Fast codebase understanding (5 steps)",
+      "steps": [
+        {"id": "repo_discovery", "skill": "repo_map"},
+        {"id": "entrypoints_detection", "skill": "entrypoints_detection"},
+        {"id": "call_graph_trace", "skill": "call_graph_trace"},
+        {"id": "data_structure_extraction", "skill": "data_structure_extraction"},
+        {"id": "report_generation", "skill": "report_generation"}
+      ]
+    }
+    // ... all 3 workflows
+  ],
+  "total": 3
+}</code></pre>
+    </div>
+
+    <!-- Health -->
+    <h2 id="health">GET /health</h2>
+
+    <p>Health check endpoint for monitoring and orchestration systems.</p>
+
+    <div class="code-block">
+      <div class="filename">Response — 200 OK</div>
+      <pre><code>{
+  "status": "healthy",
+  "version": "v0.2.0",
+  "uptime_seconds": 3600,
+  "llm_provider": "openai",
+  "llm_model": "gpt-4o-mini",
+  "queue_depth": 2
+}</code></pre>
+    </div>
+
+    <!-- Python Client -->
+    <h2 id="python-client">Python API Client</h2>
+
+    <p>Use the built-in Python client for programmatic access:</p>
+
+    <div class="code-block">
+      <div class="filename">client.py</div>
+      <pre><code>import requests
+import time
+
+BASE_URL = "http://localhost:8080"
+
+def submit_analysis(repo_url, workflow="vulnerability_research"):
+    resp = requests.post(f"{BASE_URL}/analyze", json={
+        "repo_url": repo_url,
+        "workflow": workflow,
+        "provider": "openai",
+        "model": "gpt-4o-mini",
+    })
+    resp.raise_for_status()
+    return resp.json()
+
+def poll_until_done(run_id, poll_interval=5, timeout=600):
+    start = time.time()
+    while time.time() - start < timeout:
+        resp = requests.get(f"{BASE_URL}/runs/{run_id}")
+        resp.raise_for_status()
+        data = resp.json()
+        status = data["status"]
+        if status == "succeeded":
+            return data["report"], data["evidence_stats"]
+        elif status == "failed":
+            raise RuntimeError(f"Analysis failed: {data['error']}")
+        print(f"Status: {status} — waiting {poll_interval}s...")
+        time.sleep(poll_interval)
+    raise TimeoutError(f"Analysis timed out after {timeout}s")
+
+# Usage
+result = submit_analysis("https://github.com/owner/repo")
+report, evidence = poll_until_done(result["run_id"])
+print(f"Report generated with {evidence['total_meus']} evidence units")</code></pre>
+    </div>
+
+    <!-- CORS & Auth -->
+    <h2 id="cors-auth">CORS & Authentication</h2>
+
+    <h3>CORS Configuration</h3>
+    <p>Enable CORS for browser-based clients:</p>
+
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>python -m uvicorn cli.commands.serve:app \
+  --port 8080 \
+  --proxy-headers \
+  --forwarded-allow-ips='*'</code></pre>
+    </div>
+
+    <h3>Authentication (Production)</h3>
+    <p>For production deployments, consider adding authentication via a reverse proxy (nginx, Traefik) or middleware:</p>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠</div>
+      <p>The default server configuration has no authentication. Do not expose the API server directly to the internet without adding auth. Use a VPN, reverse proxy with basic auth, or API key middleware.</p>
+    </div>
+
+    <!-- Error Responses -->
+    <h2 id="errors">Error Responses</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>HTTP Code</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>400 Bad Request</code></td><td>Invalid request body or missing required fields</td></tr>
+          <tr><td><code>404 Not Found</code></td><td>Run ID or resource not found</td></tr>
+          <tr><td><code>422 Unprocessable Entity</code></td><td>Validation error in request fields</td></tr>
+          <tr><td><code>500 Internal Server Error</code></td><td>Server-side error — check server logs</td></tr>
+          <tr><td><code>503 Service Unavailable</code></td><td>Server is overloaded or initializing</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block">
+      <div class="filename">Error Response Format</div>
+      <pre><code>{
+  "detail": "Workflow 'invalid_workflow' not found. Available: codebase_research, architecture_analysis, vulnerability_research",
+  "error_code": "WORKFLOW_NOT_FOUND",
+  "request_id": "req_xyz789"
+}</code></pre>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="cli.html" style="color:var(--accent-cyan)">← CLI Reference</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono)">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>

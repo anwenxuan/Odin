@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI Reference — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-cyan" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1.5" width="10" height="9" rx="1.5"/><path d="M3 4.5L5.5 6L3 7.5" stroke-linecap="round"/><path d="M6 7.5H9" stroke-linecap="round"/></svg>CLI Reference</div>
+    <h1>Command Line Interface</h1>
+    <div class="doc-meta"><span>odin analyze</span><span class="separator"></span><span>list-skills</span><span class="separator"></span><span>list-workflows</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- Overview -->
+    <h2 id="overview">CLI Overview</h2>
+
+    <p>The Odin CLI provides a unified interface for analyzing codebases. It is invoked via the <code>odin.py</code> entry point:</p>
+
+    <div class="code-block">
+      <div class="filename">odin.py</div>
+      <pre><code># As a module
+python odin.py &lt;command&gt; [options]
+
+# After pip install (if configured)
+odin &lt;command&gt; [options]</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>All commands support <code>--version</code> to display the installed Odin version (<strong>v0.2.0</strong>).</p>
+    </div>
+
+    <!-- Global Flags -->
+    <h2 id="global">Global Options</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Flag</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--version</code></td><td>Show version number and exit</td></tr>
+          <tr><td><code>-v, --verbose</code></td><td>Enable verbose (DEBUG level) logging</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- analyze Command -->
+    <h2 id="analyze">odin analyze</h2>
+
+    <p>The primary command for analyzing repositories. Supports both local paths and GitHub URLs.</p>
+
+    <div class="code-block">
+      <div class="filename">cli/main.py</div>
+      <pre><code>odin analyze &lt;repo&gt; [options]</code></pre>
+    </div>
+
+    <h3>Positional Arguments</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Argument</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>repo</code></td><td>string</td><td>GitHub URL or local path to the repository</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Options</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>--workflow</code></td><td><code>codebase_research</code></td><td>Analysis workflow: <code>vulnerability_research</code>, <code>codebase_research</code>, <code>architecture_analysis</code></td></tr>
+          <tr><td><code>--provider</code></td><td><code>openai</code></td><td>LLM provider: <code>openai</code>, <code>anthropic</code>, <code>ollama</code>, <code>mock</code></td></tr>
+          <tr><td><code>--model</code></td><td><code>gpt-4o-mini</code></td><td>Model name (e.g. <code>gpt-4o-mini</code>, <code>claude-sonnet-4-20250514</code>)</td></tr>
+          <tr><td><code>--output</code></td><td>(stdout)</td><td>Output file path for the report (Markdown or JSON)</td></tr>
+          <tr><td><code>--output-format</code></td><td><code>markdown</code></td><td>Report format: <code>markdown</code> or <code>json</code></td></tr>
+          <tr><td><code>--focus-paths</code></td><td>(none)</td><td>Space-separated list of paths to focus analysis on (relative to repo root)</td></tr>
+          <tr><td><code>--max-iterations</code></td><td><code>20</code></td><td>Maximum tool call iterations per Skill step</td></tr>
+          <tr><td><code>--branch</code></td><td>(default)</td><td>Git branch to clone (only for GitHub URLs)</td></tr>
+          <tr><td><code>--no-cache</code></td><td><code>false</code></td><td>Force re-clone of remote repositories (ignore cache)</td></tr>
+          <tr><td><code>--verbose</code></td><td><code>false</code></td><td>Print detailed execution logs</td></tr>
+          <tr><td><code>--serve</code></td><td><code>false</code></td><td>Start FastAPI server mode instead of running analysis</td></tr>
+          <tr><td><code>--serve-port</code></td><td><code>8080</code></td><td>Port for API server mode</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Examples</h3>
+
+    <p>Basic usage with mock mode (no API key needed):</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>python odin.py analyze ./my-project --provider mock</code></pre>
+    </div>
+
+    <p>GitHub repository with OpenAI:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>python odin.py analyze https://github.com/owner/repo \
+  --workflow vulnerability_research \
+  --provider openai \
+  --model gpt-4o-mini</code></pre>
+    </div>
+
+    <p>Local repository with focus paths:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>python odin.py analyze ./my-project \
+  --workflow architecture_analysis \
+  --focus-paths src/auth src/api \
+  --verbose</code></pre>
+    </div>
+
+    <p>Save report to file:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code># Save as Markdown
+python odin.py analyze ./repo \
+  --workflow vulnerability_research \
+  --output ./report.md
+
+# Save as JSON
+python odin.py analyze ./repo \
+  --workflow vulnerability_research \
+  --output ./report.json \
+  --output-format json</code></pre>
+    </div>
+
+    <p>With specific branch:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>python odin.py analyze https://github.com/owner/repo \
+  --branch develop \
+  --workflow codebase_research \
+  --provider anthropic</code></pre>
+    </div>
+
+    <!-- list-skills -->
+    <h2 id="list-skills">odin list-skills</h2>
+
+    <p>Lists all registered Skills available in the current installation.</p>
+
+    <div class="code-block">
+      <div class="filename">cli/commands/list_skills.py</div>
+      <pre><code>odin list-skills</code></pre>
+    </div>
+
+    <p>Example output:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>[Skills] Loaded Skills:
+  - repo_map @ 1.0
+    → Repository Map Builder
+  - entrypoints_detection @ 1.0
+    → Entry Points Detection
+  - call_graph_trace @ 1.0
+    → Call Graph Tracer
+  - data_structure_extraction @ 1.0
+    → Data Structure Extraction
+  - auth_logic_detection @ 1.0
+    → Auth Logic Detector
+  - input_flow_analysis @ 1.0
+    → Input Flow Analyzer
+  - sink_detection @ 1.0
+    → Sink Function Detector
+  - dependency_analysis @ 1.0
+    → Dependency Analyzer
+  - attack_surface_mapping @ 1.0
+    → Attack Surface Mapper
+  - vulnerability_hypothesis @ 1.0
+    → Vulnerability Hypothesizer
+  - exploit_generation @ 1.0
+    → Exploit Generator
+  - report_generation @ 1.0
+    → Report Generator</code></pre>
+    </div>
+
+    <!-- list-workflows -->
+    <h2 id="list-workflows">odin list-workflows</h2>
+
+    <p>Lists all registered Workflows and their step chains.</p>
+
+    <div class="code-block">
+      <div class="filename">cli/commands/list_workflows.py</div>
+      <pre><code>odin list-workflows</code></pre>
+    </div>
+
+    <p>Example output:</p>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code>Workflow: codebase_research (5 steps)
+  repo_discovery → entrypoints_detection → call_graph_trace → data_structure_extraction → report_generation
+
+Workflow: architecture_analysis (7 steps)
+  repo_discovery → entrypoints_detection → call_graph_trace → data_structure_extraction → auth_logic_detection → dependency_analysis → report_generation
+
+Workflow: vulnerability_research (11 steps)
+  repo_discovery → [entrypoints_detection, sink_detection, dependency_analysis] →
+  [call_graph_trace, auth_logic_detection] → input_flow_analysis →
+  attack_surface_mapping → vulnerability_hypothesis → exploit_generation → report_generation</code></pre>
+    </div>
+
+    <!-- Exit Codes -->
+    <h2 id="exit-codes">Exit Codes</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td>Success — analysis completed without errors</td></tr>
+          <tr><td><code>1</code></td><td>Error — repository not found, workflow not found, or internal error</td></tr>
+          <tr><td><code>130</code></td><td>Interrupted — user pressed Ctrl+C</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Complete Examples -->
+    <h2 id="examples">Complete Workflow Examples</h2>
+
+    <h3>Security Audit Workflow</h3>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code># Full security audit with OpenAI GPT-4o mini
+export OPENAI_API_KEY=sk-...
+
+# Analyze a production codebase
+python odin.py analyze https://github.com/myorg/api-service \
+  --workflow vulnerability_research \
+  --provider openai \
+  --output ./security-audit-$(date +%Y%m%d).md \
+  --verbose</code></pre>
+    </div>
+
+    <h3>PR Review Workflow (CI/CD Integration)</h3>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code># Fast PR review using codebase_research
+python odin.py analyze ./changes \
+  --workflow codebase_research \
+  --provider openai \
+  --output ./pr-review.json \
+  --output-format json \
+  && echo "Analysis complete" || echo "Analysis failed with code $?"</code></pre>
+    </div>
+
+    <h3>Local Development (No API Key)</h3>
+    <div class="code-block">
+      <div class="filename">terminal</div>
+      <pre><code># Test locally without API costs
+python odin.py analyze ./my-local-repo \
+  --workflow codebase_research \
+  --provider mock \
+  --verbose</code></pre>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="api.html" style="color:var(--accent-cyan)">API Server →</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono)">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>
