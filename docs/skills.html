@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand"><div class="sidebar-logo">O</div><div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section"><div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section"><div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span></div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg></button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg><span>Search docs...</span><kbd>⌘K</kbd></div>
+    <div class="topbar-links"><a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-green" style="margin-bottom:12px;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1L8 4.5L12 5.5L9 8.5L10 12L6 10L2 12L3 8.5L0 5.5L4 4.5Z"/></svg>MVP Reference</div>
+    <h1>Skills</h1>
+    <div class="doc-meta"><span>12 specialized skills</span><span class="separator"></span><span>SkillAgent execution</span><span class="separator"></span><span>YAML-defined prompts</span></div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <h2 id="overview">What is a Skill?</h2>
+    <p>A <strong>Skill</strong> is a self-contained analysis unit that combines a prompt template, an output JSON schema, and the logic to execute it via the Agent Loop. Each Skill focuses on a specific analytical task — like detecting entry points, tracing call graphs, or generating vulnerability hypotheses.</p>
+
+    <p>Skills are defined as YAML packages under the <code>skills/</code> directory:</p>
+
+    <div class="code-block">
+      <div class="filename">skills/repo_map/skill.yaml</div>
+      <pre><code>id: repo_map
+name: Repository Map Builder
+version: "1.0"
+description: >
+  Build a comprehensive module map of the codebase,
+  detecting the tech stack, directory structure, and key files.
+
+prompt_template: prompt.md.j2
+output_schema: schema.json
+max_iterations: 15
+required_evidence_types:
+  - code_snippet
+  - config</code></pre>
+    </div>
+
+    <h2 id="list">All 12 Skills</h2>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Skill ID</th><th>Name</th><th>Phase</th><th>Output Key</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>repo_map</code></td><td>Repository Map Builder</td><td><span class="tag tag-cyan">MVP</span></td><td><code>modules</code>, <code>tech_stack</code></td></tr>
+          <tr><td><code>entrypoints_detection</code></td><td>Entry Points Detection</td><td><span class="tag tag-cyan">MVP</span></td><td><code>entrypoints</code></td></tr>
+          <tr><td><code>call_graph_trace</code></td><td>Call Graph Tracer</td><td><span class="tag tag-cyan">MVP</span></td><td><code>call_graph</code>, <code>relations</code></td></tr>
+          <tr><td><code>data_structure_extraction</code></td><td>Data Structure Extraction</td><td><span class="tag tag-cyan">MVP</span></td><td><code>data_structures</code></td></tr>
+          <tr><td><code>auth_logic_detection</code></td><td>Auth Logic Detector</td><td><span class="tag tag-cyan">MVP</span></td><td><code>auth_flows</code>, <code>guards</code></td></tr>
+          <tr><td><code>input_flow_analysis</code></td><td>Input Flow Analyzer</td><td><span class="tag tag-cyan">MVP</span></td><td><code>input_flows</code></td></tr>
+          <tr><td><code>sink_detection</code></td><td>Sink Function Detector</td><td><span class="tag tag-cyan">MVP</span></td><td><code>sinks</code></td></tr>
+          <tr><td><code>dependency_analysis</code></td><td>Dependency Analyzer</td><td><span class="tag tag-cyan">MVP</span></td><td><code>dependencies</code></td></tr>
+          <tr><td><code>attack_surface_mapping</code></td><td>Attack Surface Mapper</td><td><span class="tag tag-cyan">MVP</span></td><td><code>attack_surfaces</code></td></tr>
+          <tr><td><code>vulnerability_hypothesis</code></td><td>Vulnerability Hypothesizer</td><td><span class="tag tag-cyan">MVP</span></td><td><code>hypotheses</code></td></tr>
+          <tr><td><code>exploit_generation</code></td><td>Exploit Generator</td><td><span class="tag tag-cyan">MVP</span></td><td><code>exploits</code></td></tr>
+          <tr><td><code>report_generation</code></td><td>Report Generator</td><td><span class="tag tag-cyan">MVP</span></td><td><code>report</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="skill-details">Skill Details</h2>
+
+    <h3 id="skill-repo-map">repo_map</h3>
+    <p>Builds a comprehensive module map of the codebase. Detects the technology stack, directory structure, key configuration files, and main entry points. This is always the first skill to run in any workflow.</p>
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p><strong>Output includes:</strong> list of modules, detected languages, framework identification, file count by type, and key files worth exploring further.</p>
+    </div>
+
+    <h3 id="skill-entrypoints">entrypoints_detection</h3>
+    <p>Finds all HTTP handlers, CLI command definitions, message queue listeners, and background job registrations. These are the external-facing surfaces through which an attacker might interact with the codebase.</p>
+    <p><strong>Supported frameworks:</strong> Express.js, FastAPI, Django, Flask, Spring Boot, Gin, Echo, Rails, NestJS, and more.</p>
+
+    <h3 id="skill-call-graph">call_graph_trace</h3>
+    <p>Traces function call relationships throughout the codebase. Builds a directed graph of which functions call which, enabling downstream analysis of how untrusted input can propagate through the system.</p>
+
+    <h3 id="skill-data-structures">data_structure_extraction</h3>
+    <p>Extracts entity models, database schemas, API request/response types, and configuration structures. Understanding the data model is critical for assessing vulnerability impact.</p>
+
+    <h3 id="skill-auth">auth_logic_detection</h3>
+    <p>Locates authentication and authorization guards throughout the codebase. Identifies where user identity is verified, where permission checks occur, and where they might be missing.</p>
+
+    <h3 id="skill-input-flow">input_flow_analysis</h3>
+    <p>Traces how untrusted input flows through the system: from HTTP request parameters → handler → business logic → data access → output. Maps every step with relevant code citations.</p>
+
+    <h3 id="skill-sinks">sink_detection</h3>
+    <p>Identifies dangerous sink functions — places where untrusted data could cause harm: SQL query execution, OS command running, file I/O, eval(), innerHTML, and similar operations.</p>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Category</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag-red">SQL Injection</span></td><td><code>db.execute()</code>, <code>cursor.execute()</code>, <code>Query.raw()</code></td></tr>
+          <tr><td><span class="tag tag-amber">Command Injection</span></td><td><code>exec()</code>, <code>system()</code>, <code>eval()</code>, <code>child_process.exec()</code></td></tr>
+          <tr><td><span class="tag tag-purple">XSS</span></td><td><code>innerHTML</code>, <code>dangerouslySetInnerHTML</code>, <code>render()</code></td></tr>
+          <tr><td><span class="tag tag-green">Path Traversal</span></td><td><code>open()</code>, <code>readFile()</code>, <code>send_file()</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="skill-dependencies">dependency_analysis</h3>
+    <p>Maps third-party dependencies from package.json, requirements.txt, go.mod, Cargo.toml, pom.xml, and similar files. Checks for known vulnerable versions.</p>
+
+    <h3 id="skill-attack-surface">attack_surface_mapping</h3>
+    <p>Correlates entry points, sinks, and input flows to produce a risk-ranked attack surface map. Each surface is scored based on reachability, impact, and existing mitigations.</p>
+
+    <h3 id="skill-hypothesis">vulnerability_hypothesis</h3>
+    <p>Generates CWE-tagged vulnerability hypotheses based on all prior evidence. Each hypothesis includes the CWE type, affected components, and confidence score.</p>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>CWE</th><th>Vulnerability Type</th></tr></thead>
+        <tbody>
+          <tr><td>CWE-89</td><td>SQL Injection</td></tr>
+          <tr><td>CWE-78</td><td>OS Command Injection</td></tr>
+          <tr><td>CWE-79</td><td>Cross-Site Scripting (XSS)</td></tr>
+          <tr><td>CWE-22</td><td>Path Traversal</td></tr>
+          <tr><td>CWE-287</td><td>Improper Authentication</td></tr>
+          <tr><td>CWE-862</td><td>Missing Authorization</td></tr>
+          <tr><td>CWE-269</td><td>Privilege Escalation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="skill-exploit">exploit_generation</h3>
+    <p>Generates proof-of-concept concepts (not functional exploit code) for validated vulnerability hypotheses. Each PoC includes the attack vector, required conditions, and expected impact.</p>
+
+    <h3 id="skill-report">report_generation</h3>
+    <p>Synthesizes all findings from previous steps into a structured Markdown report. Each finding is linked back to MEU evidence citations for full traceability.</p>
+
+    <h2 id="skill-agent">SkillAgent</h2>
+    <p>Each Skill is executed by a <code>SkillAgent</code> — a wrapper around the <code>AgentLoop</code> that provides the Skill's prompt template, input schema, and output schema.</p>
+
+    <div class="code-block">
+      <div class="filename">agent/skill_agent.py</div>
+      <pre><code>from agent.skill_agent import SkillAgent
+
+agent = SkillAgent(
+    skill=skill_pkg,
+    llm_adapter=llm,
+    tool_executor=tool_executor,
+    evidence_store=evidence_store,
+    memory_store=memory_store,
+    loop_config=loop_config,
+)
+
+result = agent.run(inputs={"repo_path": "/path/to/repo"})
+# result.skill_output — the structured JSON output from the skill
+# result.evidence_stored — list of MEU IDs extracted
+# result.loop_result — LoopResult with iteration stats</code></pre>
+    </div>
+
+    <h2 id="creating">Creating a Custom Skill</h2>
+    <p>To create a new Skill, add a package under <code>skills/</code> with three files:</p>
+
+    <div class="grid-2">
+      <div class="code-block" style="margin:0;">
+        <div class="filename">skills/my_skill/skill.yaml</div>
+        <pre><code>id: my_skill
+name: My Custom Skill
+version: "1.0"
+description: >
+  Brief description of what
+  this skill analyzes.
+
+prompt_template: prompt.md.j2
+output_schema: schema.json
+max_iterations: 10</code></pre>
+      </div>
+      <div class="code-block" style="margin:0;">
+        <div class="filename">skills/my_skill/schema.json</div>
+        <pre><code>{
+  "type": "object",
+  "properties": {
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": {"type": "string"},
+          "evidence_refs": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "confidence": {"type": "number"}
+        },
+        "required": ["claim", "evidence_refs"]
+      }
+    }
+  }
+}</code></pre>
+      </div>
+    </div>
+
+    <p>The Jinja2 prompt template (<code>prompt.md.j2</code>) receives these variables:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>{{ repo_path }}</code></td><td>Absolute path to the repository</td></tr>
+          <tr><td><code>{{ inputs.* }}</code></td><td>Workflow input parameters</td></tr>
+          <tr><td><code>{{ steps.*.outputs.* }}</code></td><td>Outputs from previous workflow steps</td></tr>
+          <tr><td><code>{{ context.session_id }}</code></td><td>Current analysis session ID</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span><a href="index.html" style="color:var(--accent-cyan);">Documentation</a></span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono);">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>

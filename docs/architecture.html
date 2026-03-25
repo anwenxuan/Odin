@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture — Odin</title>
+  <link rel="stylesheet" href="assets/css/docs.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%2300d4ff'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">O</div>
+    <div><div class="sidebar-brand-name">Odin</div><div class="sidebar-brand-tagline">AI Code Research</div></div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>Introduction</a>
+      <a href="getting-started.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>Getting Started</a>
+      <a href="architecture.html" class="sidebar-link active"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/><path d="M4 7V9H7V13H9V9H12"/></svg>Architecture</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>Skills</a>
+      <a href="workflows.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>Workflows</a>
+      <a href="tools.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>Tools</a>
+      <a href="evidence.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>Evidence Model</a>
+      <a href="configuration.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>Configuration</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>CLI Reference</a>
+      <a href="api.html" class="sidebar-link"><svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>API Server</a>
+    </div>
+  </div>
+  <div class="sidebar-version">Version <span>v0.2.0</span> &nbsp;·&nbsp; MIT License</div>
+</nav>
+
+<main class="docs-main">
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/></svg>
+    </button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search docs...</span><kbd>⌘K</kbd>
+    </div>
+    <div class="topbar-links">
+      <a href="https://github.com" target="_blank"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    </div>
+  </header>
+
+  <div class="doc-header">
+    <div class="badge badge-purple" style="margin-bottom:12px;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="4" height="4" rx="0.5"/><rect x="7" y="1" width="4" height="4" rx="0.5"/><rect x="4" y="7" width="4" height="4" rx="0.5"/></svg>
+      System Design
+    </div>
+    <h1>Architecture</h1>
+    <div class="doc-meta">
+      <span>6-layer system</span>
+      <span class="separator"></span>
+      <span>DAG-parallel execution</span>
+      <span class="separator"></span>
+      <span>Evidence-backed reasoning</span>
+    </div>
+  </div>
+
+  <div class="docs-content doc-body">
+
+    <!-- Overview -->
+    <h2 id="overview">System Overview</h2>
+
+    <p>Odin is built as a layered system where each phase builds on the previous one. The architecture spans from low-level tool execution through to high-level research workflows — all unified by a shared evidence model.</p>
+
+    <p>The system processes a code analysis request through this flow:</p>
+
+    <div class="arch-diagram">
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 0</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">CLI Entry</span>
+          <span class="arch-node cyan">FastAPI Server</span>
+          <span class="arch-node cyan">od in.py</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 1</div>
+        <div class="arch-layer-content">
+          <span class="arch-node purple">WorkflowOrchestrator</span>
+          <span class="arch-node purple">PipelineExecutor</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 2</div>
+        <div class="arch-layer-content">
+          <span class="arch-node green">SkillAgent</span>
+          <span class="arch-node green">AgentLoop</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 3</div>
+        <div class="arch-layer-content">
+          <span class="arch-node amber">ToolExecutor</span>
+          <span class="arch-node amber">LLMAdapter</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 4</div>
+        <div class="arch-layer-content">
+          <span class="arch-node purple">EvidenceStore</span>
+          <span class="arch-node purple">MemoryStore</span>
+          <span class="arch-node purple">RAGStore</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 5</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">Skill Prompts</span>
+          <span class="arch-node cyan">YAML Workflows</span>
+          <span class="arch-node cyan">JSON Schema</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool Executor -->
+    <h2 id="phase-1">Phase 1 — Tool Executor</h2>
+
+    <p>The Tool layer gives the LLM real "hands" to interact with the codebase. Each tool follows the <code>Tool</code> Protocol interface and returns a <code>ToolResult</code> regardless of success or failure.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Description</th>
+            <th>Safety</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>read_file</code></td>
+            <td>Read file content with line range support</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+          <tr>
+            <td><code>list_dir</code></td>
+            <td>Directory tree listing with file type icons</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+          <tr>
+            <td><code>search_code</code></td>
+            <td>Regex code search with configurable context lines</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+          <tr>
+            <td><code>run_shell</code></td>
+            <td>Safe shell commands (whitelist: git, find, grep, wc...)</td>
+            <td><span class="tag tag-amber">Whitelisted</span></td>
+          </tr>
+          <tr>
+            <td><code>git_clone</code></td>
+            <td>Clone remote repository to local temp directory</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+          <tr>
+            <td><code>git_log</code></td>
+            <td>View commit history</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+          <tr>
+            <td><code>git_diff</code></td>
+            <td>View file changes between commits</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+          <tr>
+            <td><code>detect_lang</code></td>
+            <td>Detect programming language and framework stack</td>
+            <td><span class="tag tag-green">Safe</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Tools are registered using the <code>@tool</code> decorator and automatically exposed to the LLM in OpenAI Function Calling format.</p>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>Security boundary: <code>run_shell</code> uses a strict command whitelist. The LLM cannot execute arbitrary shell commands. <code>read_file</code> enforces path resolution against the repo root to prevent traversal attacks.</p>
+    </div>
+
+    <!-- Agent Loop -->
+    <h2 id="phase-2">Phase 2 — Agent Loop</h2>
+
+    <p>The Agent Loop is the core execution engine that enables iterative LLM ↔ tool interaction. It follows the classic ReAct pattern:</p>
+
+    <div class="dag-flow">
+      <span class="dag-step active">Render Skill Prompt</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step purple">Call LLM</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step amber">Has tool_calls?</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step green">Extract Output ✓</span>
+    </div>
+
+    <p>When tools are requested, the loop executes them and feeds results back:</p>
+
+    <div class="dag-flow" style="flex-wrap:wrap; justify-content:center;">
+      <span class="dag-step cyan">Execute Tools</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step purple">Append ToolMessage</span>
+      <span class="dag-arrow">→</span>
+      <span class="dag-step amber">Continue LLM Loop</span>
+    </div>
+
+    <p>The loop terminates when:</p>
+    <ul>
+      <li><strong>LLM returns plain text</strong> (no tool calls) → Success</li>
+      <li><strong>Max iterations reached</strong> → <code>max_iterations</code> status</li>
+      <li><strong>Consecutive tool errors exceed limit</strong> → Graceful degradation or failure</li>
+    </ul>
+
+    <h3>Loop Configuration</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Config Field</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>max_iterations</code></td>
+            <td><code>20</code></td>
+            <td>Max LLM → tool iterations per SkillAgent run</td>
+          </tr>
+          <tr>
+            <td><code>evidence_required</code></td>
+            <td><code>true</code></td>
+            <td>Enforce evidence citations in all conclusions</td>
+          </tr>
+          <tr>
+            <td><code>require_final_json</code></td>
+            <td><code>true</code></td>
+            <td>Require the final LLM output to be valid JSON</td>
+          </tr>
+          <tr>
+            <td><code>allow_fallback_on_error</code></td>
+            <td><code>true</code></td>
+            <td>Continue even if individual steps fail</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LLM Adapter -->
+    <h2 id="llm-adapter">Phase 3 — LLM Adapter</h2>
+
+    <p>The <code>LLMAdapter</code> abstract base class provides a unified interface for all LLM providers. All adapters return a normalized <code>LLMResponse</code> regardless of the underlying API:</p>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-top:0;">OpenAI Adapter</h3>
+        <p>Supports GPT-4o, GPT-4o-mini, and any OpenAI-compatible API endpoint.</p>
+        <div class="code-block">
+          <div class="filename">openai.py</div>
+          <pre><code>llm = create_adapter(
+    "openai",
+    default_model="gpt-4o-mini"
+)</code></pre>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">Anthropic Adapter</h3>
+        <p>Supports Claude 3.5 Sonnet, Claude Sonnet 4, and Claude 3 Opus.</p>
+        <div class="code-block">
+          <div class="filename">anthropic.py</div>
+          <pre><code>llm = create_adapter(
+    "anthropic",
+    default_model="claude-sonnet-4"
+)</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-top:0;">Ollama Adapter</h3>
+        <p>Connects to local Ollama instances with OpenAI-compatible API.</p>
+        <div class="code-block">
+          <div class="filename">ollama.py</div>
+          <pre><code>llm = create_adapter(
+    "ollama",
+    base_url="http://localhost:11434/v1",
+    default_model="llama3"
+)</code></pre>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">Mock Adapter</h3>
+        <p>Simulates LLM responses for testing without API costs.</p>
+        <div class="code-block">
+          <div class="filename">mock.py</div>
+          <pre><code>llm = create_adapter("mock")
+# Returns preset responses
+# or simulated tool calls</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pipeline Executor -->
+    <h2 id="pipeline">Phase 4 — Pipeline Executor (DAG Parallelism)</h2>
+
+    <p>The Pipeline Executor takes a workflow definition and schedules its steps across DAG layers using Kahn's algorithm. Steps within the same layer run concurrently via <code>ThreadPoolExecutor</code>.</p>
+
+    <h3>DAG Layering Example (vulnerability_research)</h3>
+
+    <div class="arch-diagram">
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 1</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">repo_discovery</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 2</div>
+        <div class="arch-layer-content">
+          <span class="arch-node purple">entrypoints_detection</span>
+          <span class="arch-node purple">sink_detection</span>
+          <span class="arch-node purple">dependency_analysis</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 3</div>
+        <div class="arch-layer-content">
+          <span class="arch-node green">call_graph_trace</span>
+          <span class="arch-node green">auth_logic_detection</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 4</div>
+        <div class="arch-layer-content">
+          <span class="arch-node amber">input_flow_analysis</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 5</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">attack_surface_mapping</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 6</div>
+        <div class="arch-layer-content">
+          <span class="arch-node purple">vulnerability_hypothesis</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 7</div>
+        <div class="arch-layer-content">
+          <span class="arch-node green">exploit_generation</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Layer 8</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">report_generation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p>In Layer 2, all three steps (<code>entrypoints_detection</code>, <code>sink_detection</code>, <code>dependency_analysis</code>) run in parallel threads. This means a 3-core machine completes Layer 2 in roughly 1/3 the time of sequential execution.</p>
+    </div>
+
+    <!-- Memory -->
+    <h2 id="memory">Phase 5 — Memory & Storage</h2>
+
+    <p>Odin maintains three interconnected stores that preserve analysis state across runs:</p>
+
+    <div class="card-grid">
+      <div class="card" style="cursor:default;">
+        <div class="card-icon cyan">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L3 6V14L10 18L17 14V6Z"/></svg>
+        </div>
+        <h3>EvidenceStore</h3>
+        <p>Stores MEUs (Minimum Evidence Units) with full code citations. Indexed by file path, symbol, and tags for fast retrieval.</p>
+      </div>
+      <div class="card" style="cursor:default;">
+        <div class="card-icon purple">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10H13M7 7H10M7 13H11"/></svg>
+        </div>
+        <h3>MemoryStore</h3>
+        <p>Stores ResearchArtifacts and Conclusions with cross-references. Enables the system to build on previous findings.</p>
+      </div>
+      <div class="card" style="cursor:default;">
+        <div class="card-icon green">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="5"/><path d="M13 13L18 18" stroke-linecap="round"/></svg>
+        </div>
+        <h3>RAGStore</h3>
+        <p>SQLite FTS5 full-text search over historical reports. Past analyses inform future ones automatically.</p>
+      </div>
+    </div>
+
+    <!-- MCP -->
+    <h2 id="mcp">Phase 6 — MCP Integration</h2>
+
+    <p>The Model Context Protocol (MCP) client allows Odin to connect to external services for enriched analysis:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Integration</th>
+            <th>Capabilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>mcp_github</code></td>
+            <td>Fetch issues, PR reviews, repository metadata, and commit history</td>
+          </tr>
+          <tr>
+            <td><code>mcp_cve</code></td>
+            <td>Cross-reference findings against CVE databases and known vulnerability patterns</td>
+          </tr>
+          <tr>
+            <td><code>mcp_jira</code></td>
+            <td>Correlate security findings with existing tickets and bug reports</td>
+          </tr>
+          <tr>
+            <td><code>custom</code></td>
+            <td>Extend with your own MCP servers for domain-specific integrations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Data Flow -->
+    <h2 id="data-flow">Data Flow</h2>
+
+    <p>A complete analysis request flows through the system as follows:</p>
+
+    <div class="code-block">
+      <div class="filename">data_flow.txt</div>
+      <pre><code>1. CLI: python odin.py analyze ./repo --workflow vulnerability_research
+          ↓
+2. GitOps: Clone repo (if remote) → local temp directory
+          ↓
+3. WorkflowOrchestrator: Load YAML definition
+          ↓
+4. PipelineExecutor: Group steps into DAG layers (Kahn's algorithm)
+          ↓
+5. For each layer (parallel where possible):
+     a. SkillAgent: Receive skill prompt + repo context
+     b. AgentLoop: Iterative LLM → tool → LLM → ... → output
+     c. ToolExecutor: read_file / search_code / git_ops / run_shell
+     d. EvidenceStore: Extract & store MEUs with code citations
+          ↓
+6. RAGStore: Index report for future retrieval
+          ↓
+7. Output: Structured Markdown report with evidence-linked findings</code></pre>
+    </div>
+
+  </div>
+
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span>
+      <a href="index.html" style="color:var(--accent-cyan);">Documentation</a> ·
+      <a href="https://github.com" target="_blank" style="color:var(--accent-cyan);">GitHub</a>
+    </span>
+  </footer>
+</main>
+
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono);">ESC</kbd>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>

@@ -1,1 +1,468 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Welcome to GitHub Pages</title>\n</head>\n<body>\n    <h1>Hello, World!</h1>\n    <p>This is a basic HTML file for GitHub Pages.</p>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odin — AI Code Research System</title>
+  <meta name="description" content="Evidence-based AI code analysis framework for systematic vulnerability research and code learning.">
+  <link rel="stylesheet" href="assets/css/docs.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2300d4ff'/><stop offset='100%' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text y='.9em' font-size='80' x='12' fill='white' font-family='monospace' font-weight='bold'>O</text></svg>">
+</head>
+<body>
+
+<!-- ─── Sidebar ─── -->
+<nav class="docs-sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">O</div>
+    <div>
+      <div class="sidebar-brand-name">Odin</div>
+      <div class="sidebar-brand-tagline">AI Code Research</div>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Overview</div>
+      <a href="index.html" class="sidebar-link active">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L13 5L8 9L3 5Z"/><path d="M3 7L8 11L13 7" opacity="0.5"/></svg>
+        Introduction
+      </a>
+      <a href="getting-started.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M6.5 5.5L10.5 8L6.5 10.5" stroke-linecap="round"/></svg>
+        Getting Started
+      </a>
+      <a href="architecture.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/><path d="M4 7V9H7V13H9V9H12"/></svg>
+        Architecture
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">Core Concepts</div>
+      <a href="skills.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2L10 6L14 7L11 10.5L12 14.5L8 12.5L4 14.5L5 10.5L2 7L6 6Z"/></svg>
+        Skills
+      </a>
+      <a href="workflows.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8H6L8 4L10 12L12 8H14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Workflows
+      </a>
+      <a href="tools.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 3.5L12.5 6.5L6.5 12.5L3.5 9.5L9.5 3.5Z"/><path d="M8.5 4.5L11.5 7.5"/></svg>
+        Tools
+      </a>
+      <a href="evidence.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2H13L14 8L7 14L1 8L2 2H7Z"/><path d="M7 6L9 8L7 10" stroke-linecap="round"/></svg>
+        Evidence Model
+      </a>
+      <a href="configuration.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2"/><path d="M8 1V3M8 13V15M1 8H3M13 8H15M2.9 2.9L4.3 4.3M11.7 11.7L13.1 13.1M13.1 2.9L11.7 4.3M4.3 11.7L2.9 13.1"/></svg>
+        Configuration
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">API Reference</div>
+      <a href="cli.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="2"/><path d="M4 6L7 8L4 10M8 10H12" stroke-linecap="round"/></svg>
+        CLI Reference
+      </a>
+      <a href="api.html" class="sidebar-link">
+        <svg class="link-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4L2 8L5 12M11 4L14 8L11 12M9 3L7 13" stroke-linecap="round"/></svg>
+        API Server
+      </a>
+    </div>
+  </div>
+
+  <div class="sidebar-version">
+    Version <span>v0.2.0</span> &nbsp;·&nbsp; MIT License
+  </div>
+</nav>
+
+<!-- ─── Main ─── -->
+<main class="docs-main">
+  <!-- Top Bar -->
+  <header class="docs-topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 5H17M3 10H17M3 15H17" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="topbar-search" onclick="document.getElementById('searchModal').style.display='flex'">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search docs...</span>
+      <kbd>⌘K</kbd>
+    </div>
+    <div class="topbar-links">
+      <a href="https://github.com" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="docs-hero animate-in">
+    <div class="badge badge-cyan" style="margin-bottom:20px;">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6L5 9L10 3" stroke-linecap="round"/></svg>
+      v0.2.0 — Autonomous AI Agent System
+    </div>
+
+    <h1>
+      AI-Powered Code<br>
+      <span class="accent">Research Engine</span>
+    </h1>
+
+    <p class="lead" style="margin-top:16px; margin-bottom:32px;">
+      Odin is an evidence-based AI code analysis framework for systematic vulnerability research and deep code understanding. It combines autonomous agents, DAG-parallel execution, and RAG-backed memory into a single, powerful system.
+    </p>
+
+    <div class="cta-row">
+      <a href="getting-started.html" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8H13M9 4L13 8L9 12" stroke-linecap="round"/></svg>
+        Get Started
+      </a>
+      <a href="architecture.html" class="btn btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="5" y="9" width="6" height="6" rx="1"/></svg>
+        Architecture
+      </a>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-row" style="margin-top:48px;">
+      <div class="stat-card">
+        <div class="stat-number cyan">12</div>
+        <div class="stat-label">Specialized Skills</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number purple">3</div>
+        <div class="stat-label">Analysis Workflows</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number green">8</div>
+        <div class="stat-label">Built-in Tools</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number amber">4</div>
+        <div class="stat-label">LLM Providers</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="docs-content" style="padding-top:0;">
+
+    <!-- Key Features -->
+    <h2 id="features">Key Features</h2>
+
+    <div class="card-grid">
+      <a href="getting-started.html" class="card">
+        <div class="card-icon cyan">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11L9 16L18 7" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Autonomous Agent</h3>
+        <p>LLM-powered agents that call real tools to read files, search code, run shell commands, and execute Git operations.</p>
+      </a>
+
+      <a href="workflows.html" class="card">
+        <div class="card-icon purple">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11H8L10 5L12 17L14 11H19" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>DAG Parallel Execution</h3>
+        <p>Independent workflow steps run concurrently via ThreadPoolExecutor, maximizing throughput across CPU cores.</p>
+      </a>
+
+      <a href="evidence.html" class="card">
+        <div class="card-icon green">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2H18L20 10L10 20L2 10L4 2H10Z"/><path d="M10 7L12.5 9.5L10 12" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Evidence-Based</h3>
+        <p>Every conclusion is backed by a Minimum Evidence Unit (MEU). No finding without proof — enforced at runtime.</p>
+      </a>
+
+      <a href="configuration.html" class="card">
+        <div class="card-icon amber">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="3"/><path d="M11 2V4M11 18V20M2 11H4M18 11H20M4.2 4.2L5.6 5.6M16.4 16.4L17.8 17.8M17.8 4.2L16.4 5.6M5.6 16.4L4.2 17.8"/></svg>
+        </div>
+        <h3>Multi-Provider LLM</h3>
+        <p>Plug in OpenAI, Anthropic Claude, local Ollama, or use Mock mode for testing — all through a unified adapter.</p>
+      </a>
+
+      <a href="api.html" class="card">
+        <div class="card-icon cyan">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 5L4 11L7 17M15 5L18 11L15 17M13 3L9 19" stroke-linecap="round"/></svg>
+        </div>
+        <h3>FastAPI Server</h3>
+        <p>HTTP API for team collaboration. POST /analyze with repo_url and receive structured research reports.</p>
+      </a>
+
+      <a href="tools.html" class="card">
+        <div class="card-icon green">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="16" height="16" rx="3"/><path d="M8 8L14 14M14 8L8 14" stroke-linecap="round"/></svg>
+        </div>
+        <h3>RAG Memory Store</h3>
+        <p>Historical reports indexed via SQLite FTS5 full-text search. Past findings inform future analyses automatically.</p>
+      </a>
+    </div>
+
+    <!-- Architecture Overview -->
+    <h2 id="architecture">System Architecture</h2>
+
+    <p>
+      Odin follows a layered architecture where each phase builds on the previous one. From low-level tool execution up through high-level research workflows.
+    </p>
+
+    <div class="arch-diagram">
+      <div class="arch-layer">
+        <div class="arch-layer-label">CLI/API</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">od in</span>
+          <span class="arch-node cyan">FastAPI</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Pipeline</div>
+        <div class="arch-layer-content">
+          <span class="arch-node purple">WorkflowOrchestrator</span>
+          <span class="arch-node purple">PipelineExecutor</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Agent</div>
+        <div class="arch-layer-content">
+          <span class="arch-node green">AgentLoop</span>
+          <span class="arch-node green">SkillAgent</span>
+          <span class="arch-node green">LLMAdapter</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Tools</div>
+        <div class="arch-layer-content">
+          <span class="arch-node amber">read_file</span>
+          <span class="arch-node amber">search_code</span>
+          <span class="arch-node amber">git_ops</span>
+          <span class="arch-node amber">run_shell</span>
+        </div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-layer">
+        <div class="arch-layer-label">Memory</div>
+        <div class="arch-layer-content">
+          <span class="arch-node cyan">EvidenceStore</span>
+          <span class="arch-node cyan">MemoryStore</span>
+          <span class="arch-node cyan">RAGStore</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Example -->
+    <h2 id="quickstart">Quick Example</h2>
+
+    <p>Analyze a GitHub repository with a single command:</p>
+
+    <div class="code-block">
+      <div class="filename">
+        <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+        terminal
+      </div>
+      <pre><code># Set your API key
+export OPENAI_API_KEY=sk-...
+
+# Analyze a GitHub repository
+python odin.py analyze https://github.com/owner/repo \
+  --workflow vulnerability_research --provider openai
+
+# Or analyze a local codebase (mock mode — no API key needed)
+python odin.py analyze ./my-project --workflow codebase_research --provider mock</code></pre>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">ℹ</div>
+      <p><strong>No API key required for local analysis.</strong> Use <code>--provider mock</code> to run with simulated LLM responses. This is perfect for exploring Odin's capabilities without incurring API costs.</p>
+    </div>
+
+    <p>Output is a structured Markdown report with evidence-linked findings:</p>
+
+    <div class="code-block">
+      <div class="filename">
+        <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+        report.md
+      </div>
+      <pre><code># Odin Code Research Report
+
+## Steps
+### ✓ repo_discovery
+  - Status: `succeeded`
+  - Tool calls: `7`
+  - Iterations: `4`
+
+### ✓ entrypoints_detection
+  - Status: `succeeded`
+  - **entrypoints**: `12` items
+
+### ✓ sink_detection
+  - Status: `succeeded`
+  - **sinks**: `8` items
+
+## Evidence
+- Total MEUs: `47`</code></pre>
+    </div>
+
+    <!-- Evidence Model -->
+    <h2 id="evidence-model">Evidence-Based Reasoning</h2>
+
+    <p>
+      Odin enforces a strict evidence policy: <strong>every conclusion must cite at least one Minimum Evidence Unit (MEU)</strong>. This means every finding is traceable back to specific lines of code.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="cursor:default;">
+        <div class="card-icon cyan">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4H16V16H4Z"/><path d="M7 10H13M10 7V13" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Code Snippet</h3>
+        <p>Direct excerpts from source files with precise line numbers</p>
+      </div>
+      <div class="card" style="cursor:default;">
+        <div class="card-icon purple">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="6"/><path d="M10 7V10L12 12"/></svg>
+        </div>
+        <h3>Call Relations</h3>
+        <p>Function call graphs with guard detection and taint tracking</p>
+      </div>
+      <div class="card" style="cursor:default;">
+        <div class="card-icon green">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2L3 7V13L10 18L17 13V7Z"/></svg>
+        </div>
+        <h3>Confidence Levels</h3>
+        <p>High (≥0.8), Medium (0.5–0.8), Low (0.4–0.5), Uncertain (&lt;0.4)</p>
+      </div>
+    </div>
+
+    <!-- Workflows Preview -->
+    <h2 id="workflows">Analysis Workflows</h2>
+
+    <p>Choose the right workflow for your goal:</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>Steps</th>
+            <th>Best For</th>
+            <th>Speed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>codebase_research</code></td>
+            <td>5</td>
+            <td>Fast codebase understanding and overview</td>
+            <td><span class="tag tag-green">Fast</span></td>
+          </tr>
+          <tr>
+            <td><code>vulnerability_research</code></td>
+            <td>11</td>
+            <td>Full security analysis with PoC generation</td>
+            <td><span class="tag tag-amber">Comprehensive</span></td>
+          </tr>
+          <tr>
+            <td><code>architecture_analysis</code></td>
+            <td>7</td>
+            <td>Deep architecture and design pattern analysis</td>
+            <td><span class="tag tag-purple">Deep</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LLM Providers -->
+    <h2 id="providers">Supported LLM Providers</h2>
+
+    <div class="grid-2">
+      <div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Models</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OpenAI</td>
+                <td><code>gpt-4o</code>, <code>gpt-4o-mini</code></td>
+              </tr>
+              <tr>
+                <td>Anthropic</td>
+                <td><code>claude-sonnet-4</code>, <code>claude-3.5-sonnet</code></td>
+              </tr>
+              <tr>
+                <td>Ollama (local)</td>
+                <td><code>llama3</code>, <code>codellama</code>, any OpenAI-compatible</td>
+              </tr>
+              <tr>
+                <td>Mock</td>
+                <td>Simulated responses for testing</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top:0;">Connecting MCP Integrations</h3>
+        <p style="font-size:14px;">Odin also supports the Model Context Protocol for connecting to external services:</p>
+        <div class="card-grid" style="grid-template-columns:1fr 1fr; margin:0;">
+          <div class="card" style="padding:16px; cursor:default;">
+            <h3 style="font-size:14px; margin:0 0 4px;">GitHub</h3>
+            <p style="margin:0; font-size:12px;">Issue tracking, PR reviews, repo metadata</p>
+          </div>
+          <div class="card" style="padding:16px; cursor:default;">
+            <h3 style="font-size:14px; margin:0 0 4px;">CVE Database</h3>
+            <p style="margin:0; font-size:12px;">Vulnerability lookup and correlation</p>
+          </div>
+          <div class="card" style="padding:16px; cursor:default;">
+            <h3 style="font-size:14px; margin:0 0 4px;">Jira</h3>
+            <p style="margin:0; font-size:12px;">Project management and bug tracking</p>
+          </div>
+          <div class="card" style="padding:16px; cursor:default;">
+            <h3 style="font-size:14px; margin:0 0 4px;">Custom MCP</h3>
+            <p style="margin:0; font-size:12px;">Extend with your own services</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="docs-footer">
+    <span>© 2025 Odin AI Code Research System · MIT License</span>
+    <span>Built with autonomous agents, evidence-based reasoning, and DAG parallelism</span>
+  </footer>
+</main>
+
+<!-- Search Modal -->
+<div id="searchModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:var(--radius-lg); padding:24px; width:560px; max-width:90vw;">
+    <div style="display:flex; align-items:center; gap:10px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; color:var(--text-muted); font-size:14px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11L14 14" stroke-linecap="round"/></svg>
+      <span>Search documentation...</span>
+      <kbd style="margin-left:auto; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:4px; padding:2px 8px; font-size:11px; font-family:var(--font-mono);">ESC</kbd>
+    </div>
+    <div style="margin-top:16px; font-size:13px; color:var(--text-muted);">
+      Try: <code style="font-size:12px;">getting started</code>, <code style="font-size:12px;">workflows</code>, <code style="font-size:12px;">configuration</code>, <code style="font-size:12px;">tools</code>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/docs.js"></script>
+</body>
+</html>
