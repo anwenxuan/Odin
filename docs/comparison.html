@@ -1,244 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Odin vs Other Agent Frameworks</title>
-
-<link rel="stylesheet" href="assets/style.css">
-<script defer src="assets/nav.js"></script>
-
-<style>
-/* Page specific styles */
-
-.hero {
-  max-width: 980px;
-  margin: 120px auto 80px;
-  padding: 0 24px;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 48px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 16px;
-}
-
-.hero p {
-  font-size: 21px;
-  color: #6e6e73;
-}
-
-.table-wrapper {
-  max-width: 1100px;
-  margin: 0 auto 80px;
-  padding: 0 24px;
-}
-
-.comparison-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 16px;
-  overflow: hidden;
-  background: white;
-}
-
-.comparison-table thead {
-  background: #f5f5f7;
-}
-
-.comparison-table th,
-.comparison-table td {
-  padding: 18px 20px;
-  text-align: center;
-  border-bottom: 1px solid #e5e5e7;
-  font-size: 15px;
-}
-
-.comparison-table th:first-child,
-.comparison-table td:first-child {
-  text-align: left;
-  font-weight: 500;
-}
-
-.comparison-table th {
-  font-weight: 600;
-  color: #1d1d1f;
-}
-
-.comparison-table td {
-  color: #1d1d1f;
-}
-
-.check {
-  color: #0071e3;
-  font-weight: 600;
-}
-
-.cross {
-  color: #d2d2d7;
-}
-
-.note-section {
-  max-width: 900px;
-  margin: 60px auto 120px;
-  padding: 0 24px;
-}
-
-.note-section p {
-  font-size: 19px;
-  line-height: 1.7;
-  color: #424245;
-}
-
-@media (max-width: 768px) {
-
-  .hero h1 {
-    font-size: 34px;
-  }
-
-  .hero p {
-    font-size: 18px;
-  }
-
-  .comparison-table th,
-  .comparison-table td {
-    padding: 14px 12px;
-    font-size: 13px;
-  }
-
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare — Odin</title>
+  <meta name="description" content="Compare Odin with OpenHands, AutoGen, LangGraph, and CrewAI. See how Odin's evidence-backed approach differs from other AI agent frameworks.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
-
 <body>
 
-<nav id="navbar"></nav>
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="comparison.html" class="nav__link active">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
 
-<section class="hero fade-in">
-  <h1>Framework Comparison</h1>
-  <p>
-    How Odin differs from existing AI agent frameworks.
-  </p>
-</section>
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <span class="badge badge--v0-2">v0.2.0 — Alpha</span>
+        <span class="badge badge--mit">MIT License</span>
+      </div>
+      <h1 class="hero__title fade-in-up">How We Compare</h1>
+      <p class="hero__subtitle fade-in-up">See how Odin's evidence-backed approach stacks up against other AI agent frameworks.</p>
+    </div>
+  </section>
 
-<section class="table-wrapper fade-in">
+  <!-- Comparison Table -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="comparison-table-wrapper fade-in-up">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th><span style="color: var(--color-accent);">Odin</span></th>
+              <th>OpenHands</th>
+              <th>AutoGen</th>
+              <th>LangGraph</th>
+              <th>CrewAI</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Type</td>
+              <td>Research Agent</td>
+              <td>Dev Agent</td>
+              <td>Multi-Agent</td>
+              <td>Orchestration</td>
+              <td>Multi-Agent</td>
+            </tr>
+            <tr>
+              <td>Evidence Model (MEU)</td>
+              <td><span class="tick">&#10003;</span></td>
+              <td><span class="cross">&#10007;</span></td>
+              <td><span class="cross">&#10007;</span></td>
+              <td><span class="cross">&#10007;</span></td>
+              <td><span<think>
+The user wants me to create an optimized comparison.html file for the Odin project. I need to return only the final HTML file without any explanations or reasoning.
 
-<table class="comparison-table">
+Let me read the current comparison.html to see what's there, and then create an optimized version following the Apple-style design with the requirements specified.
+</think>
 
-<thead>
-<tr>
-<th>Dimension</th>
-<th>Odin</th>
-<th>OpenHands</th>
-<th>AutoGen</th>
-<th>LangGraph</th>
-<th>CrewAI</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Type</td>
-<td>Research Agent</td>
-<td>Dev Agent</td>
-<td>Multi-Agent</td>
-<td>Orchestration</td>
-<td>Multi-Agent</td>
-</tr>
-
-<tr>
-<td>Evidence Model (MEU)</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-</tr>
-
-<tr>
-<td>DAG Execution</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-</tr>
-
-<tr>
-<td>12 Built-in Skills</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-</tr>
-
-<tr>
-<td>Evaluation Framework</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-</tr>
-
-<tr>
-<td>Python Only</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="check">✅</td>
-<td class="check">✅</td>
-<td class="check">✅</td>
-</tr>
-
-<tr>
-<td>MCP Support</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-<td class="cross">❌</td>
-</tr>
-
-<tr>
-<td>MIT License</td>
-<td class="check">✅</td>
-<td class="check">✅</td>
-<td class="cross">❌</td>
-<td class="check">✅</td>
-<td class="check">✅</td>
-</tr>
-
-</tbody>
-</table>
-
-</section>
-
-<section class="note-section fade-in">
-
-<p>
-Most existing AI agent frameworks focus on orchestration, developer automation,
-or general multi-agent collaboration.
-</p>
-
-<p>
-Odin is designed specifically for <strong>systematic vulnerability research</strong>.
-It introduces a structured evidence model (MEU), deterministic research workflows,
-and DAG-based execution to ensure reproducible analysis.
-</p>
-
-<p>
-Instead of acting as a generic agent runtime, Odin operates as a
-<strong>research system</strong> that enforces evidence collection,
-skill-driven analysis, and measurable evaluation of AI-assisted security research.
-</p>
-
-</section>
-
-</body>
-</html>
