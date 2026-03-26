@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Odin vs Other Agent Frameworks</title>
+
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/nav.js"></script>
+
+<style>
+/* Page specific styles */
+
+.hero {
+  max-width: 980px;
+  margin: 120px auto 80px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 21px;
+  color: #6e6e73;
+}
+
+.table-wrapper {
+  max-width: 1100px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+}
+
+.comparison-table thead {
+  background: #f5f5f7;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 18px 20px;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e7;
+  font-size: 15px;
+}
+
+.comparison-table th:first-child,
+.comparison-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+.comparison-table th {
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.comparison-table td {
+  color: #1d1d1f;
+}
+
+.check {
+  color: #0071e3;
+  font-weight: 600;
+}
+
+.cross {
+  color: #d2d2d7;
+}
+
+.note-section {
+  max-width: 900px;
+  margin: 60px auto 120px;
+  padding: 0 24px;
+}
+
+.note-section p {
+  font-size: 19px;
+  line-height: 1.7;
+  color: #424245;
+}
+
+@media (max-width: 768px) {
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+
+}
+</style>
+
+</head>
+
+<body>
+
+<nav id="navbar"></nav>
+
+<section class="hero fade-in">
+  <h1>Framework Comparison</h1>
+  <p>
+    How Odin differs from existing AI agent frameworks.
+  </p>
+</section>
+
+<section class="table-wrapper fade-in">
+
+<table class="comparison-table">
+
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Odin</th>
+<th>OpenHands</th>
+<th>AutoGen</th>
+<th>LangGraph</th>
+<th>CrewAI</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Type</td>
+<td>Research Agent</td>
+<td>Dev Agent</td>
+<td>Multi-Agent</td>
+<td>Orchestration</td>
+<td>Multi-Agent</td>
+</tr>
+
+<tr>
+<td>Evidence Model (MEU)</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+</tr>
+
+<tr>
+<td>DAG Execution</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+</tr>
+
+<tr>
+<td>12 Built-in Skills</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+</tr>
+
+<tr>
+<td>Evaluation Framework</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+</tr>
+
+<tr>
+<td>Python Only</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="check">✅</td>
+<td class="check">✅</td>
+<td class="check">✅</td>
+</tr>
+
+<tr>
+<td>MCP Support</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+<td class="cross">❌</td>
+</tr>
+
+<tr>
+<td>MIT License</td>
+<td class="check">✅</td>
+<td class="check">✅</td>
+<td class="cross">❌</td>
+<td class="check">✅</td>
+<td class="check">✅</td>
+</tr>
+
+</tbody>
+</table>
+
+</section>
+
+<section class="note-section fade-in">
+
+<p>
+Most existing AI agent frameworks focus on orchestration, developer automation,
+or general multi-agent collaboration.
+</p>
+
+<p>
+Odin is designed specifically for <strong>systematic vulnerability research</strong>.
+It introduces a structured evidence model (MEU), deterministic research workflows,
+and DAG-based execution to ensure reproducible analysis.
+</p>
+
+<p>
+Instead of acting as a generic agent runtime, Odin operates as a
+<strong>research system</strong> that enforces evidence collection,
+skill-driven analysis, and measurable evaluation of AI-assisted security research.
+</p>
+
+</section>
+
+</body>
+</html>
