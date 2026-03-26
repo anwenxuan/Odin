@@ -1,0 +1,2 @@
+{"session_id": "gateway-session", "tool_id": "run_shell", "params": {"command": "echo 'gateway test'"}, "success": true, "exit_code": 0, "duration_ms": 4, "resource_usage": {}, "timestamp": "2026-03-25T09:11:01.602495+00:00", "error": null}
+{"session_id": "gateway-session", "tool_id": "run_shell", "params": {"command": "echo 'gateway test'"}, "success": true, "exit_code": 0, "duration_ms": 4, "resource_usage": {}, "timestamp": "2026-03-25T09:13:32.192824+00:00", "error": null}

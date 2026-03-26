@@ -1,0 +1,15 @@
+id: auth_logic_detection
+version: 1.0.0
+name: Auth Logic Detection
+description: Locate authentication and authorization logic throughout the codebase.
+owner: core-team
+tags: [security, auth, authorization]
+runtime:
+  model_profile: reasoning-default
+  timeout_sec: 90
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

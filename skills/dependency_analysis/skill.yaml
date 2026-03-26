@@ -1,0 +1,15 @@
+id: dependency_analysis
+version: 1.0.0
+name: Dependency Analysis
+description: Identify third-party dependencies and flag known vulnerabilities.
+owner: core-team
+tags: [security, dependencies, supply-chain]
+runtime:
+  model_profile: default
+  timeout_sec: 60
+contracts:
+  prompt: prompt.md
+  input_schema: input_schema.json
+  output_schema: output_schema.json
+requirements:
+  evidence_required: true

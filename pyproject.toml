@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "odin-ai-research"
+version = "0.1.0"
+description = "AI Code Research System — Evidence-backed code analysis framework"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "Core Team", email = "core@example.com" }
+]
+keywords = ["code-analysis", "security", "vulnerability-research", "ai"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "pyyaml>=6.0",
+    "jsonschema>=4.0",
+    "openai>=1.0",
+    "anthropic>=0.40",
+    "fastapi>=0.110",
+    "uvicorn>=0.30",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.0",
+]
+extended = [
+    "docker>=7.0",
+    "structlog>=24.0",
+    "opentelemetry-api>=1.20",
+    "opentelemetry-sdk>=1.20",
+    "prometheus-client>=0.19",
+    "aiosqlite>=0.19",
+    "tenacity>=8.2",
+]
+agent = [
+    "docker>=7.0",
+    "structlog>=24.0",
+    "opentelemetry-api>=1.20",
+    "opentelemetry-sdk>=1.20",
+    "prometheus-client>=0.19",
+    "aiosqlite>=0.19",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["agent", "tools", "core", "memory", "mcp", "rag", "cli", "benchmarks"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

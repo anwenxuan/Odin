@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["entities", "evidence_refs"],
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "file_path", "line_start", "fields", "evidence_refs"],
+        "properties": {
+          "name": { "type": "string" },
+          "file_path": { "type": "string" },
+          "line_start": { "type": "integer" },
+          "type_kind": { "type": "string", "enum": ["class", "struct", "interface", "record", "enum", "dict"] },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "type_hint": { "type": "string" },
+                "sensitive": { "type": "boolean" }
+              }
+            }
+          },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "relation_type": { "type": "string" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

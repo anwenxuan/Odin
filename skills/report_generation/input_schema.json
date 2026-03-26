@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["skill_outputs"],
+  "properties": {
+    "skill_outputs": {
+      "type": "object",
+      "description": "A dictionary of skill_id -> skill output JSON"
+    },
+    "repo_info": {
+      "type": "object",
+      "properties": {
+        "repo_url": { "type": "string" },
+        "commit": { "type": "string" },
+        "repo_path": { "type": "string" }
+      }
+    },
+    "workflow_id": { "type": "string" },
+    "evidence_refs": {
+      "type": "array",
+      "description": "All evidence refs collected across all skills"
+    }
+  }
+}

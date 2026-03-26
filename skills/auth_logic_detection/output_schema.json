@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["auth_flows", "guard_points", "evidence_refs"],
+  "properties": {
+    "auth_flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["flow_id", "type", "description", "entrypoint", "guard_functions", "evidence_refs"],
+        "properties": {
+          "flow_id": { "type": "string" },
+          "type": { "type": "string", "enum": ["session_based", "token_based", "oauth", "api_key", "basic_auth", "custom"] },
+          "description": { "type": "string" },
+          "entrypoint": { "type": "string" },
+          "guard_functions": { "type": "array", "items": { "type": "string" } },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "guard_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["function", "file_path", "line_start", "covers", "evidence_refs"],
+        "properties": {
+          "function": { "type": "string" },
+          "file_path": { "type": "string" },
+          "line_start": { "type": "integer" },
+          "covers": { "type": "array", "items": { "type": "string" } },
+          "has_bypass": { "type": "boolean" },
+          "bypass_conditions": { "type": "array", "items": { "type": "string" } },
+          "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+        }
+      }
+    },
+    "evidence_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+  }
+}

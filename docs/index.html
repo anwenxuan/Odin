@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odin — Evidence-Backed AI Code Research System</title>
+  <meta name="description" content="An autonomous AI agent framework for systematic vulnerability research. Every finding backed by code evidence.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/your-org/odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <span class="badge badge--v0-2">v0.2.0 — Alpha</span>
+        <span class="badge badge--mit">MIT License</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Odin</h1>
+      <p class="hero__subtitle fade-in-up">Evidence-backed AI code analysis for systematic vulnerability research. Every finding, traceable to source.</p>
+      <div class="hero__ctas fade-in-up">
+        <a href="getting-started/quickstart.html" class="btn btn--primary btn--lg">Get Started</a>
+        <a href="https://github.com/your-org/odin" class="btn btn--secondary btn--lg" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+      <div class="hero__badge-row fade-in-up">
+        <span style="font-size: var(--text-sm); color: var(--color-text-secondary);">Python 3.11+</span>
+        <span style="color: var(--color-border);">|</span>
+        <span style="font-size: var(--text-sm); color: var(--color-text-secondary);">OpenAI · Anthropic · Ollama</span>
+        <span style="color: var(--color-border);">|</span>
+        <span style="font-size: var(--text-sm); color: var(--color-text-secondary);">12 Built-in Skills</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- One-liner -->
+  <section class="section section--sm" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <p class="fade-in-up" style="font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 300; color: var(--color-text); text-align: center; line-height: 1.4; max-width: 760px; margin: 0 auto;">
+        Stop trusting AI guesses.<br>Every finding backed by code.
+      </p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Capabilities</p>
+        <h2 class="section-header__title">Built for rigorous code analysis</h2>
+        <p class="section-header__subtitle">Odin combines an autonomous agent loop with evidence enforcement, so every vulnerability claim is anchored to a code snippet you can verify.</p>
+      </div>
+      <div class="feature-grid stagger-children">
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 4L6 14v20l18 10 18-10V14L24 4z"/>
+              <path d="M24 24L6 14"/>
+              <path d="M24 24l18-10"/>
+              <path d="M24 24V44"/>
+              <path d="M6 34l18 10"/>
+              <path d="M42 34l-18 10"/>
+            </svg>
+          </div>
+          <h3 class="card__title">MEU Enforcement</h3>
+          <p class="card__text">Every conclusion requires a Minimum Evidence Unit — file path, line range, and snippet. No evidence means no conclusion. No hallucinations.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="36" cy="12" r="4"/>
+              <circle cx="12" cy="36" r="4"/>
+              <circle cx="36" cy="36" r="4"/>
+              <circle cx="24" cy="24" r="4"/>
+              <line x1="12" y1="16" x2="12" y2="32"/>
+              <line x1="36" y1="16" x2="36" y2="32"/>
+              <line x1="16" y1="12" x2="32" y2="12"/>
+              <line x1="16" y1="36" x2="32" y2="36"/>
+            </svg>
+          </div>
+          <h3 class="card__title">DAG-Layer Parallelism</h3>
+          <p class="card__text">Independent workflow steps execute in parallel via ThreadPoolExecutor. An 8-step pipeline can complete in 3 layers instead of 8 sequential steps.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="8" width="40" height="32" rx="4"/>
+              <path d="M4 16h40"/>
+              <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+              <circle cx="18" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+              <circle cx="24" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+              <path d="M14 26h20M14 32h14"/>
+            </svg>
+          </div>
+          <h3 class="card__title">12 Built-in Skills</h3>
+          <p class="card__text">From repo mapping to exploit generation, Odin's 12 skills cover the full vulnerability research pipeline — each composable in any workflow.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 8h32v32H8z"/>
+              <path d="M8 20h32"/>
+              <path d="M20 20v20"/>
+              <circle cx="32" cy="32" r="10"/>
+              <path d="M28 32h8M32 28v8"/>
+            </svg>
+          </div>
+          <h3 class="card__title">MCP Integration</h3>
+          <p class="card__text">Connect Odin to GitHub, CVE databases, Jira, or any MCP-compatible data source. Structured context enrichment in real time.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 36V12l18 12 18-12v24"/>
+              <path d="M6 24l18 12 18-12"/>
+              <circle cx="38" cy="10" r="5"/>
+              <path d="M38 7v6M35 10h6"/>
+            </svg>
+          </div>
+          <h3 class="card__title">RAG Knowledge Store</h3>
+          <p class="card__text">SQLite FTS5 full-text search over historical analysis reports. Ask questions against all past findings in seconds.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="6" width="36" height="36" rx="4"/>
+              <path d="M6 30l10-8 8 6 8-10 10 12"/>
+              <circle cx="16" cy="22" r="3"/>
+              <circle cx="24" cy="28" r="3"/>
+              <circle cx="34" cy="18" r="3"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Evaluation Framework</h3>
+          <p class="card__text">Precision, Recall, F1 benchmarks against ground truth datasets. Track hallucination rates, tool call accuracy, and evidence coverage per release.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="section section--code" id="quickstart">
+    <div class="container container--narrow">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow" style="color: rgba(255,255,255,0.5);">Quick Start</p>
+        <h2 class="section-header__title" style="color: var(--color-code-text);">Up and running in 3 steps</h2>
+        <p class="section-header__subtitle" style="color: rgba(255,255,255,0.55);">No API key needed to try it out — mock mode works out of the box.</p>
+      </div>
+
+      <div class="code-block fade-in-up">
+        <div class="code-block__header">
+          <span class="code-block__lang">bash</span>
+          <button class="code-block__copy" aria-label="Copy command">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copy
+          </button>
+        </div>
+        <div class="code-block__body">
+<pre><code><span class="token-comment"># 1. Install</span>
+<span class="token-function">pip</span> install -e .
+<span class="token-comment"># or with uv</span>
+<span class="token-function">uv</span> pip install -e .
+
+<span class="token-comment"># 2. Try without an API key</span>
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./examples --provider mock --verbose
+
+  <span class="token-comment">✓ repo_discovery   [  1.2s ]</span>
+  <span class="token-comment">✓ entrypoints      [  0.8s ]</span>
+  <span class="token-comment">✓ call_graph       [  2.1s ]</span>
+  <span class="token-comment">✓ report           [  0.3s ]</span>
+
+  <span class="token-comment">Found 3 entry points, 12 call chains, 2 auth guards.</span>
+  <span class="token-comment">Report: .odin/audit/report-2026-03-26.md</span>
+
+<span class="token-comment"># 3. With real AI (requires OPENAI_API_KEY)</span>
+<span class="token-function">export</span> <span class="token-variable">OPENAI_API_KEY</span>=sk-...
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze https://github.com/owner/repo \
+    --workflow vulnerability_research \
+    --provider openai --model gpt-4o-mini</code></pre>
+        </div>
+      </div>
+
+      <div class="text-center fade-in-up">
+        <a href="getting-started/quickstart.html" class="btn btn--secondary btn--lg" style="border-color: rgba(255,255,255,0.2); color: var(--color-code-text);">
+          Full Quick Start Guide
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Preview -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Architecture</p>
+        <h2 class="section-header__title">Layered design, built for scale</h2>
+        <p class="section-header__subtitle">Four execution layers working in concert — from raw tools to reasoning agents to structured memory.</p>
+      </div>
+      <div class="arch-diagram fade-in-up">
+        <svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+          <!-- Layer 1: User -->
+          <g>
+            <rect x="310" y="10" width="180" height="44" rx="22" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="400" y="38" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="600" fill="#1d1d1f">CLI · HTTP API · SDK</text>
+          </g>
+
+          <!-- Arrow down -->
+          <line x1="400" y1="54" x2="400" y2="76" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <!-- Layer 2: Agent -->
+          <g>
+            <rect x="250" y="80" width="300" height="70" rx="12" fill="#0071e3" fill-opacity="0.06" stroke="#0071e3" stroke-width="1.5"/>
+            <text x="400" y="105" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#0071e3" letter-spacing="0.05em">AGENT LOOP</text>
+            <text x="400" y="122" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">LLM Adapter · Observer · Checkpoint · Retry</text>
+            <text x="400" y="138" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">Skill Agent · Error Handler · Sandbox</text>
+          </g>
+
+          <!-- Arrows down -->
+          <line x1="300" y1="150" x2="300" y2="172" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="400" y1="150" x2="400" y2="172" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="500" y1="150" x2="500" y2="172" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <!-- Layer 3: Core -->
+          <g>
+            <rect x="40" y="176" width="720" height="90" rx="12" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="400" y="196" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.06em">CORE EXECUTION</text>
+
+            <!-- Core modules -->
+            <rect x="60" y="206" width="110" height="46" rx="8" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="115" y="228" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#1d1d1f">Pipeline</text>
+            <text x="115" y="243" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#86868b">DAG Executor</text>
+
+            <rect x="185" y="206" width="110" height="46" rx="8" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="240" y="228" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#1d1d1f">Workflow</text>
+            <text x="240" y="243" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#86868b">Orchestrator</text>
+
+            <rect x="310" y="206" width="110" height="46" rx="8" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="365" y="228" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#1d1d1f">Skill</text>
+            <text x="365" y="243" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#86868b">Loader</text>
+
+            <rect x="435" y="206" width="110" height="46" rx="8" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="490" y="228" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#1d1d1f">Prompt</text>
+            <text x="490" y="243" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#86868b">Runner</text>
+
+            <rect x="560" y="206" width="110" height="46" rx="8" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="615" y="228" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#1d1d1f">Schema</text>
+            <text x="615" y="243" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#86868b">Validator</text>
+
+            <rect x="685" y="206" width="60" height="46" rx="8" fill="#ffffff" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="715" y="228" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#1d1d1f">...</text>
+          </g>
+
+          <!-- Arrows down -->
+          <line x1="115" y1="266" x2="115" y2="288" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="240" y1="266" x2="240" y2="288" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <line x1="490" y1="266" x2="490" y2="288" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+          <!-- Layer 4: Tools + Memory -->
+          <g>
+            <text x="150" y="300" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.06em">TOOLS</text>
+            <rect x="40" y="308" width="220" height="76" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="150" y="328" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">read_file · list_dir · search_code</text>
+            <text x="150" y="344" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">run_shell · git_ops · detect_lang</text>
+            <text x="150" y="360" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">+ MCP extensible</text>
+
+            <text x="430" y="300" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.06em">MEMORY</text>
+            <rect x="310" y="308" width="240" height="76" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+            <text x="430" y="328" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">Evidence Store (MEU) · Working Memory</text>
+            <text x="430" y="344" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">Long-term Memory · RAG Store</text>
+            <text x="430" y="360" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">SQLite FTS5</text>
+
+            <text x="645" y="300" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.06em">EXTENSIBILITY</text>
+            <rect x="570" y="308" width="150" height="76" rx="10" fill="#0071e3" fill-opacity="0.06" stroke="#0071e3" stroke-width="1"/>
+            <text x="645" y="328" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">Sandbox Isolation</text>
+            <text x="645" y="344" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">Verification Engine</text>
+            <text x="645" y="360" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b">Eval · Observability</text>
+          </g>
+
+          <!-- Arrow marker -->
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#d2d2d7"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+      <div class="text-center fade-in-up" style="margin-top: var(--space-8);">
+        <a href="architecture/overview.html" class="btn btn--ghost">Explore full architecture</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Status -->
+  <section class="section" style="background: var(--color-bg-secondary);" id="status">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Project Status</p>
+        <h2 class="section-header__title">v0.2.0 — Alpha</h2>
+        <p class="section-header__subtitle">Production-ready core, growing ecosystem. See the full roadmap for what's next.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-8);">
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Implemented</h3>
+          <ul class="status-list">
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Agent loop with iterative reasoning
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              DAG-layer parallel pipeline execution
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              12 built-in analysis skills
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              MCP client (GitHub, CVE, Jira)
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              FastAPI HTTP server
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              RAG knowledge store (SQLite FTS5)
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Evaluation framework (P/R/F1)
+            </li>
+            <li class="status-list__item">
+              <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              MEU evidence enforcement
+            </li>
+          </ul>
+        </div>
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Coming Next</h3>
+          <ul class="status-list">
+            <li class="status-list__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--color-warning);flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Agent checkpoint / breakpoint resume
+            </li>
+            <li class="status-list__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--color-warning);flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Task queue and long-running support
+            </li>
+            <li class="status-list__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--color-warning);flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Docker sandbox isolation
+            </li>
+            <li class="status-list__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--color-warning);flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Vector store for long-term memory
+            </li>
+            <li class="status-list__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--color-warning);flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Full observability (traces / metrics)
+            </li>
+            <li class="status-list__item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--color-warning);flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Human-in-the-loop safety gate
+            </li>
+          </ul>
+          <div style="margin-top: var(--space-6);">
+            <a href="roadmap/roadmap.html" class="btn btn--secondary btn--sm">Full Roadmap</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doc Navigation -->
+  <section class="section" id="docs">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Documentation</p>
+        <h2 class="section-header__title">Everything you need to get started</h2>
+      </div>
+      <div class="doc-nav-cards stagger-children">
+        <a href="why.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Why Odin</span>
+          <span class="doc-nav-card__text">Pain points, design philosophy, and who this is for.</span>
+        </a>
+        <a href="architecture/overview.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Architecture</span>
+          <span class="doc-nav-card__text">System design, module responsibilities, data flow.</span>
+        </a>
+        <a href="guide/core-concepts.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Core Concepts</span>
+          <span class="doc-nav-card__text">MEU model, skills, workflows, and evidence chains.</span>
+        </a>
+        <a href="api/cli.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">CLI & API</span>
+          <span class="doc-nav-card__text">Full command reference and REST API endpoints.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/your-org/odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/your-org/odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/your-org/odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/nav.js"></script>
+  <script src="assets/animations.js"></script>
+</body>
+</html>
