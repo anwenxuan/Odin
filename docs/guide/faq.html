@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Odin</title>
+  <meta name="description" content="Frequently asked questions about Odin — API keys, LLM providers, supported languages, MEU verification, and more.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="core-concepts.html" class="nav__link nav__submenu-trigger active">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="faq.html" class="nav__submenu-item active">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="core-concepts.html" style="color: var(--color-text-secondary); text-decoration: none;">Guide</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>FAQ</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Frequently Asked Questions</h1>
+      <p class="hero__subtitle fade-in-up">Everything you need to know about using Odin for systematic vulnerability research.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- Q1 -->
+          <h2 id="api-key">Do I need an API key to use Odin?</h2>
+          <p class="lead">No — Odin ships with a built-in Mock mode that requires no external API key.</p>
+          <p>When you run Odin without configuring an LLM provider, it automatically falls back to <strong>Mock mode</strong>. In this mode, Odin simulates the full analysis pipeline using deterministic, rule-based responses. This is ideal for:</p>
+          <ul>
+            <li>Evaluating Odin's workflow and DAG execution behavior</li>
+            <li>Testing skill orchestration and MEU enforcement locally</li>
+            <li>Learning the Odin CLI and configuration system</li>
+            <li>CI/CD environments where external API calls are undesirable</li>
+          </ul>
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Real analysis requires an API key.</strong><br>
+              To perform actual vulnerability research on real codebases, configure a supported LLM provider (OpenAI, Anthropic, Azure OpenAI, or Ollama) in <code>odin.yaml</code>.
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <h2 id="providers">Which LLM providers does Odin support?</h2>
+          <p class="lead">Odin is provider-agnostic and works with any OpenAI-compatible endpoint.</p>
+
+          <div class="feature-grid" style="margin-bottom: var(--space-8);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">OpenAI</strong>
+              </div>
+              <p class="card__text">GPT-4o, GPT-4o-mini, GPT-4-Turbo. Set <code>provider: openai</code> and <code>model: gpt-4o</code>.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Anthropic</strong>
+              </div>
+              <p class="card__text">Claude 3.5 Sonnet, Claude 3 Opus. Set <code>provider: anthropic</code> and <code>model: claude-3-5-sonnet</code>.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Azure OpenAI</strong>
+              </div>
+              <p class="card__text">Deployments behind Azure's API. Set <code>provider: azure</code> with your endpoint and API version.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Ollama</strong>
+              </div>
+              <p class="card__text">Local models (Llama 3, Mistral, Qwen). Set <code>provider: ollama</code> with your local endpoint URL.</p>
+            </div>
+          </div>
+
+          <div class="callout callout--warning fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div>
+              <strong>Function calling required.</strong><br>
+              All providers must support OpenAI-compatible function calling (tool use) for Odin to invoke skills and workflow steps.
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <h2 id="storage">Where are analysis results stored?</h2>
+          <p class="lead">Results are persisted locally in structured formats, with full control over storage location.</p>
+          <p>By default, Odin stores all outputs under <code>./odin-output/</code>:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">output</span>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment">odin-output/</span>
+<span class="token-comment">├── &lt;target-name&gt;/</span>
+<span class="token-comment">│   ├── analysis/</span>
+<span class="token-comment">│   │   ├── &lt;timestamp&gt;.json      # Full analysis report</span>
+<span class="token-comment">│   │   ├── evidence/             # MEU evidence files</span>
+<span class="token-comment">│   │   └── skills/               # Per-skill outputs</span>
+<span class="token-comment">│   ├── dag/</span>
+<span class="token-comment">│   │   └── execution.json       # DAG execution trace</span>
+<span class="token-comment">│   └── logs/</span>
+<span class="token-comment">│       └── odin.log              # Execution logs</span></code></pre>
+            </div>
+          </div>
+          <p>Customize the output directory via the <code>odin.yaml</code> <code>output.path</code> field or the <code>--output</code> CLI flag. RAG vector stores are kept in <code>~/.odin/rag/</code> by default.</p>
+
+          <!-- Q4 -->
+          <h2 id="private-repos">How does Odin handle private repositories?</h2>
+          <p class="lead">Odin clones repositories on-demand and never uploads code to external servers (unless you configure a cloud LLM).</p>
+          <p>For private repos, authenticate before running analysis:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># HTTPS with personal access token</span>
+<span class="token-function">git</span> clone https://github.com/YOUR_ORG/private-repo.git
+
+<span class="token-comment"># SSH (preferred)</span>
+<span class="token-function">git</span> clone git@github.com:YOUR_ORG/private-repo.git</code></pre>
+            </div>
+          </div>
+
+          <p>Alternatively, pass a GitHub token via the <code>GITHUB_TOKEN</code> environment variable — Odin will inject it automatically when cloning HTTPS URLs:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">export</span> <span class="token-variable">GITHUB_TOKEN</span>=ghp_xxxxxxxxxxxx
+<span class="token-function">odin</span> analyze https://github.com/YOUR_ORG/private-repo</code></pre>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <h2 id="slow-analysis">The analysis is running slowly. What can I do?</h2>
+          <p class="lead">Slowness is usually caused by model latency, repository size, or suboptimal workflow configuration.</p>
+          <p>Here are the most effective optimizations, in order of impact:</p>
+          <ol>
+            <li><strong>Use a faster model.</strong> GPT-4o-mini and Claude 3.5 Haiku are significantly cheaper and faster than GPT-4o or Claude 3 Opus, with comparable accuracy for routine vulnerability patterns.</li>
+            <li><strong>Limit the target scope.</strong> Run analysis on a specific subdirectory or file pattern rather than an entire monorepo. Use <code>odin.yaml</code> to configure include/exclude patterns:</li>
+          </ol>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># odin.yaml — focus on Python files only</span>
+<span class="token-variable">analysis</span>:
+  <span class="token-keyword">include</span>: [<span class="token-string">"**/*.py"</span>]
+  <span class="token-keyword">exclude</span>: [<span class="token-string">"tests/**"</span>, <span class="token-string">"venv/**"</span>, <span class="token-string">"node_modules/**"</span>]</code></pre>
+            </div>
+          </div>
+          <ol start="3">
+            <li><strong>Enable DAG parallel execution.</strong> Skills that are independent (different files or modules) run in parallel by default. Verify your workflow is configured with correct dependency edges in the DAG.</li>
+            <li><strong>Reduce RAG chunk size.</strong> Smaller chunks (512 tokens vs 2048) mean fewer retrieval calls. Adjust in <code>odin.yaml</code> under <code>rag.chunk_size</code>.</li>
+            <li><strong>Cache repeated analyses.</strong> Re-running the same target skips unchanged files when <code>analysis.cache: true</code> is enabled.</li>
+          </ol>
+
+          <!-- Q6 -->
+          <h2 id="meu-failure">What does "MEU verification failed" mean?</h2>
+          <p class="lead">The Minimum Evidence Unit (MEU) for a finding did not meet the minimum evidence threshold.</p>
+          <p>MEU is a core Odin concept — every vulnerability claim must be backed by a structured evidence unit containing:</p>
+          <ul>
+            <li><strong>file</strong> — the source file path</li>
+            <li><strong>line_range</strong> — exact or approximate line numbers</li>
+            <li><strong>snippet</strong> — the relevant code excerpt</li>
+            <li><strong>confidence</strong> — a score from 0.0 to 1.0</li>
+            <li><strong>rationale</strong> — a natural-language explanation of why this is a finding</li>
+          </ul>
+          <p>A MEU verification fails when any of these fields is missing, empty, or when <code>confidence</code> falls below the threshold set in <code>odin.yaml</code> (default: <code>0.6</code>). Failed MEUs are logged as warnings and excluded from the final report.</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Adjust the MEU confidence threshold</span>
+<span class="token-variable">meu</span>:
+  <span class="token-keyword">min_confidence</span>: <span class="token-number">0.5</span>   <span class="token-comment"># Lower = more permissive, more false positives</span>
+  <span class="token-keyword">require_snippet</span>: <span class="token-builtin">true</span>  <span class="token-comment"># Enforce that snippet is never empty</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Q7 -->
+          <h2 id="languages">Which programming languages are supported?</h2>
+          <p class="lead">Odin ships with built-in rule packs for 10+ languages and supports custom skill definitions for any language.</p>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); margin-bottom: var(--space-8);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;">
+              <strong>Python</strong>
+              <span class="badge badge--completed" style="display: block; margin-top: var(--space-2);">Best Support</span>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>JavaScript</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>TypeScript</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>Go</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>Rust</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>Java</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>PHP</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>Ruby</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>C / C++</strong></div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-4); text-align: center;"><strong>Kotlin</strong></div>
+          </div>
+
+          <p>For unsupported languages, you can define custom skills using Odin's <a href="core-concepts.html#skills">skill DSL</a>. Community-contributed skill packs can be installed via the <code>odin skills install</code> command.</p>
+
+          <!-- Q8 -->
+          <h2 id="contribute-skill">How do I contribute a new skill?</h2>
+          <p class="lead">Skills are defined as structured YAML files with prompts, triggers, and evidence schemas.</p>
+          <p>Each skill lives in <code>~/.odin/skills/</code> or <code>./skills/</code> as a YAML file. Here is the minimal structure:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">name</span>: detect-sql-injection
+<span class="token-keyword">description</span>: Detects SQL injection vulnerabilities in string concatenations
+<span class="token-keyword">language</span>: python
+<span class="token-keyword">trigger</span>: <span class="token-string">"**.py"</span>
+<span class="token-keyword">priority</span>: p0
+
+<span class="token-keyword">prompt</span>: |
+  Review the provided Python file for SQL injection risks.
+  ...
+
+<span class="token-keyword">meu_schema</span>:
+  <span class="token-keyword">required_fields</span>: [file, line_range, snippet, confidence, rationale]
+  <span class="token-keyword">min_confidence</span>: <span class="token-number">0.7</span>
+
+<span class="token-keyword">output</span>:
+  <span class="token-keyword">format</span>: json
+  <span class="token-keyword">path</span>: <span class="token-string">"skills/sql-injection-findings.json"</span></code></pre>
+            </div>
+          </div>
+
+          <p>Submit your skill as a pull request to the <a href="https://github.com/anwenxuan/Odin" target="_blank" rel="noopener">Odin community skills repository</a>. See the <a href="core-concepts.html">Core Concepts</a> guide for the full skill schema reference.</p>
+
+          <!-- Q9 -->
+          <h2 id="github-actions">How do I integrate Odin with GitHub Actions?</h2>
+          <p class="lead">A dedicated GitHub Action automates vulnerability scanning on every pull request.</p>
+          <p>Add this to your workflow file (<code>.github/workflows/security-scan.yml</code>):</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">name</span>: Odin Security Scan
+
+<span class="token-keyword">on</span>:
+  <span class="token-keyword">pull_request</span>:
+    <span class="token-keyword">paths</span>:
+      - <span class="token-string">"**.py"</span>
+      - <span class="token-string">"**.js"</span>
+
+<span class="token-keyword">jobs</span>:
+  <span class="token-keyword">scan</span>:
+    <span class="token-keyword">runs-on</span>: ubuntu-latest
+    <span class="token-keyword">steps</span>:
+      - <span class="token-keyword">uses</span>: actions/checkout@v4
+      - <span class="token-keyword">uses</span>: anwenxuan/odin-action@v0.2
+        <span class="token-keyword">with</span>:
+          <span class="token-variable">provider</span>: openai
+          <span class="token-variable">OPENAI_API_KEY</span>: <span class="token-variable">${{ secrets.OPENAI_API_KEY }}</span></code></pre>
+            </div>
+          </div>
+
+          <p>The action posts findings as pull request comments and fails the build if MEU-validated high-severity vulnerabilities are detected.</p>
+
+          <!-- Q10 -->
+          <h2 id="license">What is Odin's license?</h2>
+          <p class="lead">Odin is released under the <strong>MIT License</strong>.</p>
+          <p>The MIT License is one of the most permissive open source licenses. You are free to:</p>
+          <ul>
+            <li>Use Odin for commercial and non-commercial projects</li>
+            <li>Modify and distribute the source code</li>
+            <li>Integrate Odin into proprietary products</li>
+            <li>Contribute improvements back to the project</li>
+          </ul>
+          <div class="callout callout--success fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <div>
+              <strong>Free to use, even in production.</strong><br>
+              No attribution required beyond preserving the copyright notice in the source code.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#api-key" class="toc__link">API Key Required?</a></li>
+              <li class="toc__item"><a href="#providers" class="toc__link">LLM Providers</a></li>
+              <li class="toc__item"><a href="#storage" class="toc__link">Result Storage</a></li>
+              <li class="toc__item"><a href="#private-repos" class="toc__link">Private Repos</a></li>
+              <li class="toc__item"><a href="#slow-analysis" class="toc__link">Slow Analysis</a></li>
+              <li class="toc__item"><a href="#meu-failure" class="toc__link">MEU Verification</a></li>
+              <li class="toc__item"><a href="#languages" class="toc__link">Supported Languages</a></li>
+              <li class="toc__item"><a href="#contribute-skill" class="toc__link">Contribute Skills</a></li>
+              <li class="toc__item"><a href="#github-actions" class="toc__link">GitHub Actions</a></li>
+              <li class="toc__item"><a href="#license" class="toc__link">License</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="footer__link">Troubleshooting</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+            <li><a href="core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Vision</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

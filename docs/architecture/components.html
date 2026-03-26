@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Components — Odin Architecture</title>
+  <meta name="description" content="Detailed breakdown of every Odin core component: Tool Executor, Agent Loop, Memory System, LLM Adapter, and more.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="overview.html" class="nav__link nav__submenu-trigger active">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="components.html" class="nav__submenu-item active">Components</a></li>
+            <li><a href="data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="../index.html" style="color: var(--color-text-secondary); text-decoration: none;">Docs</a>
+        <span style="color: var(--color-border);">/</span>
+        <a href="overview.html" style="color: var(--color-text-secondary); text-decoration: none;">Architecture</a>
+        <span style="color: var(--color-border);">/</span>
+        <span>Components</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Core Components</h1>
+      <p class="hero__subtitle fade-in-up">A detailed reference for every module in the Odin system. Each entry covers responsibilities, key interfaces, and how it interacts with the rest of the stack.</p>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  <section class="section section--sm">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center;" class="fade-in-up">
+        <a href="#agent-loop" class="badge badge--planned" style="text-decoration: none;">Agent Loop</a>
+        <a href="#tool-executor" class="badge badge--planned" style="text-decoration: none;">Tool Executor</a>
+        <a href="#skill-system" class="badge badge--planned" style="text-decoration: none;">Skill System</a>
+        <a href="#workflow-orchestrator" class="badge badge--planned" style="text-decoration: none;">Workflow Orchestrator</a>
+        <a href="#memory-system" class="badge badge--planned" style="text-decoration: none;">Memory System</a>
+        <a href="#evidence-store" class="badge badge--planned" style="text-decoration: none;">Evidence Store</a>
+        <a href="#rag-store" class="badge badge--planned" style="text-decoration: none;">RAG Store</a>
+        <a href="#llm-adapter" class="badge badge--planned" style="text-decoration: none;">LLM Adapter</a>
+        <a href="#mcp-client" class="badge badge--planned" style="text-decoration: none;">MCP Client</a>
+        <a href="#evaluation" class="badge badge--planned" style="text-decoration: none;">Evaluation Framework</a>
+        <a href="#fastapi-server" class="badge badge--planned" style="text-decoration: none;">FastAPI Server</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Agent Loop ═══ -->
+  <section class="section" id="agent-loop">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 2</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Agent Loop</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          The autonomous reasoning engine. Orchestrates LLM calls, monitors convergence, manages checkpoints, and handles retries — all in a tight iterative loop until the task is complete or a termination condition is met.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px;">
+        <div class="card fade-in-up" style="border-color: rgba(0,113,227,0.2);">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="24" r="10"/>
+              <path d="M24 4v8M24 36v8M4 24h8M36 24h8"/>
+              <path d="M10 10l6 6M32 32l6 6M10 38l6-6M32 16l6-6"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Loop Controller</h3>
+          <p class="card__text">The conductor. Manages max iterations, timeouts, early termination signals, and convergence detection. Evaluates whether the agent has reached a stable answer state after each iteration.</p>
+        </div>
+        <div class="card fade-in-up" style="border-color: rgba(0,113,227,0.2);">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="8" y="8" width="32" height="32" rx="4"/>
+              <path d="M8 20h32M20 8v32"/>
+              <circle cx="32" cy="16" r="3"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Observer</h3>
+          <p class="card__text">Watches intermediate agent state — tool call history, MEU candidates, evidence gaps. Emits structured events consumed by the evaluation and logging subsystems. Supports real-time UI feedback.</p>
+        </div>
+        <div class="card fade-in-up" style="border-color: rgba(0,113,227,0.2);">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 4h24v36H12z"/>
+              <path d="M20 4v36M12 24h24"/>
+              <path d="M16 12h16M16 18h12M16 30h16"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Checkpoint</h3>
+          <p class="card__text">Serializes agent state after each completed iteration — Working Memory, tool call log, MEU buffer, DAG progress. Enables crash recovery and human-in-the-loop review at any iteration boundary.</p>
+        </div>
+        <div class="card fade-in-up" style="border-color: rgba(0,113,227,0.2);">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 4L6 14v20l18 10 18-10V14L24 4z"/>
+              <path d="M24 24V44"/>
+              <path d="M24 24L6 14M24 24l18-10"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Retry Handler</h3>
+          <p class="card__text">Implements exponential backoff for transient LLM API failures (rate limits, network timeouts). Falls back to a lower-cost model if the primary model is unavailable. Max retry count and backoff schedule are configurable.</p>
+        </div>
+      </div>
+
+      <div class="code-block fade-in-up" style="margin-top: var(--space-8); max-width: 1000px;">
+        <div class="code-block__header">
+          <span class="code-block__lang">Python — AgentLoop interface</span>
+        </div>
+        <div class="code-block__body">
+<pre><code><span class="token-keyword">class</span> <span class="token-class">AgentLoop</span>:
+    <span class="token-keyword">def</span> <span class="token-function">run</span>(task: <span class="token-class">TaskContext</span>, max_iter: <span class="token-builtin">int</span> = <span class="token-number">20</span>, timeout: <span class="token-builtin">float</span> = <span class="token-number">300.0</span>) -> <span class="token-class">TaskResult</span>:
+        <span class="token-comment">"""Main entry: runs the agent loop until convergence or termination."""</span>
+        ...
+
+    <span class="token-keyword">def</span> <span class="token-function">checkpoint</span>() -> <span class="token-class">CheckpointSnapshot</span>:
+        <span class="token-comment">"""Returns a serializable snapshot of current loop state."""</span>
+        ...
+
+    <span class="token-keyword">def</span> <span class="token-function">restore</span>(snapshot: <span class="token-class">CheckpointSnapshot</span>) -> <span class="token-keyword">None</span>:
+        <span class="token-comment">"""Restores loop state from a checkpoint snapshot."""</span>
+        ...</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Tool Executor ═══ -->
+  <section class="section section--dark" id="tool-executor">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 1 — Tools</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Tool Executor</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          The runtime for all skill operations. Manages tool invocation, sandboxing, timeout enforcement, and structured result serialization. Acts as the bridge between the Agent Loop's reasoning decisions and the actual filesystem/network operations.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px;">
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Responsibilities</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Dispatch tool calls to the appropriate executor (local shell, MCP, or sandboxed worker)</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Enforce per-call timeout, memory limit, and output truncation</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Serialize results into a normalized <code>ToolResult</code> schema with error codes</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Maintain a call log for the Observer (instrumented, not blocking)</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Support streaming output for long-running commands</span>
+            </li>
+          </ul>
+        </div>
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Key Interfaces</h3>
+          <div class="code-block" style="margin-bottom: var(--space-4);">
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">class</span> <span class="token-class">ToolExecutor</span>:
+    <span class="token-keyword">async def</span> <span class="token-function">execute</span>(
+        tool_call: <span class="token-class">ToolCall</span>,
+        sandbox: <span class="token-keyword">bool</span> = <span class="token-keyword">False</span>
+    ) -> <span class="token-class">ToolResult</span>:
+        ...
+
+<span class="token-keyword">class</span> <span class="token-class">ToolCall</span>(<span class="token-class">BaseModel</span>):
+    name: <span class="token-builtin">str</span>
+    args: <span class="token-builtin">dict</span>[<span class="token-builtin">str</span>, <span class="token-builtin">Any</span>]
+    timeout: <span class="token-builtin">float</span> = <span class="token-number">30.0</span>
+    sandbox: <span class="token-keyword">bool</span> = <span class="token-keyword">False</span>
+
+<span class="token-keyword">class</span> <span class="token-class">ToolResult</span>(<span class="token-class">BaseModel</span>):
+    stdout: <span class="token-builtin">str</span>
+    stderr: <span class="token-builtin">str</span>
+    exit_code: <span class="token-builtin">int</span>
+    duration_ms: <span class="token-builtin">float</span>
+    error: <span class="token-builtin">str</span> | <span class="token-keyword">None</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Skill System ═══ -->
+  <section class="section" id="skill-system">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 1 — Tools</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Skill System</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          Skills are Odin's atomic analysis units — self-contained, composable modules that the Agent Loop calls to perform specific tasks. Every skill produces structured output and can be wired into any workflow via the DAG definition.
+        </p>
+      </div>
+
+      <div class="code-block fade-in-up" style="max-width: 1000px;">
+        <div class="code-block__header">
+          <span class="code-block__lang">Python — Skill base interface</span>
+        </div>
+        <div class="code-block__body">
+<pre><code><span class="token-keyword">class</span> <span class="token-class">BaseSkill</span>(<span class="token-class">ABC</span>):
+    name: <span class="token-builtin">str</span>
+    description: <span class="token-builtin">str</span>
+    input_schema: <span class="token-class">type</span>[<span class="token-class">BaseModel</span>]
+    output_schema: <span class="token-class">type</span>[<span class="token-class">BaseModel</span>]
+    requires: <span class="token-builtin">list</span>[<span class="token-builtin">str</span>]   <span class="token-comment"># skill dependencies</span>
+    provides: <span class="token-builtin">list</span>[<span class="token-builtin">str</span>]    <span class="token-comment"># artifact keys</span>
+
+    <span class="token-keyword">async def</span> <span class="token-function">execute</span>(ctx: <span class="token-class">SkillContext</span>, input: <span class="token-class">BaseModel</span>) -> <span class="token-class">SkillOutput</span>:
+        <span class="token-keyword">raise</span> <span class="token-class">NotImplementedError</span>
+
+<span class="token-keyword">class</span> <span class="token-class">SkillRegistry</span>:
+    <span class="token-keyword">def</span> <span class="token-function">register</span>(skill: <span class="token-class">type</span>[<span class="token-class">BaseSkill</span>]) -> <span class="token-keyword">None</span>
+    <span class="token-keyword">def</span> <span class="token-function">resolve</span>(dag: <span class="token-class">DAGDefinition</span>) -> <span class="token-builtin">list</span>[<span class="token-builtin">list</span>[<span class="token-class">SkillNode</span>]]
+    <span class="token-keyword">def</span> <span class="token-function">get</span>(name: <span class="token-builtin">str</span>) -> <span class="token-class">type</span>[<span class="token-class">BaseSkill</span>]</code></pre>
+        </div>
+      </div>
+
+      <div class="section-header--left fade-in-up" style="margin-top: var(--space-12);">
+        <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-6);">12 Built-in Skills</h3>
+      </div>
+
+      <div class="comparison-table-wrapper fade-in-up" style="max-width: 1000px;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Dependencies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>repo_discovery</code></td>
+              <td>Mapping</td>
+              <td>Enumerates all source files, detects language/framework, builds file tree</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><code>entrypoints</code></td>
+              <td>Mapping</td>
+              <td>Identifies user-facing entry points: HTTP handlers, CLI commands, RPC endpoints</td>
+              <td>repo_discovery</td>
+            </tr>
+            <tr>
+              <td><code>call_graph</code></td>
+              <td>Analysis</td>
+              <td>Static analysis of function/variable call relationships, builds NetworkX graph</td>
+              <td>repo_discovery</td>
+            </tr>
+            <tr>
+              <td><code>dependency_enum</code></td>
+              <td>Analysis</td>
+              <td>Parses package manifests (package.json, pyproject.toml, Cargo.toml) and lockfiles</td>
+              <td>repo_discovery</td>
+            </tr>
+            <tr>
+              <td><code>secret_scan</code></td>
+              <td>Security</td>
+              <td>Regex + entropy scanning for credentials, tokens, keys, and secrets in source</td>
+              <td>repo_discovery</td>
+            </tr>
+            <tr>
+              <td><code>vuln_fingerprint</code></td>
+              <td>Security</td>
+              <td>Cross-references dependencies against CVE databases via MCP integration</td>
+              <td>dependency_enum</td>
+            </tr>
+            <tr>
+              <td><code>auth_guard_analysis</code></td>
+              <td>Security</td>
+              <td>Identifies authentication/authorization guards in call chains from entrypoints</td>
+              <td>call_graph, entrypoints</td>
+            </tr>
+            <tr>
+              <td><code>data_flow</code></td>
+              <td>Analysis</td>
+              <td>Tracks user input propagation through sinks (SQL, command, file, network)</td>
+              <td>call_graph</td>
+            </tr>
+            <tr>
+              <td><code>patch_generator</code></td>
+              <td>Mitigation</td>
+              <td>Generates code patches for identified vulnerabilities using LLM reasoning</td>
+              <td>vuln_fingerprint, auth_guard_analysis</td>
+            </tr>
+            <tr>
+              <td><code>report_compiler</code></td>
+              <td>Output</td>
+              <td>Assembles findings into structured Markdown + JSON report with MEU citations</td>
+              <td>all analysis skills</td>
+            </tr>
+            <tr>
+              <td><code>test_generator</code></td>
+              <td>Mitigation</td>
+              <td>Generates proof-of-concept test cases for each confirmed vulnerability</td>
+              <td>vuln_fingerprint</td>
+            </tr>
+            <tr>
+              <td><code>exploit_poc</code></td>
+              <td>Security</td>
+              <td>Constructs minimal exploit proof-of-concept for confirmed critical findings</td>
+              <td>vuln_fingerprint, data_flow</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Workflow Orchestrator ═══ -->
+  <section class="section section--dark" id="workflow-orchestrator">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 3 — Core</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Workflow Orchestrator</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          Selects the appropriate skill DAG for a given task, resolves dependencies, and hands off the layered execution plan to the Pipeline Executor. Also handles dynamic workflow switching when the agent decides mid-task that a different strategy is needed.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px;">
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Responsibilities</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Match task intent to a named workflow (e.g., <code>vulnerability_research</code>, <code>audit</code>)</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Topologically sort the skill DAG and compute parallel layers via Kahn's algorithm</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Validate that all required skills are registered and not in conflict</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Support workflow composition and conditional branching based on intermediate results</span>
+            </li>
+          </ul>
+        </div>
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Key Interface</h3>
+          <div class="code-block" style="margin-bottom: 0;">
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">class</span> <span class="token-class">WorkflowOrchestrator</span>:
+    <span class="token-keyword">def</span> <span class="token-function">plan</span>(
+        task: <span class="token-class">TaskContext</span>
+    ) -> <span class="token-builtin">list</span>[<span class="token-builtin">list</span>[<span class="token-class">SkillNode</span>]]:
+        <span class="token-comment">"""Returns a list of execution layers."""</span>
+        ...
+
+    <span class="token-keyword">def</span> <span class="token-function">execute_plan</span>(
+        layers: <span class="token-builtin">list</span>[<span class="token-builtin">list</span>[<span class="token-class">SkillNode</span>]],
+        ctx: <span class="token-class">SkillContext</span>
+    ) -> <span class="token-class">WorkflowResult</span>:
+        <span class="token-comment">"""Runs layers sequentially; parallel within layer."""</span>
+        ...</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Memory System ═══ -->
+  <section class="section" id="memory-system">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 4 — Memory</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Memory System</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          Odin's memory subsystem is split into four stores, each serving a distinct purpose. They share no internal state and can be queried and updated independently, preventing cross-contamination of concerns.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-6);">
+
+        <div class="card fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(0,113,227,0.08); border: 1px solid rgba(0,113,227,0.2);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </span>
+            <h3 style="font-size: var(--text-base); margin: 0;">Working Memory</h3>
+          </div>
+          <p class="card__text">In-memory, session-scoped store for the current task's context. Holds intermediate agent reasoning, partial findings, tool call buffers, and LLM context windows. Cleared at task end.</p>
+          <div style="margin-top: var(--space-4);">
+            <code style="font-size: var(--text-xs);">interface: MemoryKV</code>
+          </div>
+        </div>
+
+        <div class="card fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(0,113,227,0.08); border: 1px solid rgba(0,113,227,0.2);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </span>
+            <h3 style="font-size: var(--text-base); margin: 0;">Long-term Memory</h3>
+          </div>
+          <p class="card__text">Persistent, JSON-serialized fact store keyed by entity (file, function, CVE). Survives sessions. Used to recall conclusions from previous analysis runs on the same codebase.</p>
+          <div style="margin-top: var(--space-4);">
+            <code style="font-size: var(--text-xs);">storage: SQLite (row-based)</code>
+          </div>
+        </div>
+
+        <div class="card fade-in-up" style="border-color: rgba(0,113,227,0.3);">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(0,113,227,0.12); border: 1px solid rgba(0,113,227,0.3);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </span>
+            <h3 style="font-size: var(--text-base); margin: 0; color: #0071e3;">Evidence Store</h3>
+            <span class="badge badge--v0-2" style="font-size: 0.65rem;">MEU</span>
+          </div>
+          <p class="card__text">The heart of MEU enforcement. Every verified finding is stored as a Minimum Evidence Unit: file path, line range, and code snippet. No MEU means no conclusion in the final report.</p>
+          <div style="margin-top: var(--space-4);">
+            <code style="font-size: var(--text-xs);">storage: SQLite (row-based)</code>
+          </div>
+        </div>
+
+        <div class="card fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(0,113,227,0.08); border: 1px solid rgba(0,113,227,0.2);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <h3 style="font-size: var(--text-base); margin: 0;">RAG Store</h3>
+          </div>
+          <p class="card__text">Full-text search over historical analysis reports using SQLite FTS5. Enables natural-language querying of past findings: "any SQL injection in the auth module?" Returns ranked snippets with source citations.</p>
+          <div style="margin-top: var(--space-4);">
+            <code style="font-size: var(--text-xs);">storage: SQLite FTS5</code>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ LLM Adapter ═══ -->
+  <section class="section section--dark" id="llm-adapter">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 2 — Agent Loop</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">LLM Adapter</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          A thin abstraction over LLM providers. Normalizes API differences (OpenAI, Anthropic, Ollama) into a single <code>LLMResponse</code> interface. Handles prompt templating, token counting, streaming, and structured output via response models.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px;">
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Supported Providers</h3>
+          <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-bg); border: 1px solid var(--color-border-light); border-radius: var(--radius-md);">
+              <span style="font-weight: 600; min-width: 80px; font-size: var(--text-sm);">OpenAI</span>
+              <span class="card__text" style="margin: 0; font-size: var(--text-xs);">gpt-4o, gpt-4o-mini, gpt-4-turbo, gpt-3.5-turbo</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-bg); border: 1px solid var(--color-border-light); border-radius: var(--radius-md);">
+              <span style="font-weight: 600; min-width: 80px; font-size: var(--text-sm);">Anthropic</span>
+              <span class="card__text" style="margin: 0; font-size: var(--text-xs);">claude-3-5-sonnet, claude-3-opus, claude-3-haiku</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--color-bg); border: 1px solid var(--color-border-light); border-radius: var(--radius-md);">
+              <span style="font-weight: 600; min-width: 80px; font-size: var(--text-sm);">Ollama</span>
+              <span class="card__text" style="margin: 0; font-size: var(--text-xs);">llama3, codellama, mistral, deepseek-coder (local)</span>
+            </div>
+          </div>
+        </div>
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Key Interface</h3>
+          <div class="code-block" style="margin-bottom: 0;">
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">class</span> <span class="token-class">LLMAdapter</span>:
+    <span class="token-keyword">async def</span> <span class="token-function">complete</span>(
+        prompt: <span class="token-builtin">list</span>[<span class="token-class">Message</span>],
+        model: <span class="token-builtin">str</span>,
+        temperature: <span class="token-builtin">float</span> = <span class="token-number">0.3</span>,
+        json_mode: <span class="token-keyword">bool</span> = <span class="token-keyword">False</span>,
+        response_model: <span class="token-class">type</span>[<span class="token-class">BaseModel</span>] | <span class="token-keyword">None</span> = <span class="token-keyword">None</span>,
+    ) -> <span class="token-class">LLMResponse</span>:
+        <span class="token-comment">"""Provider-agnostic completion."""</span>
+        ...
+
+    <span class="token-keyword">def</span> <span class="token-function">count_tokens</span>(text: <span class="token-builtin">str</span>) -> <span class="token-builtin">int</span>
+    <span class="token-keyword">def</span> <span class="token-function">max_context</span>(model: <span class="token-builtin">str</span>) -> <span class="token-builtin">int</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MCP Client ═══ -->
+  <section class="section" id="mcp-client">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Layer 1 — Tools</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">MCP Client</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          Connects Odin to external data sources via the Model Context Protocol. Tools are loaded dynamically from MCP servers — no code changes required to add a new external integration. Built-in MCP clients for GitHub, CVE databases, and Jira.
+        </p>
+      </div>
+
+      <div class="feature-grid fade-in-up" style="max-width: 1000px;">
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 4L6 14v20l18 10 18-10V14L24 4z"/>
+              <path d="M6 34l18 10 18-10"/>
+              <path d="M24 24V44"/>
+            </svg>
+          </div>
+          <h3 class="card__title">GitHub Integration</h3>
+          <p class="card__text">Fetch repo metadata, issues, PR diffs, commit history, and file contents. Enriches context with real external data during analysis.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="24" r="18"/>
+              <path d="M24 12v12l8 4"/>
+              <circle cx="24" cy="24" r="3"/>
+            </svg>
+          </div>
+          <h3 class="card__title">CVE Database</h3>
+          <p class="card__text">Cross-reference findings against known vulnerability databases (NVD, OSV). Enriches <code>vuln_fingerprint</code> skill output with severity scores, affected versions, and patch links.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="8" width="40" height="32" rx="4"/>
+              <path d="M4 16h40M16 8v8M32 8v8"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Jira Integration</h3>
+          <p class="card__text">Create or update Jira tickets from confirmed findings. Links evidence MEUs directly to ticket descriptions, making vulnerability reports immediately actionable.</p>
+        </div>
+        <div class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="8" y="8" width="32" height="32" rx="4"/>
+              <path d="M8 20h32M20 20v20"/>
+              <path d="M28 20l4 4-4 4"/>
+            </svg>
+          </div>
+          <h3 class="card__title">Custom MCP Servers</h3>
+          <p class="card__text">Add any MCP-compatible tool server via configuration. Odin automatically discovers tools and exposes them to the Agent Loop as first-class skills.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Evaluation Framework ═══ -->
+  <section class="section section--dark" id="evaluation">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">Infrastructure</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Evaluation Framework</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          Quantifies Odin's accuracy using precision, recall, and F1 against labeled ground truth datasets. Runs offline after a task completes. Results are persisted to SQLite and exportable as OpenTelemetry traces.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px;">
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Metrics Computed</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;"><strong>Precision</strong> — fraction of reported findings that are true positives</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;"><strong>Recall</strong> — fraction of ground truth findings that were detected</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;"><strong>F1 Score</strong> — harmonic mean of precision and recall</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;"><strong>MEU Coverage</strong> — percentage of conclusions with valid MEU attached</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;"><strong>Hallucination Rate</strong> — conclusions with no MEU / total conclusions</span>
+            </li>
+          </ul>
+        </div>
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Key Interface</h3>
+          <div class="code-block" style="margin-bottom: 0;">
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">class</span> <span class="token-class">EvaluationFramework</span>:
+    <span class="token-keyword">def</span> <span class="token-function">evaluate</span>(
+        predictions: <span class="token-builtin">list</span>[<span class="token-class">EvidenceUnit</span>],
+        ground_truth: <span class="token-builtin">list</span>[<span class="token-class">EvidenceUnit</span>],
+    ) -> <span class="token-class">EvalResult</span>:
+        <span class="token-comment">"""Returns precision, recall, F1, MEU coverage."""</span>
+        ...
+
+<span class="token-keyword">class</span> <span class="token-class">EvalResult</span>(<span class="token-class">BaseModel</span>):
+    precision: <span class="token-builtin">float</span>
+    recall: <span class="token-builtin">float</span>
+    f1: <span class="token-builtin">float</span>
+    meu_coverage: <span class="token-builtin">float</span>
+    hallucination_rate: <span class="token-builtin">float</span>
+    false_positives: <span class="token-builtin">list</span>[<span class="token-class">EvidenceUnit</span>]
+    false_negatives: <span class="token-builtin">list</span>[<span class="token-class">EvidenceUnit</span>]</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FastAPI Server ═══ -->
+  <section class="section" id="fastapi-server">
+    <div class="container">
+      <div class="section-header--left fade-in-up">
+        <p class="section-header__eyebrow">User Entry Point</p>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">FastAPI Server</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: 680px; margin: 0 0 var(--space-8);">
+          The HTTP gateway. Exposes a REST API for programmatic access to all Odin capabilities — task submission, status polling, result retrieval, and evidence querying. Supports async long-running tasks via background job IDs.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px;">
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Key Endpoints</h3>
+          <div class="code-block" style="margin-bottom: 0;">
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Task lifecycle</span>
+POST   /tasks                  <span class="token-comment"># Submit analysis task</span>
+GET    /tasks/{id}             <span class="token-comment"># Poll task status</span>
+DELETE /tasks/{id}             <span class="token-comment"># Cancel running task</span>
+
+<span class="token-comment"># Results</span>
+GET    /tasks/{id}/report      <span class="token-comment"># Download full report</span>
+GET    /tasks/{id}/evidence    <span class="token-comment"># List all MEU evidence</span>
+
+<span class="token-comment"># RAG / Knowledge</span>
+GET    /search?q=...           <span class="token-comment"># Query historical reports</span>
+
+<span class="token-comment"># Evaluation</span>
+POST   /eval/run               <span class="token-comment"># Trigger benchmark run</span>
+GET    /eval/results           <span class="token-comment"># Retrieve eval metrics</span>
+
+<span class="token-comment"># Config</span>
+GET    /config/workflows       <span class="token-comment"># List available workflows</span>
+GET    /config/skills          <span class="token-comment"># List registered skills</span></code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="fade-in-up">
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Key Features</h3>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Async task queue — long-running analyses return a job ID immediately</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Bearer token authentication with configurable scope</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">OpenAPI 3.1 auto-generated docs at <code>/docs</code></span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">Structured logging (JSON) with request tracing via OpenTelemetry</span>
+            </li>
+            <li style="display: flex; gap: var(--space-3); align-items: flex-start; margin-bottom: var(--space-4);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="card__text" style="margin: 0;">CORS support for cross-origin SDK / web UI integration</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Cards -->
+  <section class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="doc-nav-cards stagger-children">
+        <a href="overview.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Overview</span>
+          <span class="doc-nav-card__text">System stack diagram, layer responsibilities, and end-to-end execution flow.</span>
+        </a>
+        <a href="data-flow.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Data Flow</span>
+          <span class="doc-nav-card__text">Visual diagrams and step-by-step walkthroughs of the three main pipelines.</span>
+        </a>
+        <a href="../guide/core-concepts.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Core Concepts</span>
+          <span class="doc-nav-card__text">MEU model, DAG-layer parallelism, and the evidence enforcement philosophy.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

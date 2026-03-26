@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vision — Odin</title>
+  <meta name="description" content="The long-term vision and roadmap for the Odin AI code research system.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🛡️</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2L3 8v12l11 6 11-6V8L14 2z" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M14 2v24M3 8l11 6 11-6" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li><a href="../index.html" class="nav__link">Overview</a></li>
+        <li><a href="../architecture/index.html" class="nav__link">Architecture</a></li>
+        <li><a href="../guide/index.html" class="nav__link">Guide</a></li>
+        <li><a href="../getting-started/index.html" class="nav__link">Get Started</a></li>
+        <li><a href="../development/index.html" class="nav__link">Development</a></li>
+        <li>
+          <div class="nav__submenu">
+            <span class="nav__link nav__submenu-trigger">More</span>
+            <ul class="nav__submenu-items">
+              <li><a href="vision.html" class="nav__submenu-item">Vision</a></li>
+              <li><a href="roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+              <li><a href="changelog.html" class="nav__submenu-item">Changelog</a></li>
+              <li><a href="../api/index.html" class="nav__submenu-item">API</a></li>
+              <li><a href="../examples/index.html" class="nav__submenu-item">Examples</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero hero--sub">
+      <div class="container container--narrow">
+        <span class="hero__eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          Vision &amp; Strategy
+        </span>
+        <h1 class="hero__title">Where Odin is Heading</h1>
+        <p class="hero__subtitle">
+          An evidence-backed autonomous vulnerability research framework — from today&rsquo;s foundation to tomorrow&rsquo;s production-grade CVE pipelines.
+        </p>
+      </div>
+    </section>
+
+    <!-- Vision Statement -->
+    <section class="section section--sm">
+      <div class="container container--narrow">
+        <div class="fade-in-up">
+          <p class="intro-text">
+            In 3&ndash;5 years, Odin powers automated vulnerability research pipelines at scale — from initial repo scan to CVE submission, fully autonomous with human oversight.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Completed -->
+    <section class="section section--sm section--dark" id="completed">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <p class="section-header__eyebrow">Status</p>
+          <h2 class="section-header__title">Completed</h2>
+          <p class="section-header__subtitle">Core building blocks that form the foundation of the Odin system.</p>
+        </div>
+
+        <div class="container container--narrow">
+          <div class="feature-grid stagger-children">
+            <div class="card card--flat">
+              <h3 class="card__title">Tool Executor</h3>
+              <p class="card__text">Pluggable tool execution engine with retry, timeout, and structured output handling.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">Agent Loop</h3>
+              <p class="card__text">ReAct-style reasoning loop with thought/action/observation cycles and state management.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">DAG Pipeline</h3>
+              <p class="card__text">Layer-based parallel task execution with dependency resolution and topological ordering.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">12 Skills</h3>
+              <p class="card__text">Twelve built-in analysis skills: Grep, AST, Semgrep, SBOM, CVSS, CWE, Deps, License, Secrets, Malware, Fuzz, CVE Lookup.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">3 Workflows</h3>
+              <p class="card__text">Scan, Deep Audit, and CVE Triage workflows — each orchestrating a tailored sequence of skills.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">MCP Integration</h3>
+              <p class="card__text">Model Context Protocol support for extending tools and connecting external resources.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">FastAPI Server</h3>
+              <p class="card__text">Production-ready REST API with workflow management, session persistence, and streaming responses.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">RAG Store</h3>
+              <p class="card__text">Retrieval-Augmented Generation knowledge store for persisting findings, CVE records, and research context.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">Evaluation Framework</h3>
+              <p class="card__text">Benchmark suite for measuring agent accuracy, recall, and MEU compliance across vulnerability research tasks.</p>
+              <span class="badge badge--completed mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- In Progress -->
+    <section class="section section--sm" id="in-progress">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <p class="section-header__eyebrow">Status</p>
+          <h2 class="section-header__title">In Progress</h2>
+          <p class="section-header__subtitle">Features actively being developed and refined in the current cycle.</p>
+        </div>
+
+        <div class="container container--narrow">
+          <div class="feature-grid stagger-children">
+            <div class="card card--flat">
+              <h3 class="card__title">FastAPI Server Improvements</h3>
+              <p class="card__text">Adding streaming responses, WebSocket support, and richer workflow management endpoints.</p>
+              <span class="badge badge--in-progress mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                In Progress
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">RAG Store Enhancements</h3>
+              <p class="card__text">Improving vector search relevance, chunking strategies, and cross-session knowledge retention.</p>
+              <span class="badge badge--in-progress mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                In Progress
+              </span>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">Evaluation Benchmarks</h3>
+              <p class="card__text">Expanding the benchmark suite with SWE-bench integration and real-world CVE datasets.</p>
+              <span class="badge badge--in-progress mt-4">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                In Progress
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Planned -->
+    <section class="section section--sm section--dark" id="planned">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <p class="section-header__eyebrow">Status</p>
+          <h2 class="section-header__title">Planned</h2>
+          <p class="section-header__subtitle">What comes next, organized by priority level.</p>
+        </div>
+
+        <div class="container container--narrow">
+
+          <!-- P0 -->
+          <div class="priority-group fade-in-up">
+            <span class="priority-label priority-label--p0">P0 — Execution Core</span>
+            <div class="feature-grid stagger-children">
+              <div class="card card--flat">
+                <h3 class="card__title">Agent Runtime</h3>
+                <p class="card__text">Checkpoint and resume support so long-running research sessions survive interruptions and can be continued from any point.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Task System</h3>
+                <p class="card__text">Fine-grained task decomposition, prioritization, and cancellation — enabling multi-turn research at scale.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Tool System</h3>
+                <p class="card__text">Error retry logic, circuit breakers, rate limiting, and observability hooks for every tool call in the pipeline.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Memory</h3>
+                <p class="card__text">Persistent vector store for long-term context across sessions — finding connections across past vulnerability research.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- P1 -->
+          <div class="priority-group fade-in-up">
+            <span class="priority-label priority-label--p1">P1 — Security &amp; Observability</span>
+            <div class="feature-grid stagger-children">
+              <div class="card card--flat">
+                <h3 class="card__title">Sandbox</h3>
+                <p class="card__text">Docker-based execution isolation for untrusted code — preventing tool execution from affecting the host system.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Verification</h3>
+                <p class="card__text">Automated proof-of-vulnerability verification — confirming findings are real and reproducible before surfacing them.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Human-in-the-Loop</h3>
+                <p class="card__text">Approval gates, escalation paths, and interactive review steps — keeping researchers in control of critical decisions.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Logs + Traces + Metrics</h3>
+                <p class="card__text">Full observability stack — structured logging, distributed tracing, and performance metrics for every agent action.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Evaluation Metrics</h3>
+                <p class="card__text">Precision, recall, and F1 scoring against labeled CVE datasets — quantitative measurement of agent quality.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- P2 -->
+          <div class="priority-group fade-in-up">
+            <span class="priority-label priority-label--p2">P2 — Governance &amp; Scale</span>
+            <div class="feature-grid stagger-children">
+              <div class="card card--flat">
+                <h3 class="card__title">Multi-Agent Orchestration</h3>
+                <p class="card__text">Coordinating multiple specialized agents — triage, deep-audit, and reporting agents working together at scale.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Permission System</h3>
+                <p class="card__text">Role-based access control for team collaboration — read-only analysts, full researchers, and admin operators.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+              <div class="card card--flat">
+                <h3 class="card__title">Cost &amp; Token Budget</h3>
+                <p class="card__text">Per-project spending limits, token usage tracking, and cost attribution — keeping large-scale research predictable.</p>
+                <span class="badge badge--planned mt-4">Planned</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Out of Scope -->
+    <section class="section section--sm" id="out-of-scope">
+      <div class="container">
+        <div class="container container--narrow">
+          <div class="section-header section-header--left fade-in-up">
+            <p class="section-header__eyebrow">Clarity</p>
+            <h2 class="section-header__title">What Odin Will Not Do</h2>
+            <p class="section-header__subtitle">Clear boundaries prevent scope creep and keep the project focused.</p>
+          </div>
+
+          <div class="callout callout--warning fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div>
+              <p>Odin has a focused, well-defined scope. The following are explicitly <strong>not</strong> on the roadmap and will not be added:
+            </div>
+          </div>
+
+          <div class="feature-grid stagger-children">
+            <div class="card card--flat">
+              <h3 class="card__title">Web UI</h3>
+              <p class="card__text">Odin is a CLI-first and API-first tool. There are no plans to build a web-based dashboard or UI.</p>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">SaaS Hosting</h3>
+              <p class="card__text">Odin will remain a self-hosted, open-source project. No managed cloud service or SaaS offering is planned.</p>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">Non-Code Analysis</h3>
+              <p class="card__text">While Odin uses SBOMs and binary metadata, it focuses exclusively on software vulnerability research — not general document or image analysis.</p>
+            </div>
+            <div class="card card--flat">
+              <h3 class="card__title">Proprietary Integrations</h3>
+              <p class="card__text">Odin will not add integrations that require proprietary licenses or vendor lock-in. All integrations are open and community-driven.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- References -->
+    <section class="section section--sm section--dark" id="references">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <p class="section-header__eyebrow">Inspiration</p>
+          <h2 class="section-header__title">References &amp; Influences</h2>
+          <p class="section-header__subtitle">Research papers, projects, and writings that inform Odin&rsquo;s design.</p>
+        </div>
+
+        <div class="container container--narrow">
+          <div class="feature-grid stagger-children">
+
+            <div>
+              <h3 class="card__title mb-4">Research Papers</h3>
+              <ul class="status-list">
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  <div>
+                    <strong>ReAct</strong>
+                    <span class="badge badge--planned" style="margin-left: 0.5rem;">Yao et al.</span>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Synergizing Reasoning and Acting in Language Models.
+                      <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">arxiv.org/abs/2210.03629</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  <div>
+                    <strong>Toolformer</strong>
+                    <span class="badge badge--planned" style="margin-left: 0.5rem;">Schick et al.</span>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Language Models Can Learn to Use Tools.
+                      <a href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">arxiv.org/abs/2302.04761</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  <div>
+                    <strong>MemGPT</strong>
+                    <span class="badge badge--planned" style="margin-left: 0.5rem;">Packer et al.</span>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Towards Infinite Context Length for LLMs.
+                      <a href="https://arxiv.org/abs/2312.07104" target="_blank" rel="noopener">arxiv.org/abs/2312.07104</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  <div>
+                    <strong>SWE-bench</strong>
+                    <span class="badge badge--planned" style="margin-left: 0.5rem;">Zheng et al.</span>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Software Engineering Benchmark from GitHub Issues.
+                      <a href="https://arxiv.org/abs/2305.13054" target="_blank" rel="noopener">arxiv.org/abs/2305.13054</a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="card__title mb-4">Related Projects</h3>
+              <ul class="status-list">
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                  <div>
+                    <strong>OpenHands</strong>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      An AI-powered software development agent.
+                      <a href="https://github.com/All-Hands-AI/OpenHands" target="_blank" rel="noopener">github.com/All-Hands-AI/OpenHands</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                  <div>
+                    <strong>LangGraph</strong>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Build language agents as graphs.
+                      <a href="https://github.com/langchain-ai/langgraph" target="_blank" rel="noopener">github.com/langchain-ai/langgraph</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                  <div>
+                    <strong>AutoGen</strong>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Multi-agent conversation framework by Microsoft.
+                      <a href="https://github.com/microsoft/autogen" target="_blank" rel="noopener">github.com/microsoft/autogen</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                  <div>
+                    <strong>Langfuse</strong>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      LLM engineering platform — tracing and evaluation.
+                      <a href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener">github.com/langfuse/langfuse</a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="card__title mb-4">Blogs &amp; Writing</h3>
+              <ul class="status-list">
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  <div>
+                    <strong>Lilian Weng</strong>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Deep dives on LLM agents, tool use, and reasoning.
+                      <a href="https://lilianweng.github.io" target="_blank" rel="noopener">lilianweng.github.io</a>
+                    </p>
+                  </div>
+                </li>
+                <li class="status-list__item">
+                  <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  <div>
+                    <strong>Eugene Yan</strong>
+                    <p class="card__text" style="margin-top: 0.25rem;">
+                      Applied ML, LLM systems, and engineering practices.
+                      <a href="https://eugeneyan.com" target="_blank" rel="noopener">eugeneyan.com</a>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../index.html" class="footer__link">Overview</a></li>
+            <li><a href="../getting-started/index.html" class="footer__link">Get Started</a></li>
+            <li><a href="../guide/index.html" class="footer__link">Guide</a></li>
+            <li><a href="../architecture/index.html" class="footer__link">Architecture</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="vision.html" class="footer__link">Vision</a></li>
+            <li><a href="roadmap.html" class="footer__link">Roadmap</a></li>
+            <li><a href="changelog.html" class="footer__link">Changelog</a></li>
+            <li><a href="../api/index.html" class="footer__link">API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issues</a></li>
+            <li><a href="../development/index.html" class="footer__link">Contributing</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2024 &mdash; MIT License &nbsp;&middot;&nbsp; v0.2.0</p>
+        <div class="footer__badge">
+          <span class="badge badge--mit">MIT License</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — Odin</title>
+  <meta name="description" content="Changelog for the Odin AI code research system.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🛡️</text></svg>">
+  <style>
+    .changelog-version {
+      margin-bottom: var(--space-16);
+    }
+
+    .changelog-version:last-child {
+      margin-bottom: 0;
+    }
+
+    .changelog-version-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border-light);
+      flex-wrap: wrap;
+    }
+
+    .changelog-version-header h2 {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+
+    .changelog-version-date {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      font-weight: 400;
+    }
+
+    .changelog-category {
+      margin-bottom: var(--space-8);
+    }
+
+    .changelog-category:last-child {
+      margin-bottom: 0;
+    }
+
+    .changelog-category-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-4);
+    }
+
+    .changelog-category-title--added {
+      color: var(--color-success);
+    }
+
+    .changelog-category-title--changed {
+      color: var(--color-warning);
+    }
+
+    .changelog-category-title--fixed {
+      color: var(--color-danger);
+    }
+
+    .changelog-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .changelog-list__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
+      font-size: var(--text-base);
+      border-bottom: 1px solid var(--color-border-light);
+      line-height: 1.6;
+    }
+
+    .changelog-list__item:last-child {
+      border-bottom: none;
+    }
+
+    .changelog-list__bullet {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+
+    .changelog-list__bullet--added {
+      background: var(--color-success);
+    }
+
+    .changelog-list__bullet--changed {
+      background: var(--color-warning);
+    }
+
+    .changelog-list__bullet--fixed {
+      background: var(--color-danger);
+    }
+
+    .changelog-list__text {
+      margin: 0;
+    }
+
+    .changelog-list__text code {
+      font-family: var(--font-mono);
+      font-size: 0.875em;
+      background: var(--color-surface);
+      padding: 0.1em 0.35em;
+      border-radius: var(--radius-sm);
+    }
+
+    .changelog-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--color-border);
+      margin: var(--space-10) 0;
+    }
+
+    .changelog-note {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-10);
+    }
+
+    .changelog-note svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-accent);
+    }
+
+    .changelog-note p {
+      margin: 0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .changelog-note {
+        background: var(--color-bg-secondary);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2L3 8v12l11 6 11-6V8L14 2z" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M14 2v24M3 8l11 6 11-6" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li><a href="../index.html" class="nav__link">Overview</a></li>
+        <li><a href="../architecture/index.html" class="nav__link">Architecture</a></li>
+        <li><a href="../guide/index.html" class="nav__link">Guide</a></li>
+        <li><a href="../getting-started/index.html" class="nav__link">Get Started</a></li>
+        <li><a href="../development/index.html" class="nav__link">Development</a></li>
+        <li>
+          <div class="nav__submenu">
+            <span class="nav__link nav__submenu-trigger">More</span>
+            <ul class="nav__submenu-items">
+              <li><a href="vision.html" class="nav__submenu-item">Vision</a></li>
+              <li><a href="roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+              <li><a href="changelog.html" class="nav__submenu-item">Changelog</a></li>
+              <li><a href="../api/index.html" class="nav__submenu-item">API</a></li>
+              <li><a href="../examples/index.html" class="nav__submenu-item">Examples</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero hero--sub">
+      <div class="container container--narrow">
+        <span class="hero__eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          Release History
+        </span>
+        <h1 class="hero__title">Changelog</h1>
+        <p class="hero__subtitle">
+          All notable changes to the Odin project, following the
+          <a href="https://keepachangelog.com/" target="_blank" rel="noopener">Keep a Changelog</a>
+          standard.
+        </p>
+      </div>
+    </section>
+
+    <!-- Changelog Content -->
+    <section class="section">
+      <div class="container">
+        <div class="container container--narrow">
+
+          <!-- Note -->
+          <div class="changelog-note fade-in-up">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p>
+              This project adheres to <a href="https://semver.org/" target="_blank" rel="noopener">Semantic Versioning</a>.
+              Breaking changes will be clearly marked. The current stable release is
+              <strong>v0.2.0</strong>.
+            </p>
+          </div>
+
+          <!-- v0.2.0 -->
+          <div class="changelog-version fade-in-up">
+            <div class="changelog-version-header">
+              <h2>v0.2.0</h2>
+              <span class="changelog-version-date">(June 2024)</span>
+              <span class="badge badge--v0-2">Current Release</span>
+            </div>
+
+            <div class="changelog-category">
+              <div class="changelog-category-title changelog-category-title--added">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Added
+              </div>
+              <ul class="changelog-list">
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>Agent loop with checkpoint support</strong> &mdash; ReAct-style reasoning with configurable thought/action/observation cycles and state snapshots at each step.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>DAG parallel execution</strong> &mdash; Layer-based task graph that schedules independent tasks simultaneously across DAG layers, dramatically reducing total analysis time.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>MCP integration</strong> &mdash; Model Context Protocol support for dynamic tool discovery, external resource connections, and extensible agent capabilities.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>FastAPI REST server</strong> &mdash; Production-ready API with workflow management, session persistence, streaming responses, and OpenAPI documentation.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>RAG knowledge store</strong> &mdash; Vector-backed retrieval for persisting vulnerability findings, CVE records, and cross-session research context with semantic search.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>Evaluation framework with benchmark suite</strong> &mdash; Quantitative measurement of agent accuracy, recall, and MEU compliance using labeled CVE datasets.</p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="changelog-category">
+              <div class="changelog-category-title changelog-category-title--changed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+                Changed
+              </div>
+              <ul class="changelog-list">
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--changed"></div>
+                  <p class="changelog-list__text">Refactored the <code>ToolExecutor</code> interface to support async/await patterns throughout the execution pipeline.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--changed"></div>
+                  <p class="changelog-list__text">Updated YAML workflow schema to support DAG definitions, layer assignments, and parallel execution hints.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--changed"></div>
+                  <p class="changelog-list__text">Upgraded <code>FastAPI</code> server with Pydantic v2 models, streaming responses, and structured logging.</p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="changelog-category">
+              <div class="changelog-category-title changelog-category-title--fixed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                Fixed
+              </div>
+              <ul class="changelog-list">
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--fixed"></div>
+                  <p class="changelog-list__text">Corrected tool timeout handling that caused silent failures in long-running skill executions.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--fixed"></div>
+                  <p class="changelog-list__text">Fixed state serialization issue when resuming agent sessions from checkpoint snapshots.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--fixed"></div>
+                  <p class="changelog-list__text">Resolved race condition in parallel skill execution that could produce duplicate findings.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="changelog-divider"></div>
+
+          <!-- v0.1.0 -->
+          <div class="changelog-version fade-in-up">
+            <div class="changelog-version-header">
+              <h2>v0.1.0</h2>
+              <span class="changelog-version-date">(January 2024)</span>
+            </div>
+
+            <div class="changelog-category">
+              <div class="changelog-category-title changelog-category-title--added">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Added
+              </div>
+              <ul class="changelog-list">
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>Tool executor with 12 built-in skills</strong> &mdash; Grep, AST, Semgrep, SBOM, CVSS, CWE, Deps, License, Secrets, Malware, Fuzz, and CVE Lookup.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>3 analysis workflows</strong> &mdash; Scan, Deep Audit, and CVE Triage — each orchestrating a tailored sequence of skills.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>CLI interface</strong> &mdash; Command-line tool with workflow selection, target specification, verbose output, and JSON result export.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>YAML workflow definitions</strong> &mdash; Human-readable configuration files defining skill sequences, parameters, and pass-through logic.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>Mock provider for offline testing</strong> &mdash; Local mock LLM provider requiring no API keys, enabling full offline development and testing.</p>
+                </li>
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--added"></div>
+                  <p class="changelog-list__text"><strong>MEU (Minimum Evidence Unit) enforcement</strong> &mdash; Every finding must include structured evidence: location, severity, and reproduction steps.</p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="changelog-category">
+              <div class="changelog-category-title changelog-category-title--changed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+                Changed
+              </div>
+              <ul class="changelog-list">
+                <li class="changelog-list__item">
+                  <div class="changelog-list__bullet changelog-list__bullet--changed"></div>
+                  <p class="changelog-list__text">Initial public release &mdash; established core architecture, skill interface, and workflow engine.</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../index.html" class="footer__link">Overview</a></li>
+            <li><a href="../getting-started/index.html" class="footer__link">Get Started</a></li>
+            <li><a href="../guide/index.html" class="footer__link">Guide</a></li>
+            <li><a href="../architecture/index.html" class="footer__link">Architecture</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="vision.html" class="footer__link">Vision</a></li>
+            <li><a href="roadmap.html" class="footer__link">Roadmap</a></li>
+            <li><a href="changelog.html" class="footer__link">Changelog</a></li>
+            <li><a href="../api/index.html" class="footer__link">API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issues</a></li>
+            <li><a href="../development/index.html" class="footer__link">Contributing</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2024 &mdash; MIT License &nbsp;&middot;&nbsp; v0.2.0</p>
+        <div class="footer__badge">
+          <span class="badge badge--mit">MIT License</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

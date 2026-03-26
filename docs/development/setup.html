@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Setup — Odin</title>
+  <meta name="description" content="Set up a local development environment for Odin. Python, virtualenv, pre-commit, tests, linters, and IDE configuration.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../examples/basic.html" class="nav__link nav__submenu-trigger active">Examples</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../examples/basic.html" class="nav__submenu-item">Basic Usage</a></li>
+            <li><a href="../examples/advanced.html" class="nav__submenu-item">Advanced Examples</a></li>
+            <li><a href="setup.html" class="nav__submenu-item active">Dev Setup</a></li>
+            <li><a href="contributing.html" class="nav__submenu-item">Contributing</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="setup.html" style="color: var(--color-text-secondary); text-decoration: none;">Development</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Dev Setup</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Local Development</h1>
+      <p class="hero__subtitle fade-in-up">Clone, set up, and run the full Odin stack from your terminal.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- Prerequisites -->
+          <h2 id="prerequisites">Prerequisites</h2>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <strong style="font-size: var(--text-sm); display: block; margin-bottom: var(--space-2);">Python</strong>
+              <p class="card__text" style="margin: 0;">3.11 or later</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <strong style="font-size: var(--text-sm); display: block; margin-bottom: var(--space-2);">Git</strong>
+              <p class="card__text" style="margin: 0;">Latest version</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <strong style="font-size: var(--text-sm); display: block; margin-bottom: var(--space-2);">pip / uv</strong>
+              <p class="card__text" style="margin: 0;">Or any PEP 517 installer</p>
+            </div>
+          </div>
+
+          <!-- Clone -->
+          <h2 id="clone">Clone &amp; Install</h2>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># 1. Clone the repository</span>
+<span class="token-function">git</span> clone git@github.com:anwenxuan/Odin.git
+<span class="token-function">cd</span> odin
+
+<span class="token-comment"># 2. Create a virtual environment (macOS / Linux)</span>
+<span class="token-function">python</span> -m venv venv
+<span class="token-function">source</span> venv/bin/activate
+
+<span class="token-comment"># On Windows:</span>
+<span class="token-comment"># python -m venv venv</span>
+<span class="token-comment"># venv\Scripts\activate</span>
+
+<span class="token-comment"># 3. Install Odin in editable mode with dev dependencies</span>
+<span class="token-function">pip</span> install -e <span class="token-string">".[dev]"</span>
+
+<span class="token-comment"># 4. Set up pre-commit hooks</span>
+<span class="token-function">pre-commit</span> install</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>uv support</strong> — If you prefer <code>uv</code>, run <code>uv sync --extra dev</code> instead of <code>pip install -e ".[dev]"</code>.
+            </div>
+          </div>
+
+          <!-- Run Tests -->
+          <h2 id="tests">Running Tests</h2>
+
+          <p>Odin uses <code>pytest</code> with the following conventions:</p>
+          <ul>
+            <li>Unit tests live alongside source in <code>tests/unit/</code></li>
+            <li>Integration tests live in <code>tests/integration/</code></li>
+            <li>Fixtures are shared via <code>tests/conftest.py</code></li>
+          </ul>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Run all tests with verbose output</span>
+<span class="token-function">pytest</span> tests/ -v
+
+<span class="token-comment"># Run only unit tests</span>
+<span class="token-function">pytest</span> tests/unit/ -v
+
+<span class="token-comment"># Run with coverage report</span>
+<span class="token-function">pytest</span> tests/ -v --cov=odin --cov-report=html
+
+<span class="token-comment"># Run tests matching a keyword</span>
+<span class="token-function">pytest</span> tests/ -k sql_injection -v
+
+<span class="token-comment"># Run tests and stop on first failure</span>
+<span class="token-function">pytest</span> tests/ -v -x</code></pre>
+            </div>
+          </div>
+
+          <h3 id="test-output">Expected Test Output</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code>tests/unit/test_meu_enforcement.py::test_meu_unit_validation ✓    <span class="token-comment">[ 12%]</span>
+tests/unit/test_meu_enforcement.py::test_meu_rejects_partial_evidence ✓ <span class="token-comment">[ 25%]</span>
+tests/unit/test_skills_registry.py::test_skill_registration ✓           <span class="token-comment">[ 37%]</span>
+tests/unit/test_skills_registry.py::test_skill_dispatch ✓               <span class="token-comment">[ 50%]</span>
+tests/unit/test_dag_executor.py::test_linear_chain ✓                    <span class="token-comment">[ 62%]</span>
+tests/unit/test_dag_executor.py::test_parallel_branches ✓               <span class="token-comment">[ 75%]</span>
+tests/integration/test_workflow_vulnerability.py::test_full_flow ✓     <span class="token-comment">[ 87%]</span>
+tests/integration/test_workflow_vulnerability.py::test_meu_audit_trail ✓ <span class="token-comment">[100%]</span>
+
+========================== 8 passed in 3.41s ==========================</code></pre>
+            </div>
+          </div>
+
+          <!-- Linting -->
+          <h2 id="linting">Linting &amp; Type Checking</h2>
+
+          <p>Odin enforces code quality with two tools:</p>
+          <ul>
+            <li><code>ruff</code> — fast linter and formatter (replaces flake8, isort, and black)</li>
+            <li><code>mypy</code> — static type checker</li>
+          </ul>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Run ruff linter (checks style, import order, unused vars, etc.)</span>
+<span class="token-function">ruff</span> check .
+
+<span class="token-comment"># Format code with ruff (autofix safe issues)</span>
+<span class="token-function">ruff</span> format .
+
+<span class="token-comment"># Run mypy type checker</span>
+<span class="token-function">mypy</span> .
+
+<span class="token-comment"># Run both (CI equivalent)</span>
+<span class="token-function">ruff</span> check . &amp;&amp; <span class="token-function">mypy</span> .</code></pre>
+            </div>
+          </div>
+
+          <h3 id="pre-commit">Pre-commit Hooks</h3>
+          <p>After <code>pre-commit install</code>, these hooks run automatically before each <code>git commit</code>:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># .pre-commit-config.yaml</span>
+<span class="token-keyword">repos</span>:
+  - <span class="token-keyword">repo</span>: https://github.com/pre-commit/pre-commit-hooks
+    <span class="token-keyword">rev</span>: v4.5.0
+    <span class="token-keyword">hooks</span>:
+      - <span class="token-keyword">id</span>: trailing-whitespace
+      - <span class="token-keyword">id</span>: check-yaml
+      - <span class="token-keyword">id</span>: end-of-file-fixer
+
+  - <span class="token-keyword">repo</span>: https://github.com/astral-sh/ruff-pre-commit
+    <span class="token-keyword">rev</span>: v0.2.0
+    <span class="token-keyword">hooks</span>:
+      - <span class="token-keyword">id</span>: ruff
+        <span class="token-keyword">args</span>: [--fix]
+      - <span class="token-keyword">id</span>: ruff-format</code></pre>
+            </div>
+          </div>
+
+          <!-- FastAPI Server -->
+          <h2 id="server">Local FastAPI Server</h2>
+
+          <p>Odin ships with a FastAPI server for programmatic access and testing the REST API locally.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Start the server with hot reload (for development)</span>
+<span class="token-function">uvicorn</span> odin.server:app --reload --port 8000
+
+<span class="token-comment"># Server runs at http://localhost:8000</span>
+<span class="token-comment"># API docs at http://localhost:8000/docs</span>
+<span class="token-comment"># ReDoc at http://localhost:8000/redoc</span></code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--success fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <div>
+              <strong>API docs</strong> — FastAPI automatically generates interactive docs at <code>/docs</code> (Swagger UI) and <code>/redoc</code>. Use them to explore and test endpoints locally.
+            </div>
+          </div>
+
+          <!-- IDE Config -->
+          <h2 id="ide">IDE Configuration</h2>
+
+          <h3 id="vscode">VSCode (Recommended)</h3>
+          <p>Place this in <code>.vscode/settings.json</code> at the repository root:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"[python]"</span>: {
+    <span class="token-string">"editor.defaultFormatter"</span>: <span class="token-string">"charliermarsh.ruff"</span>,
+    <span class="token-string">"editor.formatOnSave"</span>: <span class="token-keyword">true</span>,
+    <span class="token-string">"editor.codeActionsOnSave"</span>: {
+      <span class="token-string">"source.fixAll.ruff"</span>: <span class="token-string">"explicit"</span>
+    },
+    <span class="token-string">"editor.rulers"</span>: [88, 120],
+    <span class="token-string">"editor.defaultFoldingRangeProvider"</span>: <span class="token-string">"ms-python.vscode-pylance"</span>
+  },
+  <span class="token-string">"python.analysis.typeCheckingMode"</span>: <span class="token-string">"basic"</span>,
+  <span class="token-string">"python.analysis.extraPaths"</span>: [<span class="token-string">"."</span>],
+  <span class="token-string">"python.testing.pytestEnabled"</span>: <span class="token-keyword">true</span>,
+  <span class="token-string">"python.testing.unittestEnabled"</span>: <span class="token-keyword">false</span>,
+  <span class="token-string">"files.trimTrailingWhitespace"</span>: <span class="token-keyword">true</span>,
+  <span class="token-string">"files.insertFinalNewline"</span>: <span class="token-keyword">true</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <h3 id="pycharm">PyCharm</h3>
+          <ul>
+            <li>Set <strong>Python interpreter</strong> to the virtualenv's <code>python</code> (<code>venv/bin/python</code>)</li>
+            <li>Enable <strong> Ruff</strong> plugin and configure it as the default formatter</li>
+            <li>Set <strong>line length</strong> to 88 (matching ruff's default)</li>
+            <li>Enable <strong>pytest</strong> as the test runner in <em>Settings → Tools → Python Integrated Tools</em></li>
+          </ul>
+
+          <!-- Environment Variables -->
+          <h2 id="env">Environment Variables</h2>
+
+          <p>Copy the example env file and fill in your credentials:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">cp</span> .env.example .env</code></pre>
+            </div>
+          </div>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># .env — never commit this file</span>
+<span class="token-keyword">ODIN_PROVIDER</span>=openai
+<span class="token-keyword">ODIN_MODEL</span>=gpt-4o-mini
+<span class="token-keyword">OPENAI_API_KEY</span>=sk-your-key-here
+<span class="token-keyword">ANTHROPIC_API_KEY</span>=sk-ant-your-key-here   <span class="token-comment"># optional</span>
+<span class="token-keyword">ODIN_WORKFLOW</span>=vulnerability_research
+<span class="token-keyword">ODIN_MOCK</span>=false                          <span class="token-comment"># true = skip AI, use mock mode</span></code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--warning fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div>
+              <strong>Never commit <code>.env</code></strong> — It is listed in <code>.gitignore</code>. API keys and secrets must never be pushed to version control.
+            </div>
+          </div>
+
+          <!-- Quick Reference -->
+          <h2 id="quick-ref">Quick Reference</h2>
+
+          <div class="card card--flat fade-in-up" style="background: var(--color-surface); padding: var(--space-6);">
+            <table>
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Command</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Activate venv</td>
+                  <td><code>source venv/bin/activate</code></td>
+                </tr>
+                <tr>
+                  <td>Install in dev mode</td>
+                  <td><code>pip install -e ".[dev]"</code></td>
+                </tr>
+                <tr>
+                  <td>Run tests</td>
+                  <td><code>pytest tests/ -v</code></td>
+                </tr>
+                <tr>
+                  <td>Run linter</td>
+                  <td><code>ruff check . &amp;&amp; ruff format --check .</code></td>
+                </tr>
+                <tr>
+                  <td>Run type checker</td>
+                  <td><code>mypy .</code></td>
+                </tr>
+                <tr>
+                  <td>Start API server</td>
+                  <td><code>uvicorn odin.server:app --reload</code></td>
+                </tr>
+                <tr>
+                  <td>CLI analyze (mock)</td>
+                  <td><code>odin analyze ./my-repo --provider mock</code></td>
+                </tr>
+                <tr>
+                  <td>Install pre-commit hooks</td>
+                  <td><code>pre-commit install</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Next Steps -->
+          <h2 id="next">Next Steps</h2>
+          <div class="doc-nav-cards" style="margin-top: var(--space-6);">
+            <a href="contributing.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Contributing Guide</span>
+              <span class="doc-nav-card__text">Learn the contribution workflow and code standards.</span>
+            </a>
+            <a href="../guide/core-concepts.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Core Concepts</span>
+              <span class="doc-nav-card__text">Understand MEU, skills, and the DAG-layer architecture.</span>
+            </a>
+            <a href="../examples/basic.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Basic Example</span>
+              <span class="doc-nav-card__text">Walk through a complete analysis from start to report.</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#prerequisites" class="toc__link">Prerequisites</a></li>
+              <li class="toc__item"><a href="#clone" class="toc__link">Clone &amp; Install</a></li>
+              <li class="toc__item"><a href="#tests" class="toc__link">Running Tests</a></li>
+              <li class="toc__item"><a href="#linting" class="toc__link">Linting &amp; Type Checking</a></li>
+              <li class="toc__item"><a href="#server" class="toc__link">FastAPI Server</a></li>
+              <li class="toc__item"><a href="#ide" class="toc__link">IDE Configuration</a></li>
+              <li class="toc__item"><a href="#env" class="toc__link">Environment Variables</a></li>
+              <li class="toc__item"><a href="#quick-ref" class="toc__link">Quick Reference</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

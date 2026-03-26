@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contributing — Odin</title>
+  <meta name="description" content="Learn how to contribute to Odin — bug reports, feature requests, pull requests, new skills, and documentation.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../examples/basic.html" class="nav__link nav__submenu-trigger active">Examples</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../examples/basic.html" class="nav__submenu-item">Basic Usage</a></li>
+            <li><a href="../examples/advanced.html" class="nav__submenu-item">Advanced Examples</a></li>
+            <li><a href="../development/setup.html" class="nav__submenu-item">Dev Setup</a></li>
+            <li><a href="../development/contributing.html" class="nav__submenu-item active">Contributing</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="setup.html" style="color: var(--color-text-secondary); text-decoration: none;">Development</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Contributing</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Contributing</h1>
+      <p class="hero__subtitle fade-in-up">Help build the future of systematic vulnerability research. Every contribution matters.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <p class="lead fade-in-up">Odin is an open-source project and we welcome contributions of all kinds — from bug reports and documentation improvements to new skills and core features.</p>
+
+          <!-- Ways to Contribute -->
+          <h2 id="ways">Ways to Contribute</h2>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Bug Reports</strong>
+              </div>
+              <p class="card__text">Found a bug? Open an issue on GitHub with reproduction steps, expected vs actual behavior, and your environment details.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Feature Requests</strong>
+              </div>
+              <p class="card__text">Have an idea for a new Skill, workflow, or integration? Open a GitHub Discussion to propose it before writing code.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Pull Requests</strong>
+              </div>
+              <p class="card__text">Fix bugs, implement features, or improve tests. All PRs go through review — see the PR workflow below.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">New Skills</strong>
+              </div>
+              <p class="card__text">Extend Odin's capabilities with custom Skills. See the <a href="#new-skill">New Skill Guide</a> for the full implementation framework.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Documentation</strong>
+              </div>
+              <p class="card__text">Improve docs, fix typos, add examples, or translate guides. Documentation contributions are always highly appreciated.</p>
+            </div>
+          </div>
+
+          <!-- PR Workflow -->
+          <h2 id="pr-workflow">Pull Request Workflow</h2>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Before writing code for a new feature</strong>, open a GitHub Discussion to align on the approach. This saves you time and ensures your work aligns with Odin's architecture.
+            </div>
+          </div>
+
+          <ol class="steps fade-in-up">
+            <li class="step">
+              <div class="step__title">Fork the repository</div>
+              <div class="step__text">Fork <code>anwenxuan/Odin</code> to your own GitHub account.</div>
+            </li>
+            <li class="step">
+              <div class="step__title">Clone your fork</div>
+              <div class="step__text">Clone the forked repository and set up your development environment following the <a href="setup.html">Dev Setup guide</a>.</div>
+            </li>
+            <li class="step">
+              <div class="step__title">Create a feature branch</div>
+              <div class="step__text">Branch naming convention:<br>
+                <code>feat/&lt;short-description&gt;</code> — new features<br>
+                <code>fix/&lt;short-description&gt;</code> — bug fixes<br>
+                <code>docs/&lt;short-description&gt;</code> — documentation<br>
+                <code>skill/&lt;skill-name&gt;</code> — new skills<br>
+                <code>refactor/&lt;short-description&gt;</code> — refactoring
+              </div>
+            </li>
+            <li class="step">
+              <div class="step__title">Make your changes</div>
+              <div class="step__text">Implement your change. Keep commits focused and atomic — one logical change per commit.</div>
+            </li>
+            <li class="step">
+              <div class="step__title">Run tests and linters</div>
+              <div class="step__text">Before pushing, verify everything passes:</div>
+              <div class="code-block">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" aria-label="Copy command">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <div class="code-block__body">
+<pre><code><span class="token-function">pytest</span> tests/ -v
+<span class="token-function">ruff</span> check .
+<span class="token-function">mypy</span> .</code></pre>
+                </div>
+              </div>
+            </li>
+            <li class="step">
+              <div class="step__title">Submit a Pull Request</div>
+              <div class="step__text">Open a PR against <code>main</code> on <code>anwenxuan/Odin</code>. Fill in the PR template completely — describe the <em>why</em>, not just the <em>what</em>. Link any related issues.</div>
+            </li>
+            <li class="step">
+              <div class="step__title">Review &amp; iterate</div>
+              <div class="step__text">Maintainers will review your PR. Address feedback by pushing additional commits — do not force-push during review unless asked.</div>
+            </li>
+          </ol>
+
+          <!-- Code Standards -->
+          <h2 id="code-standards">Code Standards</h2>
+
+          <h3 id="python-style">Python Style</h3>
+          <p>Odin uses <code>ruff</code> for linting and formatting. Configuration lives in <code>pyproject.toml</code>.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">python</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Good: type hints on all public functions</span>
+<span class="token-keyword">def</span> <span class="token-function">analyze_vulnerability</span>(
+    repo_path: str,
+    workflow: str = <span class="token-string">"vulnerability_research"</span>,
+) -&gt; AnalysisResult:
+    <span class="token-string">"""Analyze a repository for vulnerabilities using the specified workflow."""</span>
+    ...
+
+<span class="token-comment"># Bad: missing type hints on public API</span>
+<span class="token-keyword">def</span> <span class="token-function">analyze_vulnerability</span>(repo_path, workflow=<span class="token-string">"vulnerability_research"</span>):
+    ...</code></pre>
+            </div>
+          </div>
+
+          <h3 id="commit-format">Commit Message Format</h3>
+          <p>Odin follows the <a href="https://www.conventionalcommits.org/" target="_blank" rel="noopener">Conventional Commits</a> specification:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Format: type(scope): description</span>
+<span class="token-function">feat</span>(skills): add SQL injection detection skill
+<span class="token-function">fix</span>(core): correct MEU evidence validation threshold
+<span class="token-function">docs</span>(contributing): add new skill framework guide
+<span class="token-function">refactor</span>(workflow): extract DAG execution into separate module
+<span class="token-function">test</span>(auth): add integration tests for guard analysis
+<span class="token-function">chore</span>(deps): bump ruff from 0.1.0 to 0.2.0
+
+<span class="token-comment"># Allowed types: feat | fix | docs | style | refactor | test | chore | perf | ci</span></code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--warning fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div>
+              <strong>Breaking changes</strong> must include <code>BREAKING CHANGE:</code> in the footer or <code>!</code> after the type (e.g., <code>feat(core)!:</code>).
+            </div>
+          </div>
+
+          <!-- New Skill Guide -->
+          <h2 id="new-skill">Adding a New Skill</h2>
+
+          <p>A Skill in Odin is a self-contained unit of capability. Each Skill lives in <code>odin/skills/&lt;category&gt;/</code> and follows a strict interface contract.</p>
+
+          <h3 id="skill-structure">Skill Structure</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code>odin/skills/
+├── analysis/           <span class="token-comment"># Analysis-layer skills</span>
+│   └── sql_injection/
+│       ├── __init__.py
+│       ├── detector.py   <span class="token-comment"># Core detection logic</span>
+│       ├── rules.py      <span class="token-comment"># Pattern matching rules</span>
+│       └── skill.yaml    <span class="token-comment"># Skill metadata</span>
+└── collection/          <span class="token-comment"># Collection-layer skills</span></code></pre>
+            </div>
+          </div>
+
+          <h3 id="skill-yaml">Skill Metadata (skill.yaml)</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">name</span>: sql_injection
+<span class="token-keyword">version</span>: <span class="token-string">"1.0.0"</span>
+<span class="token-keyword">category</span>: analysis
+<span class="token-keyword">layer</span>: layer_3_vulnerability_scan
+<span class="token-keyword">description</span>: <span class="token-string">"Detect SQL injection vulnerabilities via taint analysis and pattern matching."</span>
+<span class="token-keyword">meu_enforced</span>: <span class="token-builtin">true</span>
+<span class="token-keyword">dependencies</span>:
+  - entrypoints
+  - call_graph
+<span class="token-keyword">parameters</span>:
+  sensitivity:
+    type: string
+    enum: [low, medium, high]
+    default: medium
+  context_lines:
+    type: integer
+    default: 3
+<span class="token-keyword">evidence_schema</span>:
+  type: object
+  properties:
+    vulnerability_type:
+      type: string
+      enum: [sql_injection, blind_sql,_time_based]
+    confidence:
+      type: number
+      minimum: 0
+      maximum: 1
+    severity:
+      type: string
+      enum: [critical, high, medium, low]</code></pre>
+            </div>
+          </div>
+
+          <h3 id="skill-impl">Skill Implementation (detector.py)</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">python</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Any
+<span class="token-keyword">from</span> odin.skills.base <span class="token-keyword">import</span> BaseSkill, SkillResult
+<span class="token-keyword">from</span> odin.evidence <span class="token-keyword">import</span> MEUUnit
+
+
+<span class="token-keyword">class</span> <span class="token-class">SQLInjectionDetector</span>(BaseSkill):
+    <span class="token-string">"""Detects SQL injection vulnerabilities using taint analysis."""</span>
+
+    skill_name = <span class="token-string">"sql_injection"</span>
+    layer = <span class="token-string">"layer_3_vulnerability_scan"</span>
+
+    <span class="token-keyword">def</span> <span class="token-function">__init__</span>(<span class="token-variable">self</span>, config: dict[str, Any] | <span class="token-keyword">None</span> = <span class="token-keyword">None</span>):
+        <span class="token-variable">self</span>.sensitivity = config.get(<span class="token-string">"sensitivity"</span>, <span class="token-string">"medium"</span>) <span class="token-keyword">if</span> config <span class="token-keyword">else</span> <span class="token-string">"medium"</span>
+        <span class="token-variable">self</span>.context_lines = config.get(<span class="token-string">"context_lines"</span>, 3)
+
+    <span class="token-keyword">async def</span> <span class="token-function">execute</span>(<span class="token-variable">self</span>, context: dict[str, Any]) -&gt; SkillResult:
+        results = []
+        call_chains = context.get(<span class="token-string">"call_chains"</span>, [])
+        entry_points = context.get(<span class="token-string">"entry_points"</span>, [])
+
+        <span class="token-keyword">for</span> chain <span class="token-keyword">in</span> call_chains:
+            finding = <span class="token-variable">self</span>._analyze_chain(chain, entry_points)
+            <span class="token-keyword">if</span> finding:
+                <span class="token-comment"># Create MEU-compliant evidence unit</span>
+                meu = MEUUnit(
+                    skill=<span class="token-variable">self</span>.skill_name,
+                    evidence=finding[<span class="token-string">"evidence_snippet"</span>],
+                    metadata=finding,
+                )
+                results.append(meu)
+
+        <span class="token-keyword">return</span> SkillResult(
+            skill=<span class="token-variable">self</span>.skill_name,
+            findings=results,
+            summary=<span class="token-string">f"{len(results)} potential SQL injection findings"</span>,
+        )
+
+    <span class="token-keyword">def</span> <span class="token-function">_analyze_chain</span>(<span class="token-variable">self</span>, chain, entry_points) -&gt; dict[str, Any] | <span class="token-keyword">None</span>:
+        <span class="token-comment"># Taint tracking: SQL sink ← untrusted source without sanitization</span>
+        <span class="token-comment"># ... implementation ...</span>
+        <span class="token-keyword">pass</span></code></pre>
+            </div>
+          </div>
+
+          <h3 id="register-skill">Registering the Skill</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">python</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># odin/skills/__init__.py</span>
+<span class="token-keyword">from</span> odin.skills.analysis.sql_injection.detector <span class="token-keyword">import</span> SQLInjectionDetector
+
+SKILL_REGISTRY: dict[str, type[BaseSkill]] = {
+    <span class="token-string">"sql_injection"</span>: SQLInjectionDetector,
+    <span class="token-string">"xss"</span>: XSSDetector,
+    <span class="token-string">"auth_guard"</span>: AuthGuardAnalyzer,
+    <span class="token-comment"># ... other skills ...</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--success fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <div>
+              <strong>MEU enforcement</strong> — Every skill must produce <code>MEUUnit</code> evidence objects. Findings not backed by traceable evidence will be rejected by the evidence enforcement layer.
+            </div>
+          </div>
+
+          <!-- Code of Conduct -->
+          <h2 id="conduct">Code of Conduct</h2>
+
+          <p>Odin follows the <a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct/" target="_blank" rel="noopener">Contributor Covenant Code of Conduct v2.1</a>. By participating, you agree to uphold a welcoming, respectful, and harassment-free environment for everyone.</p>
+
+          <p>Short version: Be kind. Assume good faith. Disagree respectfully. Focus on the work, not the person.</p>
+
+          <!-- Checklist -->
+          <h2 id="checklist">PR Checklist</h2>
+
+          <div class="card card--flat fade-in-up" style="background: var(--color-surface); padding: var(--space-6);">
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                All new code has type hints on function signatures
+              </li>
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <code>ruff check .</code> passes with no errors
+              </li>
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <code>mypy .</code> passes with no errors
+              </li>
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <code>pytest tests/ -v</code> passes with new tests added
+              </li>
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Commit messages follow Conventional Commits format
+              </li>
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                PR description explains the <em>why</em>, not just the <em>what</em>
+              </li>
+              <li class="status-list__item">
+                <svg class="status-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Breaking changes are explicitly marked
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#ways" class="toc__link">Ways to Contribute</a></li>
+              <li class="toc__item"><a href="#pr-workflow" class="toc__link">PR Workflow</a></li>
+              <li class="toc__item"><a href="#code-standards" class="toc__link">Code Standards</a></li>
+              <li class="toc__item"><a href="#new-skill" class="toc__link">New Skill Guide</a></li>
+              <li class="toc__item"><a href="#conduct" class="toc__link">Code of Conduct</a></li>
+              <li class="toc__item"><a href="#checklist" class="toc__link">PR Checklist</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

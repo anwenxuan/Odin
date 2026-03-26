@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration — Odin</title>
+  <meta name="description" content="Configure Odin with environment variables, odin.yaml, provider settings, and output directory.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="quickstart.html" class="nav__link nav__submenu-trigger active">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="quickstart.html" style="color: var(--color-text-secondary); text-decoration: none;">Get Started</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Configuration</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Configuration</h1>
+      <p class="hero__subtitle fade-in-up">Environment variables, odin.yaml, provider settings, and output directory.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <!-- Main Content -->
+        <div class="content">
+
+          <!-- Environment Variables -->
+          <h2 id="env">Environment Variables</h2>
+          <p class="lead">Odin is configured primarily through environment variables. You can set these in your shell, a <code>.env</code> file, or your CI/CD pipeline.</p>
+
+          <div class="comparison-table-wrapper fade-in-up">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Description</th>
+                  <th>Default</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>OPENAI_API_KEY</code></td>
+                  <td>OpenAI API key for GPT-4o, GPT-4o-mini, and other OpenAI models. Get one at <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a>.</td>
+                  <td><em>None</em></td>
+                </tr>
+                <tr>
+                  <td><code>ANTHROPIC_API_KEY</code></td>
+                  <td>Anthropic API key for Claude 3.5 Sonnet, Claude 3 Opus, and other Anthropic models. Get one at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.</td>
+                  <td><em>None</em></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_PROVIDER</code></td>
+                  <td>The default AI provider to use. Valid values: <code>openai</code>, <code>anthropic</code>, <code>ollama</code>, <code>mock</code>.</td>
+                  <td><code>mock</code></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_MODEL</code></td>
+                  <td>Default model when no model is specified on the command line. Example: <code>gpt-4o-mini</code> or <code>claude-3-5-sonnet-20241022</code>.</td>
+                  <td><em>Provider default</em></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_MAX_TOKENS</code></td>
+                  <td>Maximum number of tokens to generate in a single LLM response. Reduce to control costs; increase for detailed analysis.</td>
+                  <td><code>4096</code></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_OUTPUT_DIR</code></td>
+                  <td>Directory where analysis reports and evidence stores are written. Can be an absolute or relative path.</td>
+                  <td><code>.odin/audit</code></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_TEMPERATURE</code></td>
+                  <td>LLM sampling temperature (0.0 to 1.0). Lower values make output more deterministic; higher values add creativity.</td>
+                  <td><code>0.1</code></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_VERBOSE</code></td>
+                  <td>Enable verbose logging. Set to <code>1</code> or <code>true</code> for detailed debug output.</td>
+                  <td><code>0</code></td>
+                </tr>
+                <tr>
+                  <td><code>ODIN_RAG_ENABLED</code></td>
+                  <td>Enable RAG knowledge store for querying past analysis results. Set to <code>0</code> to disable.</td>
+                  <td><code>1</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Priority order</strong><br>
+              Configuration is resolved in this order (highest to lowest): CLI flags &gt; <code>odin.yaml</code> &gt; environment variables &gt; defaults.
+            </div>
+          </div>
+
+          <!-- odin.yaml -->
+          <h2 id="yaml">Configuration File (odin.yaml)</h2>
+          <p class="lead">Place an <code>odin.yaml</code> file in your project root or home directory for persistent configuration.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># odin.yaml</span>
+<span class="token-comment"># Place in your project root or ~/.odin/odin.yaml</span>
+
+<span class="token-comment"># Default provider (openai | anthropic | ollama | mock)</span>
+<span class="token-variable">provider</span>: <span class="token-string">openai</span>
+
+<span class="token-comment"># Default model</span>
+<span class="token-variable">model</span>: <span class="token-string">gpt-4o-mini</span>
+
+<span class="token-comment"># Max tokens per LLM response</span>
+<span class="token-variable">max_tokens</span>: <span class="token-number">4096</span>
+
+<span class="token-comment"># Temperature (0.0 - 1.0)</span>
+<span class="token-variable">temperature</span>: <span class="token-number">0.1</span>
+
+<span class="token-comment"># Output directory for reports and evidence</span>
+<span class="token-variable">output_dir</span>: <span class="token-string">.odin/audit</span>
+
+<span class="token-comment"># Enable RAG knowledge store</span>
+<span class="token-variable">rag</span>:
+  <span class="token-variable">enabled</span>: <span class="token-keyword">true</span>
+  <span class="token-variable">db_path</span>: <span class="token-string">~/.odin/knowledge.db</span>
+
+<span class="token-comment"># MCP server integrations</span>
+<span class="token-variable">mcp</span>:
+  <span class="token-variable">servers</span>:
+    - <span class="token-variable">name</span>: <span class="token-string">github</span>
+      <span class="token-variable">command</span>: <span class="token-string">npx @modelcontextprotocol/server-github</span>
+      <span class="token-variable">env</span>:
+        <span class="token-variable">GITHUB_PERSONAL_ACCESS_TOKEN</span>: <span class="token-string">${GITHUB_TOKEN}</span>
+    - <span class="token-variable">name</span>: <span class="token-string">filesystem</span>
+      <span class="token-variable">command</span>: <span class="token-string">npx @modelcontextprotocol/server-filesystem</span>
+      <span class="token-variable">args</span>:
+        - <span class="token-string">/tmp/odin-sandbox</span>
+
+<span class="token-comment"># Workflow defaults</span>
+<span class="token-variable">workflow</span>:
+  <span class="token-variable">default</span>: <span class="token-string">vulnerability_research</span>
+  <span class="token-variable">timeout</span>: <span class="token-number">600</span>
+  <span class="token-variable">retry</span>:
+    <span class="token-variable">max_attempts</span>: <span class="token-number">3</span>
+    <span class="token-variable">backoff</span>: <span class="token-string">exponential</span>
+
+<span class="token-comment"># Sandbox isolation (Docker)</span>
+<span class="token-variable">sandbox</span>:
+  <span class="token-variable">enabled</span>: <span class="token-keyword">false</span>
+  <span class="token-variable">image</span>: <span class="token-string">odin-sandbox:latest</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Provider Config -->
+          <h2 id="providers">Provider Configuration</h2>
+          <p class="lead">Odin supports multiple AI providers. Choose based on your needs and budget.</p>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+
+            <!-- OpenAI -->
+            <div class="card fade-in-up">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M8 12h8M12 8v8"/>
+                </svg>
+                <h3 style="margin: 0; font-size: var(--text-xl);">OpenAI</h3>
+                <span class="badge badge--completed" style="margin-left: auto;">Recommended</span>
+              </div>
+              <p style="margin-bottom: var(--space-4);">Best overall performance and cost efficiency. Supports <code>gpt-4o</code>, <code>gpt-4o-mini</code>, <code>gpt-4-turbo</code>.</p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" aria-label="Copy command">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <div class="code-block__body">
+<pre><code><span class="token-function">export</span> <span class="token-variable">OPENAI_API_KEY</span>=sk-your-key-here
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./target --provider openai --model gpt-4o-mini</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Anthropic -->
+            <div class="card fade-in-up">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5"/>
+                </svg>
+                <h3 style="margin: 0; font-size: var(--text-xl);">Anthropic</h3>
+                <span class="badge badge--planned" style="margin-left: auto;">Extended Context</span>
+              </div>
+              <p style="margin-bottom: var(--space-4);">Excellent for complex reasoning and code understanding. Supports <code>claude-3-5-sonnet-20241022</code>, <code>claude-3-opus-20240229</code>. 200K context window on Sonnet.</p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" aria-label="Copy command">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <div class="code-block__body">
+<pre><code><span class="token-function">export</span> <span class="token-variable">ANTHROPIC_API_KEY</span>=sk-ant-your-key-here
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./target --provider anthropic --model claude-3-5-sonnet-20241022</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ollama -->
+            <div class="card fade-in-up">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+                <h3 style="margin: 0; font-size: var(--text-xl);">Ollama</h3>
+                <span class="badge badge--v0-2" style="margin-left: auto;">Local / Offline</span>
+              </div>
+              <p style="margin-bottom: var(--space-4);">Run open-source models locally (Llama 3, CodeLlama, Qwen2, etc.). Zero API costs, full privacy. Requires <a href="https://ollama.com/" target="_blank" rel="noopener">Ollama installed</a> and running.</p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" aria-label="Copy command">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <div class="code-block__body">
+<pre><code><span class="token-comment"># Pull a model first</span>
+<span class="token-function">ollama</span> pull llama3.1
+
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./target --provider ollama --model llama3.1</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mock -->
+            <div class="card fade-in-up">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <h3 style="margin: 0; font-size: var(--text-xl);">Mock</h3>
+                <span class="badge badge--mit" style="margin-left: auto;">No API Key</span>
+              </div>
+              <p style="margin-bottom: var(--space-4);">Rule-based simulation of the full pipeline. No API key required. Perfect for learning, CI/CD testing, and workflow development.</p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" aria-label="Copy command">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <div class="code-block__body">
+<pre><code><span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./target --provider mock --verbose</code></pre>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Output Directory -->
+          <h2 id="output">Output Directory</h2>
+          <p class="lead">By default, Odin writes all outputs to <code>.odin/audit/</code> relative to where you run the command.</p>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <h4 style="margin-bottom: var(--space-2);">Reports</h4>
+              <p class="card__text" style="font-family: var(--font-mono); font-size: var(--text-xs);">.odin/audit/report-YYYY-MM-DD.md</p>
+              <p class="card__text">Human-readable Markdown report with all findings, evidence snippets, and confidence scores.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <h4 style="margin-bottom: var(--space-2);">Evidence Store</h4>
+              <p class="card__text" style="font-family: var(--font-mono); font-size: var(--text-xs);">.odin/audit/evidence.jsonl</p>
+              <p class="card__text">JSON Lines file containing every MEU (Minimum Evidence Unit) collected during the run.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5);">
+              <h4 style="margin-bottom: var(--space-2);">Session Log</h4>
+              <p class="card__text" style="font-family: var(--font-mono); font-size: var(--text-xs);">.odin/audit/session-YYYY-MM-DD.jsonl</p>
+              <p class="card__text">Complete execution log including layer timings, tool calls, LLM prompts, and responses.</p>
+            </div>
+          </div>
+
+          <p>Override the output directory with the <code>ODIN_OUTPUT_DIR</code> environment variable or the <code>--output</code> CLI flag:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Via environment variable</span>
+<span class="token-function">export</span> <span class="token-variable">ODIN_OUTPUT_DIR</span>=/var/results/odin
+
+<span class="token-comment"># Via CLI flag (overrides env)</span>
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./target --output /tmp/my-results</code></pre>
+            </div>
+          </div>
+
+          <!-- Next Steps -->
+          <h2 id="next">Next Steps</h2>
+          <div class="doc-nav-cards" style="margin-top: var(--space-6);">
+            <a href="installation.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Installation</span>
+              <span class="doc-nav-card__text">Install via pip, uv, or from source.</span>
+            </a>
+            <a href="quickstart.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Quick Start</span>
+              <span class="doc-nav-card__text">Up and running in 5 minutes.</span>
+            </a>
+            <a href="../architecture/overview.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Architecture</span>
+              <span class="doc-nav-card__text">Understand how Odin's layers work together.</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#env" class="toc__link">Environment Variables</a></li>
+              <li class="toc__item"><a href="#yaml" class="toc__link">odin.yaml</a></li>
+              <li class="toc__item"><a href="#providers" class="toc__link">Providers</a></li>
+              <li class="toc__item"><a href="#output" class="toc__link">Output Directory</a></li>
+              <li class="toc__item"><a href="#next" class="toc__link">Next Steps</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="installation.html" class="footer__link">Installation</a></li>
+            <li><a href="configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

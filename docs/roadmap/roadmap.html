@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap — Odin</title>
+  <meta name="description" content="The development roadmap for the Odin AI code research system.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>🛡️</text></svg>">
+  <style>
+    .roadmap-legend {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-bottom: var(--space-10);
+      flex-wrap: wrap;
+    }
+
+    .roadmap-legend__item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .roadmap-legend__dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .roadmap-legend__dot--done {
+      background: var(--color-success);
+      box-shadow: 0 0 0 2px var(--color-success);
+    }
+
+    .roadmap-legend__dot--progress {
+      background: var(--color-warning);
+      box-shadow: 0 0 0 2px var(--color-warning);
+    }
+
+    .roadmap-legend__dot--future {
+      background: var(--color-border);
+      box-shadow: 0 0 0 2px var(--color-border-light);
+    }
+
+    .roadmap-version-block {
+      margin-bottom: var(--space-16);
+    }
+
+    .roadmap-version-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .roadmap-version-header {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .roadmap-version-header h2 {
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+
+    .roadmap-version-subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    .roadmap-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .roadmap-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      transition: all var(--duration-base) var(--ease-out);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .roadmap-item {
+        background: var(--color-bg-secondary);
+      }
+    }
+
+    .roadmap-item:hover {
+      border-color: var(--color-border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .roadmap-item__icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+    }
+
+    .roadmap-item__text {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .roadmap-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--color-border);
+      margin: var(--space-8) 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2L3 8v12l11 6 11-6V8L14 2z" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M14 2v24M3 8l11 6 11-6" stroke="#0071e3" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li><a href="../index.html" class="nav__link">Overview</a></li>
+        <li><a href="../architecture/index.html" class="nav__link">Architecture</a></li>
+        <li><a href="../guide/index.html" class="nav__link">Guide</a></li>
+        <li><a href="../getting-started/index.html" class="nav__link">Get Started</a></li>
+        <li><a href="../development/index.html" class="nav__link">Development</a></li>
+        <li>
+          <div class="nav__submenu">
+            <span class="nav__link nav__submenu-trigger">More</span>
+            <ul class="nav__submenu-items">
+              <li><a href="vision.html" class="nav__submenu-item">Vision</a></li>
+              <li><a href="roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+              <li><a href="changelog.html" class="nav__submenu-item">Changelog</a></li>
+              <li><a href="../api/index.html" class="nav__submenu-item">API</a></li>
+              <li><a href="../examples/index.html" class="nav__submenu-item">Examples</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero hero--sub">
+      <div class="container container--narrow">
+        <span class="hero__eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Development Plan
+        </span>
+        <h1 class="hero__title">Roadmap</h1>
+        <p class="hero__subtitle">
+          From foundational architecture to production-grade autonomous vulnerability research — every milestone on the path to v1.0.
+        </p>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="section">
+      <div class="container">
+        <div class="container container--narrow">
+
+          <!-- v0.1.0 -->
+          <div class="roadmap-version-block fade-in-up">
+            <div class="roadmap-version-header">
+              <span class="badge badge--completed">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+              <h2>v0.1.0</h2>
+              <p class="roadmap-version-subtitle">Foundation</p>
+            </div>
+            <div class="timeline">
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">January 2024</div>
+                <div class="timeline__title">Tool Executor</div>
+                <p class="timeline__text">Pluggable execution engine with timeout, retry, and structured output across all 12 built-in skills.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">January 2024</div>
+                <div class="timeline__title">12 Built-in Skills</div>
+                <p class="timeline__text">Grep, AST, Semgrep, SBOM, CVSS, CWE, Deps, License, Secrets, Malware, Fuzz, CVE Lookup — ready to orchestrate.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">January 2024</div>
+                <div class="timeline__title">CLI Interface</div>
+                <p class="timeline__text">Command-line interface with workflow selection, target specification, and verbose output modes.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">January 2024</div>
+                <div class="timeline__title">YAML Workflow Definitions</div>
+                <p class="timeline__text">Human-readable workflow configs defining skill sequences, parameters, and pass-through logic.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">January 2024</div>
+                <div class="timeline__title">Mock Provider</div>
+                <p class="timeline__text">Offline testing mode using a local mock LLM provider — no API keys required to get started.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="roadmap-divider"></div>
+
+          <!-- v0.2.0 -->
+          <div class="roadmap-version-block fade-in-up">
+            <div class="roadmap-version-header">
+              <span class="badge badge--completed">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Completed
+              </span>
+              <h2>v0.2.0</h2>
+              <p class="roadmap-version-subtitle">Agent Core</p>
+            </div>
+            <div class="timeline">
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">June 2024</div>
+                <div class="timeline__title">Agent Loop</div>
+                <p class="timeline__text">ReAct-style reasoning engine with thought/action/observation cycles, state machine, and configurable max iterations.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">June 2024</div>
+                <div class="timeline__title">DAG Parallel Execution</div>
+                <p class="timeline__text">Layered task graph with topological scheduling — independent tasks run in parallel across DAG layers.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">June 2024</div>
+                <div class="timeline__title">MCP Integration</div>
+                <p class="timeline__text">Model Context Protocol support enabling dynamic tool discovery and external resource connections.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">June 2024</div>
+                <div class="timeline__title">FastAPI REST Server</div>
+                <p class="timeline__text">Production-grade API for workflow management, session persistence, and programmatic access.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--done"></div>
+                <div class="timeline__date">June 2024</div>
+                <div class="timeline__title">RAG Knowledge Store</div>
+                <p class="timeline__text">Vector-backed retrieval for persisting vulnerability findings, CVE records, and cross-session research context.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="roadmap-divider"></div>
+
+          <!-- v0.3.0 -->
+          <div class="roadmap-version-block fade-in-up">
+            <div class="roadmap-version-header">
+              <span class="badge badge--in-progress">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                In Progress
+              </span>
+              <h2>v0.3.0</h2>
+              <p class="roadmap-version-subtitle">Stability</p>
+            </div>
+            <div class="timeline">
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--progress"></div>
+                <div class="timeline__date">Q4 2024 (Target)</div>
+                <div class="timeline__title">Checkpoint &amp; Resume</div>
+                <p class="timeline__text">Agent state snapshots at configurable intervals — recover any research session after interruption without losing progress.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">Q4 2024 (Target)</div>
+                <div class="timeline__title">Docker Sandbox</div>
+                <p class="timeline__text">Containerized tool execution with resource limits, network isolation, and clean-up guarantees.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">Q4 2024 (Target)</div>
+                <div class="timeline__title">Evaluation Benchmarks</div>
+                <p class="timeline__text">SWE-bench integration, real-world CVE datasets, and quantitative precision/recall metrics for agent quality.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="roadmap-divider"></div>
+
+          <!-- v0.4.0 -->
+          <div class="roadmap-version-block fade-in-up">
+            <div class="roadmap-version-header">
+              <span class="badge badge--planned">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+                Planned
+              </span>
+              <h2>v0.4.0</h2>
+              <p class="roadmap-version-subtitle">Scale</p>
+            </div>
+            <div class="timeline">
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">2025 (Target)</div>
+                <div class="timeline__title">Multi-Agent Orchestration</div>
+                <p class="timeline__text">Coordinator agents delegating to specialized triage, audit, and reporting agents — running in parallel across repositories.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">2025 (Target)</div>
+                <div class="timeline__title">Permission System</div>
+                <p class="timeline__text">Role-based access control for teams — analysts, researchers, and admins with scoped permissions.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">2025 (Target)</div>
+                <div class="timeline__title">Cost &amp; Token Budget</div>
+                <p class="timeline__text">Per-project spending limits, token usage dashboards, and cost attribution across research pipelines.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="roadmap-divider"></div>
+
+          <!-- v1.0.0 -->
+          <div class="roadmap-version-block fade-in-up">
+            <div class="roadmap-version-header">
+              <span class="badge badge--planned">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+                Planned
+              </span>
+              <h2>v1.0.0</h2>
+              <p class="roadmap-version-subtitle">Production Ready</p>
+            </div>
+            <div class="timeline">
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">2025&ndash;2026 (Target)</div>
+                <div class="timeline__title">Full Observability</div>
+                <p class="timeline__text">Structured logging, distributed tracing, and metrics dashboards — complete visibility into every agent decision.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">2025&ndash;2026 (Target)</div>
+                <div class="timeline__title">Human-in-the-Loop</div>
+                <p class="timeline__text">Approval gates, escalation paths, and interactive review steps for critical vulnerability findings.</p>
+              </div>
+              <div class="timeline__item">
+                <div class="timeline__dot timeline__dot--future"></div>
+                <div class="timeline__date">2025&ndash;2026 (Target)</div>
+                <div class="timeline__title">Public API</div>
+                <p class="timeline__text">Stable, versioned REST API with OpenAPI documentation, client SDKs, and backward-compatibility guarantees.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress Overview -->
+    <section class="section section--sm section--dark">
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <p class="section-header__eyebrow">At a Glance</p>
+          <h2 class="section-header__title">Progress Overview</h2>
+        </div>
+
+        <div class="container container--narrow">
+          <div class="roadmap-legend fade-in-up">
+            <div class="roadmap-legend__item">
+              <div class="roadmap-legend__dot roadmap-legend__dot--done"></div>
+              Completed
+            </div>
+            <div class="roadmap-legend__item">
+              <div class="roadmap-legend__dot roadmap-legend__dot--progress"></div>
+              In Progress
+            </div>
+            <div class="roadmap-legend__item">
+              <div class="roadmap-legend__dot roadmap-legend__dot--future"></div>
+              Planned
+            </div>
+          </div>
+
+          <div class="roadmap-items stagger-children">
+
+            <div class="roadmap-item">
+              <svg class="roadmap-item__icon" style="color: var(--color-success);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <p class="roadmap-item__text"><strong>v0.1.0</strong> &mdash; Foundation &amp; CLI</p>
+            </div>
+
+            <div class="roadmap-item">
+              <svg class="roadmap-item__icon" style="color: var(--color-success);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <p class="roadmap-item__text"><strong>v0.2.0</strong> &mdash; Agent Core &amp; RAG</p>
+            </div>
+
+            <div class="roadmap-item">
+              <svg class="roadmap-item__icon" style="color: var(--color-warning);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <p class="roadmap-item__text"><strong>v0.3.0</strong> &mdash; Checkpoint, Sandbox, Benchmarks</p>
+            </div>
+
+            <div class="roadmap-item">
+              <svg class="roadmap-item__icon" style="color: var(--color-text-secondary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+              <p class="roadmap-item__text"><strong>v0.4.0</strong> &mdash; Multi-Agent, RBAC, Budget</p>
+            </div>
+
+            <div class="roadmap-item">
+              <svg class="roadmap-item__icon" style="color: var(--color-text-secondary);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+              <p class="roadmap-item__text"><strong>v1.0.0</strong> &mdash; Observability, HiTL, Public API</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../index.html" class="footer__link">Overview</a></li>
+            <li><a href="../getting-started/index.html" class="footer__link">Get Started</a></li>
+            <li><a href="../guide/index.html" class="footer__link">Guide</a></li>
+            <li><a href="../architecture/index.html" class="footer__link">Architecture</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="vision.html" class="footer__link">Vision</a></li>
+            <li><a href="roadmap.html" class="footer__link">Roadmap</a></li>
+            <li><a href="changelog.html" class="footer__link">Changelog</a></li>
+            <li><a href="../api/index.html" class="footer__link">API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issues</a></li>
+            <li><a href="../development/index.html" class="footer__link">Contributing</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2024 &mdash; MIT License &nbsp;&middot;&nbsp; v0.2.0</p>
+        <div class="footer__badge">
+          <span class="badge badge--mit">MIT License</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

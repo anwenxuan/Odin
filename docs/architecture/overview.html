@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture Overview — Odin</title>
+  <meta name="description" content="Odin architecture overview: layered design, module responsibilities, and end-to-end execution flow.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="overview.html" class="nav__link nav__submenu-trigger active">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="overview.html" class="nav__submenu-item active">Overview</a></li>
+            <li><a href="components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="../index.html" style="color: var(--color-text-secondary); text-decoration: none;">Docs</a>
+        <span style="color: var(--color-border);">/</span>
+        <span>Architecture</span>
+      </div>
+      <h1 class="hero__title fade-in-up">System Architecture</h1>
+      <p class="hero__subtitle fade-in-up">A four-layer autonomous system for evidence-backed code analysis. From raw tools to reasoning agents to structured memory — every component traceable.</p>
+    </div>
+  </section>
+
+  <!-- SVG Architecture Diagram -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Architecture Diagram</p>
+        <h2 class="section-header__title">Full System Stack</h2>
+        <p class="section-header__subtitle">Six layers from user entry to infrastructure, connected by a controlled data flow.</p>
+      </div>
+
+      <div class="arch-diagram fade-in-up" style="max-width: 860px;">
+        <svg viewBox="0 0 860 620" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;">
+
+          <defs>
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#d2d2d7"/>
+            </marker>
+            <marker id="arrowhead-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#0071e3"/>
+            </marker>
+            <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.06)"/>
+            </filter>
+            <linearGradient id="accent-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#0071e3; stop-opacity:0.07"/>
+              <stop offset="100%" style="stop-color:#0071e3; stop-opacity:0.03"/>
+            </linearGradient>
+            <linearGradient id="dark-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#1d1d1f; stop-opacity:0.06"/>
+              <stop offset="100%" style="stop-color:#1d1d1f; stop-opacity:0.02"/>
+            </linearGradient>
+          </defs>
+
+          <!-- ═══ LAYER 0: Entry Point ═══ -->
+          <text x="430" y="28" text-anchor="middle" font-size="10" font-weight="700" fill="#86868b" letter-spacing="0.1em">USER ENTRY POINT</text>
+          <rect x="300" y="36" width="260" height="44" rx="22" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#card-shadow)"/>
+          <text x="430" y="54" text-anchor="middle" font-size="12" font-weight="600" fill="#1d1d1f">CLI</text>
+          <text x="430" y="70" text-anchor="middle" font-size="11" fill="#86868b">REST API · SDK</text>
+
+          <!-- Arrow down -->
+          <line x1="430" y1="80" x2="430" y2="98" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+          <!-- ═══ LAYER 1: Tools ═══ -->
+          <text x="430" y="116" text-anchor="middle" font-size="10" font-weight="700" fill="#86868b" letter-spacing="0.1em">LAYER 1 — TOOLS</text>
+          <rect x="40" y="124" width="780" height="72" rx="12" fill="url(#dark-fill)" stroke="#e8e8ed" stroke-width="1"/>
+          <!-- Built-in Tools -->
+          <rect x="56" y="138" width="340" height="46" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="226" y="158" text-anchor="middle" font-size="11" font-weight="700" fill="#0071e3" letter-spacing="0.04em">12 BUILT-IN SKILLS</text>
+          <text x="226" y="173" text-anchor="middle" font-size="10" fill="#86868b">read_file · search_code · run_shell · git_ops</text>
+          <!-- MCP Tools -->
+          <rect x="412" y="138" width="340" height="46" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="582" y="158" text-anchor="middle" font-size="11" font-weight="700" fill="#8d6ef3" letter-spacing="0.04em">MCP EXTERNAL</text>
+          <text x="582" y="173" text-anchor="middle" font-size="10" fill="#86868b">GitHub · CVE Database · Jira · Custom MCP</text>
+
+          <!-- Arrows down (3) -->
+          <line x1="226" y1="196" x2="226" y2="218" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="430" y1="196" x2="430" y2="218" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="582" y1="196" x2="582" y2="218" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+          <!-- ═══ LAYER 2: Agent Loop ═══ -->
+          <text x="430" y="236" text-anchor="middle" font-size="10" font-weight="700" fill="#0071e3" letter-spacing="0.1em">LAYER 2 — AGENT LOOP</text>
+          <rect x="80" y="244" width="700" height="110" rx="12" fill="url(#accent-fill)" stroke="#0071e3" stroke-width="1.5"/>
+          <text x="430" y="262" text-anchor="middle" font-size="11" font-weight="700" fill="#0071e3" letter-spacing="0.06em">AUTONOMOUS REASONING ENGINE</text>
+
+          <!-- Agent loop sub-modules -->
+          <rect x="100" y="274" width="105" height="64" rx="8" fill="#ffffff" stroke="#0071e3" stroke-width="1"/>
+          <text x="152" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">LLM</text>
+          <text x="152" y="314" text-anchor="middle" font-size="10" fill="#86868b">Adapter</text>
+          <text x="152" y="326" text-anchor="middle" font-size="9" fill="#86868b">OpenAI · Anthropic</text>
+
+          <rect x="220" y="274" width="105" height="64" rx="8" fill="#ffffff" stroke="#0071e3" stroke-width="1"/>
+          <text x="272" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Loop</text>
+          <text x="272" y="314" text-anchor="middle" font-size="10" fill="#86868b">Controller</text>
+          <text x="272" y="326" text-anchor="middle" font-size="9" fill="#86868b">max_iter · timeout</text>
+
+          <rect x="340" y="274" width="105" height="64" rx="8" fill="#ffffff" stroke="#0071e3" stroke-width="1"/>
+          <text x="392" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Observer</text>
+          <text x="392" y="314" text-anchor="middle" font-size="10" fill="#86868b">State Monitor</text>
+          <text x="392" y="326" text-anchor="middle" font-size="9" fill="#86868b">convergence check</text>
+
+          <rect x="460" y="274" width="105" height="64" rx="8" fill="#ffffff" stroke="#0071e3" stroke-width="1"/>
+          <text x="512" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Checkpoint</text>
+          <text x="512" y="314" text-anchor="middle" font-size="10" fill="#86868b">State Snapshots</text>
+          <text x="512" y="326" text-anchor="middle" font-size="9" fill="#86868b">resume support</text>
+
+          <rect x="580" y="274" width="105" height="64" rx="8" fill="#ffffff" stroke="#0071e3" stroke-width="1"/>
+          <text x="632" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Retry</text>
+          <text x="632" y="314" text-anchor="middle" font-size="10" fill="#86868b">Error Handler</text>
+          <text x="632" y="326" text-anchor="middle" font-size="9" fill="#86868b">backoff · fallback</text>
+
+          <rect x="700" y="274" width="60" height="64" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="730" y="307" text-anchor="middle" font-size="16" fill="#d2d2d7">...</text>
+
+          <!-- Loop arrow (back to LLM) -->
+          <path d="M 655 338 Q 430 370 152 338" fill="none" stroke="#0071e3" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrowhead-blue)" opacity="0.5"/>
+
+          <!-- Arrows down -->
+          <line x1="226" y1="354" x2="226" y2="376" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="430" y1="354" x2="430" y2="376" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="582" y1="354" x2="582" y2="376" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+          <!-- ═══ LAYER 3: Core ═══ -->
+          <text x="430" y="394" text-anchor="middle" font-size="10" font-weight="700" fill="#86868b" letter-spacing="0.1em">LAYER 3 — CORE EXECUTION</text>
+          <rect x="40" y="402" width="780" height="80" rx="12" fill="#f5f5f7" stroke="#e8e8ed" stroke-width="1"/>
+
+          <rect x="56" y="416" width="130" height="52" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1" filter="url(#card-shadow)"/>
+          <text x="121" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Pipeline</text>
+          <text x="121" y="452" text-anchor="middle" font-size="10" fill="#86868b">DAG Executor</text>
+          <text x="121" y="462" text-anchor="middle" font-size="9" fill="#86868b">parallel layers</text>
+
+          <rect x="200" y="416" width="130" height="52" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1" filter="url(#card-shadow)"/>
+          <text x="265" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Workflow</text>
+          <text x="265" y="452" text-anchor="middle" font-size="10" fill="#86868b">Orchestrator</text>
+          <text x="265" y="462" text-anchor="middle" font-size="9" fill="#86868b">step scheduling</text>
+
+          <rect x="344" y="416" width="130" height="52" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1" filter="url(#card-shadow)"/>
+          <text x="409" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Skill</text>
+          <text x="409" y="452" text-anchor="middle" font-size="10" fill="#86868b">Loader & Registry</text>
+          <text x="409" y="462" text-anchor="middle" font-size="9" fill="#86868b">12 built-in</text>
+
+          <rect x="488" y="416" width="130" height="52" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1" filter="url(#card-shadow)"/>
+          <text x="553" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Prompt</text>
+          <text x="553" y="452" text-anchor="middle" font-size="10" fill="#86868b">Runner & Templating</text>
+          <text x="553" y="462" text-anchor="middle" font-size="9" fill="#86868b">context assembly</text>
+
+          <rect x="632" y="416" width="130" height="52" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1" filter="url(#card-shadow)"/>
+          <text x="697" y="438" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Schema</text>
+          <text x="697" y="452" text-anchor="middle" font-size="10" fill="#86868b">Validator</text>
+          <text x="697" y="462" text-anchor="middle" font-size="9" fill="#86868b">MEU enforcement</text>
+
+          <!-- Arrows down -->
+          <line x1="121" y1="482" x2="121" y2="504" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="265" y1="482" x2="265" y2="504" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="409" y1="482" x2="409" y2="504" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="553" y1="482" x2="553" y2="504" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+          <line x1="697" y1="482" x2="697" y2="504" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+          <!-- ═══ LAYER 4: Memory ═══ -->
+          <text x="430" y="522" text-anchor="middle" font-size="10" font-weight="700" fill="#86868b" letter-spacing="0.1em">LAYER 4 — MEMORY</text>
+          <rect x="40" y="530" width="780" height="80" rx="12" fill="url(#dark-fill)" stroke="#e8e8ed" stroke-width="1"/>
+
+          <rect x="56" y="542" width="148" height="56" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="130" y="562" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Working Memory</text>
+          <text x="130" y="576" text-anchor="middle" font-size="10" fill="#86868b">Session context</text>
+          <text x="130" y="589" text-anchor="middle" font-size="9" fill="#86868b">ephemeral, per-task</text>
+
+          <rect x="218" y="542" width="148" height="56" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="292" y="562" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Long-term Memory</text>
+          <text x="292" y="576" text-anchor="middle" font-size="10" fill="#86868b">Persistent facts</text>
+          <text x="292" y="589" text-anchor="middle" font-size="9" fill="#86868b">structured JSON</text>
+
+          <rect x="380" y="542" width="148" height="56" rx="8" fill="#0071e3" fill-opacity="0.08" stroke="#0071e3" stroke-width="1"/>
+          <text x="454" y="562" text-anchor="middle" font-size="11" font-weight="600" fill="#0071e3">Evidence Store</text>
+          <text x="454" y="576" text-anchor="middle" font-size="10" fill="#86868b">MEU compliance</text>
+          <text x="454" y="589" text-anchor="middle" font-size="9" fill="#86868b">SQLite</text>
+
+          <rect x="542" y="542" width="148" height="56" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="616" y="562" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">RAG Store</text>
+          <text x="616" y="576" text-anchor="middle" font-size="10" fill="#86868b">Full-text search</text>
+          <text x="616" y="589" text-anchor="middle" font-size="9" fill="#86868b">SQLite FTS5</text>
+
+          <rect x="704" y="542" width="96" height="56" rx="8" fill="#ffffff" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="752" y="562" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Graph</text>
+          <text x="752" y="576" text-anchor="middle" font-size="10" fill="#86868b">Call relations</text>
+          <text x="752" y="589" text-anchor="middle" font-size="9" fill="#86868b">networkx</text>
+
+          <!-- ═══ INFRASTRUCTURE BAR ═══ -->
+          <rect x="40" y="624" width="780" height="36" rx="8" fill="#1d1d1f" fill-opacity="0.05" stroke="#d2d2d7" stroke-width="1"/>
+          <text x="145" y="646" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Sandbox</text>
+          <line x1="240" y1="630" x2="240" y2="654" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="340" y="646" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Verification</text>
+          <line x1="435" y1="630" x2="435" y2="654" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="535" y="646" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Evaluation</text>
+          <line x1="630" y1="630" x2="630" y2="654" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="730" y="646" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Observability</text>
+
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layer Responsibilities -->
+  <section class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Layer Responsibilities</p>
+        <h2 class="section-header__title">Each layer, clearly defined</h2>
+        <p class="section-header__subtitle">Odin uses a strict layered architecture where each layer only communicates with adjacent layers. This separation ensures testability, extensibility, and predictable performance.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 1000px; margin: 0 auto;">
+        <div class="fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #f5f5f7; border: 1px solid #d2d2d7; font-size: var(--text-xs); font-weight: 700; color: #86868b;">0</span>
+            <h3 style="font-size: var(--text-lg); margin: 0;">User Entry Point</h3>
+          </div>
+          <p class="card__text" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7;">
+            Accepts natural-language tasks from the CLI or REST API. Parses arguments, validates credentials, and forwards structured task definitions to the Agent Loop. Acts purely as a thin gateway — no business logic lives here.
+          </p>
+        </div>
+        <div class="fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #0071e3; font-size: var(--text-xs); font-weight: 700; color: white;">1</span>
+            <h3 style="font-size: var(--text-lg); margin: 0;">Tools Layer</h3>
+          </div>
+          <p class="card__text" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7;">
+            12 built-in skills covering repo mapping, entry point detection, call graph analysis, dependency enumeration, and more. Each tool is self-contained and MCP-compatible. External MCP tools are loaded dynamically without modifying core code.
+          </p>
+        </div>
+        <div class="fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #0071e3; font-size: var(--text-xs); font-weight: 700; color: white;">2</span>
+            <h3 style="font-size: var(--text-lg); margin: 0;">Agent Loop</h3>
+          </div>
+          <p class="card__text" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7;">
+            The autonomous reasoning core. The LLM Adapter normalizes provider differences (OpenAI, Anthropic, Ollama). The Loop Controller manages iteration, termination, and convergence checks. The Observer monitors intermediate state. Checkpoint enables resume on failure. Retry handles transient errors with exponential backoff.
+          </p>
+        </div>
+        <div class="fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #0071e3; font-size: var(--text-xs); font-weight: 700; color: white;">3</span>
+            <h3 style="font-size: var(--text-lg); margin: 0;">Core Execution</h3>
+          </div>
+          <p class="card__text" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7;">
+            The execution engine. Pipeline Executor resolves skill DAGs and dispatches tasks to ThreadPoolExecutor for parallel layer execution. Workflow Orchestrator selects and sequences skills. Skill Loader manages the registry and handles hot-reload. Prompt Runner assembles context windows with token budget management.
+          </p>
+        </div>
+        <div class="fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #0071e3; font-size: var(--text-xs); font-weight: 700; color: white;">4</span>
+            <h3 style="font-size: var(--text-lg); margin: 0;">Memory System</h3>
+          </div>
+          <p class="card__text" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7;">
+            Four distinct memory stores: Working Memory (session-scoped, ephemeral), Long-term Memory (persistent JSON facts), Evidence Store (MEU-compliant findings with file/line/snippet), and RAG Store (SQLite FTS5 full-text search over historical reports). Each store has a dedicated access API with no cross-contamination.
+          </p>
+        </div>
+        <div class="fade-in-up">
+          <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #1d1d1f; font-size: var(--text-xs); font-weight: 700; color: white;">I</span>
+            <h3 style="font-size: var(--text-lg); margin: 0;">Infrastructure</h3>
+          </div>
+          <p class="card__text" style="font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7;">
+            Sandboxing isolates untrusted code execution. Verification engine cross-checks findings against ground truth or static analysis tools. Evaluation framework measures precision, recall, and F1 against labeled datasets. Observability layer exports traces, metrics, and structured logs via OpenTelemetry-compatible interfaces.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- End-to-End Execution Flow -->
+  <section class="section" id="execution-flow">
+    <div class="container container--narrow">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Execution Flow</p>
+        <h2 class="section-header__title">End-to-end task lifecycle</h2>
+        <p class="section-header__subtitle">From a single command to a structured evidence-backed report, every step is deliberate and traceable.</p>
+      </div>
+
+      <ol class="steps fade-in-up">
+        <li class="step">
+          <div class="step__title">User Input</div>
+          <div class="step__text">The user runs <code>odin analyze &lt;target&gt;</code> via CLI or sends a POST request to the REST API. The entry point parses the target, selects a workflow (e.g., <code>vulnerability_research</code>), and creates a <code>TaskContext</code> object with session metadata.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Workflow Initialization</div>
+          <div class="step__text">The Workflow Orchestrator loads the named workflow definition from the skills registry. It resolves the skill DAG — determining which skills can run in parallel (same layer) and which must wait for upstream dependencies. This produces a sorted execution plan.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">DAG-Layer Parallel Execution</div>
+          <div class="step__text">The Pipeline Executor iterates over each layer. Within a layer, all ready skills are dispatched concurrently via <code>ThreadPoolExecutor</code>. Results flow into the next layer's input. A 7-step workflow that would take 7 × N seconds sequentially might complete in 3 layers × N seconds in parallel.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Agent Loop Reasoning</div>
+          <div class="step__text">As each skill executes, the Agent Loop monitors intermediate findings. The LLM Adapter assembles a context prompt from Working Memory, the current skill output, and relevant Evidence Store entries. The LLM generates reasoning steps, tool calls, and MEU candidates.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">MEU Enforcement</div>
+          <div class="step__text">Every LLM-generated conclusion must be paired with a Minimum Evidence Unit — a file path, line range, and code snippet. The Schema Validator rejects conclusions lacking MEU. Unverified claims are flagged as <code>UNVERIFIED</code> and excluded from the final report.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Evidence Store & RAG Indexing</div>
+          <div class="step__text">Verified MEU entries are persisted to the Evidence Store (SQLite). Concurrently, the report text is chunked and indexed into the RAG Store (SQLite FTS5). Future queries can retrieve relevant historical findings via semantic or keyword search.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Report Generation</div>
+          <div class="step__text">The Prompt Runner assembles the final report from the verified Evidence Store entries, organized by severity and skill. The output is written as Markdown to <code>.odin/audit/</code> with a structured JSON manifest for programmatic consumption.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Evaluation (Optional)</div>
+          <div class="step__text">If a ground truth dataset is provided, the Evaluation Framework computes precision, recall, and F1 for this run. Results are appended to a metrics SQLite file and exported as an OpenTelemetry trace if observability is configured.</div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Module Dependency -->
+  <section class="section" style="background: var(--color-bg-secondary);" id="dependencies">
+    <div class="container container--narrow">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Module Dependencies</p>
+        <h2 class="section-header__title">Dependency graph</h2>
+        <p class="section-header__subtitle">Understanding how modules depend on each other helps when extending or debugging Odin.</p>
+      </div>
+
+      <div class="code-block fade-in-up">
+        <div class="code-block__header">
+          <span class="code-block__lang">Dependency Graph</span>
+        </div>
+        <div class="code-block__body">
+<pre><code>CLI / REST API
+    │
+    ▼
+┌─────────────────────────────────────────────┐
+│  FastAPI Server  (HTTP layer, auth, routing) │
+└────────────────────┬────────────────────────┘
+                     │
+                     ▼
+┌─────────────────────────────────────────────┐
+│  Agent Loop  (reasoning, convergence, retry) │
+│    ├── LLM Adapter  (OpenAI · Anthropic)      │
+│    ├── Observer  (state monitoring)           │
+│    └── Checkpoint  (resume / replay)          │
+└──────────────┬─────────────────┬─────────────┘
+               │                 │
+               ▼                 ▼
+┌──────────────────────┐  ┌────────────────────┐
+│  Core / Pipeline     │  │  Workflow           │
+│  Executor (DAG)      │  │  Orchestrator       │
+└──────────┬───────────┘  └─────────┬──────────┘
+           │                         │
+           ▼                         ▼
+┌──────────────────────────────────────────────┐
+│  Skill Loader  (registry, hot-reload)         │
+│    └── 12 built-in skills (each self-contained)│
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│  Tool Executor  (sandbox, retry, timeout)      │
+│    └── MCP Client  (external tool integration)│
+└──────────────────────┬───────────────────────┘
+                       │
+           ┌───────────┼───────────┐
+           ▼           ▼           ▼
+   ┌────────────┐ ┌──────────┐ ┌──────────────┐
+   │  Working   │ │Evidence  │ │    RAG       │
+   │  Memory    │ │ Store    │ │    Store     │
+   └────────────┘ └──────────┘ └──────────────┘
+           │
+           ▼
+   ┌──────────────────────────────────────────┐
+   │  Evaluation Framework  (P/R/F1, traces)  │
+   │  Observability  (OpenTelemetry export)    │
+   └──────────────────────────────────────────┘</code></pre>
+        </div>
+      </div>
+
+      <div class="callout callout--info fade-in-up" style="margin-top: var(--space-6);">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div>
+          <strong>Key design principle:</strong> Dependencies only flow downward. Higher layers (Entry) never import lower layers (Infrastructure). This ensures that the memory and evaluation layers can be replaced or stubbed independently without touching the agent reasoning code.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Cards -->
+  <section class="section">
+    <div class="container">
+      <div class="doc-nav-cards stagger-children">
+        <a href="components.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Components</span>
+          <span class="doc-nav-card__text">Detailed breakdown of every module: Tool Executor, Agent Loop, Memory, and more.</span>
+        </a>
+        <a href="data-flow.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Data Flow</span>
+          <span class="doc-nav-card__text">Request processing, tool calling, and evidence storage pipelines visualized.</span>
+        </a>
+        <a href="../guide/core-concepts.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Core Concepts</span>
+          <span class="doc-nav-card__text">MEU model, DAG-layer parallelism, and the evidence enforcement philosophy.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

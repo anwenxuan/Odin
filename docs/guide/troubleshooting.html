@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting — Odin</title>
+  <meta name="description" content="Common issues and solutions when running Odin — API key errors, timeouts, MCP failures, RAG permissions, DAG stalls, and memory limits.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="core-concepts.html" class="nav__link nav__submenu-trigger active">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="nav__submenu-item active">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="core-concepts.html" style="color: var(--color-text-secondary); text-decoration: none;">Guide</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Troubleshooting</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Troubleshooting</h1>
+      <p class="hero__subtitle fade-in-up">Diagnose and resolve common issues with Odin. Find the problem, understand the cause, and apply the fix.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- Issue 1 -->
+          <h2 id="api-key-error">API key not set / authentication error</h2>
+          <div class="card card--flat fade-in-up" style="padding: 0; overflow: hidden; margin-bottom: var(--space-8);">
+            <div style="background: rgba(255, 69, 58, 0.08); border-left: 3px solid var(--color-danger); padding: var(--space-4) var(--space-6);">
+              <strong style="color: var(--color-danger);">Error</strong>
+              <p style="margin: var(--space-2) 0 0; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-text-secondary);">
+                odin.errors.AuthError: No API key configured for provider "openai". Set OPENAI_API_KEY or configure provider in odin.yaml.
+              </p>
+            </div>
+          </div>
+
+          <h3>Cause</h3>
+          <p>Odin requires a valid API key for any LLM provider except Mock mode. If the <code>OPENAI_API_KEY</code> (or equivalent) environment variable is missing, or if the key in <code>odin.yaml</code> is invalid or expired, authentication fails at the first API call.</p>
+
+          <h3>Solution</h3>
+          <p><strong>Step 1:</strong> Verify the environment variable is set:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">echo</span> <span class="token-variable">$OPENAI_API_KEY</span>   <span class="token-comment"># Should print your key, not be empty</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 2:</strong> Set the variable (replace with your actual key):</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">export</span> <span class="token-variable">OPENAI_API_KEY</span>=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 3:</strong> Or configure it in <code>odin.yaml</code>:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># odin.yaml</span>
+<span class="token-variable">provider</span>: openai
+<span class="token-variable">model</span>: gpt-4o-mini
+<span class="token-variable">api_key</span>: <span class="token-string">"sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span>   <span class="token-comment"># Or use env var: env:OPENAI_API_KEY</span></code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Never commit API keys to source control.</strong><br>
+              Use environment variables or a <code>.env</code> file (add <code>.env</code> to <code>.gitignore</code>). In CI/CD, pass keys via secret variables.
+            </div>
+          </div>
+
+          <!-- Issue 2 -->
+          <h2 id="analysis-timeout">Analysis request timed out</h2>
+          <div class="card card--flat fade-in-up" style="padding: 0; overflow: hidden; margin-bottom: var(--space-8);">
+            <div style="background: rgba(255, 159, 10, 0.08); border-left: 3px solid var(--color-warning); padding: var(--space-4) var(--space-6);">
+              <strong style="color: var(--color-warning);">Error</strong>
+              <p style="margin: var(--space-2) 0 0; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-text-secondary);">
+                odin.errors.TimeoutError: Analysis request timed out after 300s. Target: src/auth/, workflow: deep-audit.
+              </p>
+            </div>
+          </div>
+
+          <h3>Cause</h3>
+          <p>Timeouts occur when the LLM takes longer than the configured threshold to respond. Common triggers include:</p>
+          <ul>
+            <li>Very large repositories with thousands of files</li>
+            <li>Complex multi-step workflows with many sequential skill calls</li>
+            <li>LLM API rate limiting causing retries</li>
+            <li>Network latency when using remote providers (e.g., OpenAI from a region with high ping)</li>
+          </ul>
+
+          <h3>Solution</h3>
+          <p><strong>Increase the timeout</strong> in <code>odin.yaml</code>:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">analysis</span>:
+  <span class="token-keyword">timeout</span>: <span class="token-number">600</span>    <span class="token-comment"># seconds, default is 300</span>
+  <span class="token-keyword">include</span>: [<span class="token-string">"src/**/*.py"</span>]   <span class="token-comment"># narrow scope to reduce processing time</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Or pass it via CLI</strong> for a one-off run:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">odin</span> analyze ./src --timeout <span class="token-number">600</span></code></pre>
+            </div>
+          </div>
+
+          <p>If timeouts persist, try using a faster model (<code>gpt-4o-mini</code> or <code>claude-3-haiku</code>) or reduce the analysis scope.</p>
+
+          <!-- Issue 3 -->
+          <h2 id="mcp-connection">MCP server connection failed</h2>
+          <div class="card card--flat fade-in-up" style="padding: 0; overflow: hidden; margin-bottom: var(--space-8);">
+            <div style="background: rgba(255, 69, 58, 0.08); border-left: 3px solid var(--color-danger); padding: var(--space-4) var(--space-6);">
+              <strong style="color: var(--color-danger);">Error</strong>
+              <p style="margin: var(--space-2) 0 0; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-text-secondary);">
+                odin.mcp.ConnectionError: Failed to connect to MCP server at localhost:8080. Is the server running?
+              </p>
+            </div>
+          </div>
+
+          <h3>Cause</h3>
+          <p>The Model Context Protocol (MCP) server that Odin connects to for extended tooling (file system access, git operations, etc.) is either not running or unreachable at the configured address.</p>
+
+          <h3>Solution</h3>
+          <p><strong>Step 1:</strong> Confirm the MCP server is running:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">curl</span> http://localhost:8080/health
+<span class="token-comment"># Expected: {"status": "ok"}</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 2:</strong> Start the MCP server if it's not running:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Start the bundled MCP server in the background</span>
+<span class="token-function">odin</span> mcp serve &
+<span class="token-comment"># Or start a custom MCP server</span>
+<span class="token-function">python</span> -m odin.mcp.server --port <span class="token-number">8080</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 3:</strong> Check the configured address in <code>odin.yaml</code>:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">mcp</span>:
+  <span class="token-keyword">enabled</span>: <span class="token-builtin">true</span>
+  <span class="token-keyword">server_url</span>: <span class="token-string">"http://localhost:8080"</span>
+  <span class="token-keyword">timeout</span>: <span class="token-number">30</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Issue 4 -->
+          <h2 id="rag-permission">RAG vector store permission denied</h2>
+          <div class="card card--flat fade-in-up" style="padding: 0; overflow: hidden; margin-bottom: var(--space-8);">
+            <div style="background: rgba(255, 69, 58, 0.08); border-left: 3px solid var(--color-danger); padding: var(--space-4) var(--space-6);">
+              <strong style="color: var(--color-danger);">Error</strong>
+              <p style="margin: var(--space-2) 0 0; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-text-secondary);">
+                PermissionError: [Errno 13] Permission denied: '/root/.odin/rag/vector_store.db'
+              </p>
+            </div>
+          </div>
+
+          <h3>Cause</h3>
+          <p>Odin stores RAG vector embeddings in <code>~/.odin/rag/</code>. If that directory was created by a different user (e.g., root during a Docker run), the current user may lack write permissions.</p>
+
+          <h3>Solution</h3>
+          <p><strong>Fix ownership</strong> of the RAG directory:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">sudo</span> chown -R <span class="token-variable">$(whoami)</span> ~/.odin/rag/</code></pre>
+            </div>
+          </div>
+
+          <p><strong>Or use a custom path</strong> that your user owns:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">rag</span>:
+  <span class="token-keyword">storage_path</span>: <span class="token-string">"./odin-rag/"</span>   <span class="token-comment"># relative to project root</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Issue 5 -->
+          <h2 id="dag-stuck">DAG execution hangs / task never completes</h2>
+          <div class="card card--flat fade-in-up" style="padding: 0; overflow: hidden; margin-bottom: var(--space-8);">
+            <div style="background: rgba(255, 159, 10, 0.08); border-left: 3px solid var(--color-warning); padding: var(--space-4) var(--space-6);">
+              <strong style="color: var(--color-warning);">Error</strong>
+              <p style="margin: var(--space-2) 0 0; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-text-secondary);">
+                odin.dag.DAGStuckError: Node "skill:dependency-graph" has been PENDING for 420s. No progress detected.
+              </p>
+            </div>
+          </div>
+
+          <h3>Cause</h3>
+          <p>A DAG node gets stuck when a skill task is waiting indefinitely — usually because its upstream dependencies never resolved, or the LLM call returned an unparseable response that the skill handler couldn't process.</p>
+
+          <h3>Solution</h3>
+          <p><strong>Step 1:</strong> Check the DAG execution log for the stuck node:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">cat</span> odin-output/<span class="token-variable">$TARGET</span>/dag/execution.json | <span class="token-function">grep</span> -A <span class="token-number">5</span> <span class="token-string">"PENDING"</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 2:</strong> Enable strict dependency validation to catch circular or missing dependencies early:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">dag</span>:
+  <span class="token-keyword">strict_mode</span>: <span class="token-builtin">true</span>   <span class="token-comment"># Fail fast on circular deps or missing edges</span>
+  <span class="token-keyword">node_timeout</span>: <span class="token-number">120</span>   <span class="token-comment"># Per-node timeout in seconds</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 3:</strong> Use a lighter workflow if the full DAG is too complex:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Use the quick-audit workflow instead of deep-audit</span>
+<span class="token-function">odin</span> analyze ./src --workflow quick-audit</code></pre>
+            </div>
+          </div>
+
+          <!-- Issue 6 -->
+          <h2 id="out-of-memory">Out of memory / OOM on large repositories</h2>
+          <div class="card card--flat fade-in-up" style="padding: 0; overflow: hidden; margin-bottom: var(--space-8);">
+            <div style="background: rgba(255, 69, 58, 0.08); border-left: 3px solid var(--color-danger); padding: var(--space-4) var(--space-6);">
+              <strong style="color: var(--color-danger);">Error</strong>
+              <p style="margin: var(--space-2) 0 0; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-text-secondary);">
+                MemoryError: Unable to allocate RAG chunk buffer. Repository size: 2.4 GB. Available RAM: 1.8 GB.
+              </p>
+            </div>
+          </div>
+
+          <h3>Cause</h3>
+          <p>Large repositories with thousands of files generate massive RAG vector embeddings. If the total chunked text exceeds available RAM, the process is killed by the OS OOM killer or raises a <code>MemoryError</code>. This is especially common when processing entire monorepos without scope limits.</p>
+
+          <h3>Solution</h3>
+          <p><strong>Step 1:</strong> Limit the files being processed:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">analysis</span>:
+  <span class="token-keyword">include</span>: [<span class="token-string">"src/**/*.py"</span>]
+  <span class="token-keyword">exclude</span>: [<span class="token-string">"tests/**"</span>, <span class="token-string">"node_modules/**"</span>, <span class="token-string">"vendor/**"</span>, <span class="token-string">"dist/**"</span>]</code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 2:</strong> Increase RAG chunk overlap and reduce batch size to lower peak memory:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">rag</span>:
+  <span class="token-keyword">chunk_size</span>: <span class="token-number">512</span>       <span class="token-comment"># tokens per chunk (default: 1024)</span>
+  <span class="token-keyword">chunk_overlap</span>: <span class="token-number">64</span>    <span class="token-comment"># overlap between chunks</span>
+  <span class="token-keyword">batch_size</span>: <span class="token-number">50</span>        <span class="token-comment"># embeddings per API call (default: 100)</span></code></pre>
+            </div>
+          </div>
+
+          <p><strong>Step 3:</strong> For very large repos, process in batches by directory:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Analyze subdirectories one at a time</span>
+<span class="token-function">odin</span> analyze ./src/auth --output ./odin-output/auth
+<span class="token-function">odin</span> analyze ./src/api --output ./odin-output/api
+<span class="token-function">odin</span> analyze ./src/core --output ./odin-output/core</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--success fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <div>
+              <strong>Still stuck?</strong><br>
+              Run <code>odin diag</code> to generate a full system diagnostic report and share it in a <a href="https://github.com/anwenxuan/Odin/issues" target="_blank" rel="noopener">GitHub Issue</a>.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#api-key-error" class="toc__link">API Key Error</a></li>
+              <li class="toc__item"><a href="#analysis-timeout" class="toc__link">Analysis Timeout</a></li>
+              <li class="toc__item"><a href="#mcp-connection" class="toc__link">MCP Connection</a></li>
+              <li class="toc__item"><a href="#rag-permission" class="toc__link">RAG Permission</a></li>
+              <li class="toc__item"><a href="#dag-stuck" class="toc__link">DAG Stuck</a></li>
+              <li class="toc__item"><a href="#out-of-memory" class="toc__link">Out of Memory</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="footer__link">Troubleshooting</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+            <li><a href="core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Vision</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

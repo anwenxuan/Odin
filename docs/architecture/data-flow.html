@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Flow — Odin Architecture</title>
+  <meta name="description" content="Odin data flow diagrams: analysis request pipeline, tool calling cycle, and evidence storage lifecycle.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="overview.html" class="nav__link nav__submenu-trigger active">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="data-flow.html" class="nav__submenu-item active">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="../index.html" style="color: var(--color-text-secondary); text-decoration: none;">Docs</a>
+        <span style="color: var(--color-border);">/</span>
+        <a href="overview.html" style="color: var(--color-text-secondary); text-decoration: none;">Architecture</a>
+        <span style="color: var(--color-border);">/</span>
+        <span>Data Flow</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Data Flow</h1>
+      <p class="hero__subtitle fade-in-up">Visual diagrams and step-by-step walkthroughs of Odin's three core pipelines: request analysis, tool execution, and evidence storage.</p>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  <section class="section section--sm">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center;" class="fade-in-up">
+        <a href="#data-flow-diagram" class="badge badge--planned" style="text-decoration: none;">Data Flow Diagram</a>
+        <a href="#analysis-request" class="badge badge--planned" style="text-decoration: none;">Analysis Request</a>
+        <a href="#tool-calling" class="badge badge--planned" style="text-decoration: none;">Tool Calling</a>
+        <a href="#evidence-storage" class="badge badge--planned" style="text-decoration: none;">Evidence Storage</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Master Data Flow Diagram ═══ -->
+  <section class="section" id="data-flow-diagram">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Data Flow Diagram</p>
+        <h2 class="section-header__title">Master Pipeline Overview</h2>
+        <p class="section-header__subtitle">Three interlocking pipelines — request, execution, and evidence — share a common memory layer and converge at the final report.</p>
+      </div>
+
+      <div class="arch-diagram fade-in-up" style="max-width: 860px;">
+        <svg viewBox="0 0 860 780" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;">
+
+          <defs>
+            <marker id="df-arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#d2d2d7"/>
+            </marker>
+            <marker id="df-arrow-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#0071e3"/>
+            </marker>
+            <marker id="df-arrow-green" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#30d158"/>
+            </marker>
+            <marker id="df-arrow-purple" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+              <polygon points="0 0, 7 2.5, 0 5" fill="#8d6ef3"/>
+            </marker>
+            <filter id="df-shadow" x="-5%" y="-5%" width="110%" height="115%">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.07)"/>
+            </filter>
+          </defs>
+
+          <!-- ═══ COLUMN HEADERS ═══ -->
+          <!-- Pipeline 1: Analysis Request -->
+          <text x="145" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#0071e3" letter-spacing="0.08em">PIPELINE 1 — ANALYSIS REQUEST</text>
+          <!-- Pipeline 2: Tool Calling -->
+          <text x="430" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.08em">PIPELINE 2 — TOOL CALLING</text>
+          <!-- Pipeline 3: Evidence Storage -->
+          <text x="715" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.08em">PIPELINE 3 — EVIDENCE STORAGE</text>
+
+          <!-- Vertical dividers -->
+          <line x1="285" y1="44" x2="285" y2="740" stroke="#e8e8ed" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="575" y1="44" x2="575" y2="740" stroke="#e8e8ed" stroke-width="1" stroke-dasharray="4 4"/>
+
+          <!-- ══════════════════════════════ PIPELINE 1: ANALYSIS REQUEST ══════════════════════════════ -->
+
+          <!-- P1 Node 1: User Input -->
+          <rect x="70" y="56" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="145" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">CLI / REST API</text>
+          <text x="145" y="94" text-anchor="middle" font-size="10" fill="#86868b">TaskContext creation</text>
+
+          <line x1="145" y1="106" x2="145" y2="128" stroke="#0071e3" stroke-width="1.5" marker-end="url(#df-arrow-blue)"/>
+
+          <!-- P1 Node 2: FastAPI Server -->
+          <rect x="70" y="132" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="145" y="154" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">FastAPI Server</text>
+          <text x="145" y="170" text-anchor="middle" font-size="10" fill="#86868b">Auth · Parse · Queue</text>
+
+          <line x1="145" y1="182" x2="145" y2="204" stroke="#0071e3" stroke-width="1.5" marker-end="url(#df-arrow-blue)"/>
+
+          <!-- P1 Node 3: Workflow Orchestrator -->
+          <rect x="70" y="208" width="150" height="50" rx="8" fill="rgba(0,113,227,0.07)" stroke="#0071e3" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="145" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#0071e3">Workflow Orchestrator</text>
+          <text x="145" y="246" text-anchor="middle" font-size="10" fill="#86868b">DAG resolve · Layer compute</text>
+
+          <line x1="145" y1="258" x2="145" y2="280" stroke="#0071e3" stroke-width="1.5" marker-end="url(#df-arrow-blue)"/>
+
+          <!-- P1 Node 4: Pipeline Executor -->
+          <rect x="70" y="284" width="150" height="50" rx="8" fill="rgba(0,113,227,0.07)" stroke="#0071e3" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="145" y="306" text-anchor="middle" font-size="11" font-weight="600" fill="#0071e3">Pipeline Executor</text>
+          <text x="145" y="322" text-anchor="middle" font-size="10" fill="#86868b">ThreadPool · Layer dispatch</text>
+
+          <line x1="145" y1="334" x2="145" y2="356" stroke="#0071e3" stroke-width="1.5" marker-end="url(#df-arrow-blue)"/>
+
+          <!-- P1 Node 5: Report Compiler -->
+          <rect x="70" y="360" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="145" y="382" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Report Compiler</text>
+          <text x="145" y="398" text-anchor="middle" font-size="10" fill="#86868b">MD + JSON manifest</text>
+
+          <line x1="145" y1="410" x2="145" y2="432" stroke="#0071e3" stroke-width="1.5" marker-end="url(#df-arrow-blue)"/>
+
+          <!-- P1 Node 6: Output -->
+          <rect x="70" y="436" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="145" y="458" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Report Output</text>
+          <text x="145" y="474" text-anchor="middle" font-size="10" fill="#86868b">.odin/audit/ · API response</text>
+
+          <!-- ══════════════════════════════ PIPELINE 2: TOOL CALLING ══════════════════════════════ -->
+
+          <!-- P2 Node 1: Agent Loop -->
+          <rect x="355" y="56" width="150" height="50" rx="8" fill="rgba(0,113,227,0.07)" stroke="#0071e3" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="#0071e3">Agent Loop</text>
+          <text x="430" y="94" text-anchor="middle" font-size="10" fill="#86868b">LLM Adapter · Controller</text>
+
+          <line x1="430" y1="106" x2="430" y2="128" stroke="#86868b" stroke-width="1.5" marker-end="url(#df-arrow)"/>
+
+          <!-- P2 Node 2: Skill Loader -->
+          <rect x="355" y="132" width="150" height="50" rx="8" fill="rgba(0,113,227,0.07)" stroke="#0071e3" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="154" text-anchor="middle" font-size="11" font-weight="600" fill="#0071e3">Skill Loader</text>
+          <text x="430" y="170" text-anchor="middle" font-size="10" fill="#86868b">Select skill · Load config</text>
+
+          <line x1="430" y1="182" x2="430" y2="204" stroke="#86868b" stroke-width="1.5" marker-end="url(#df-arrow)"/>
+
+          <!-- P2 Node 3: Tool Executor -->
+          <rect x="355" y="208" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Tool Executor</text>
+          <text x="430" y="246" text-anchor="middle" font-size="10" fill="#86868b">Invoke · Timeout · Sandbox</text>
+
+          <line x1="430" y1="258" x2="430" y2="280" stroke="#86868b" stroke-width="1.5" marker-end="url(#df-arrow)"/>
+
+          <!-- P2 Node 4: Skill Execute -->
+          <rect x="355" y="284" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="306" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Skill.execute()</text>
+          <text x="430" y="322" text-anchor="middle" font-size="10" fill="#86868b">12 built-in skills</text>
+
+          <line x1="430" y1="334" x2="430" y2="356" stroke="#86868b" stroke-width="1.5" marker-end="url(#df-arrow)"/>
+
+          <!-- P2 Node 5: ToolResult -->
+          <rect x="355" y="360" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="382" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">ToolResult</text>
+          <text x="430" y="398" text-anchor="middle" font-size="10" fill="#86868b">stdout · stderr · exit_code</text>
+
+          <line x1="430" y1="410" x2="430" y2="432" stroke="#86868b" stroke-width="1.5" marker-end="url(#df-arrow)"/>
+
+          <!-- P2 Node 6: Writeback -->
+          <rect x="355" y="436" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="458" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Memory Writeback</text>
+          <text x="430" y="474" text-anchor="middle" font-size="10" fill="#86868b">Working Memory · Long-term</text>
+
+          <!-- ══════════════════════════════ PIPELINE 3: EVIDENCE STORAGE ══════════════════════════════ -->
+
+          <!-- P3 Node 1: MEU Discovery -->
+          <rect x="640" y="56" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="715" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">LLM Conclusion</text>
+          <text x="715" y="94" text-anchor="middle" font-size="10" fill="#86868b">Finding candidate</text>
+
+          <line x1="715" y1="106" x2="715" y2="128" stroke="#8d6ef3" stroke-width="1.5" marker-end="url(#df-arrow-purple)"/>
+
+          <!-- P3 Node 2: MEU Validation -->
+          <rect x="640" y="132" width="150" height="50" rx="8" fill="rgba(141,110,219,0.08)" stroke="#8d6ef3" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="715" y="154" text-anchor="middle" font-size="11" font-weight="600" fill="#8d6ef3">Schema Validator</text>
+          <text x="715" y="170" text-anchor="middle" font-size="10" fill="#86868b">MEU enforcement check</text>
+
+          <!-- YES/NO branch -->
+          <text x="640" y="198" text-anchor="middle" font-size="10" font-weight="700" fill="#30d158">VALID</text>
+          <text x="790" y="198" text-anchor="middle" font-size="10" font-weight="700" fill="#ff453a">INVALID</text>
+
+          <!-- Valid path -->
+          <line x1="640" y1="182" x2="565" y2="220" stroke="#30d158" stroke-width="1.5" marker-end="url(#df-arrow-green)"/>
+          <rect x="490" y="210" width="150" height="50" rx="8" fill="rgba(48,209,88,0.08)" stroke="#30d158" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="565" y="232" text-anchor="middle" font-size="11" font-weight="600" fill="#30d158">Evidence Store</text>
+          <text x="565" y="248" text-anchor="middle" font-size="10" fill="#86868b">SQLite · file/line/snippet</text>
+
+          <!-- Invalid path -->
+          <line x1="790" y1="182" x2="865" y2="220" stroke="#ff453a" stroke-width="1.5" marker-end="url(#df-arrow)"/>
+          <rect x="790" y="210" width="150" height="50" rx="8" fill="rgba(255,69,58,0.06)" stroke="#ff453a" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="865" y="232" text-anchor="middle" font-size="11" font-weight="600" fill="#ff453a">Flagged UNVERIFIED</text>
+          <text x="865" y="248" text-anchor="middle" font-size="10" fill="#86868b">Excluded from report</text>
+
+          <!-- Valid path continued -->
+          <line x1="565" y1="260" x2="565" y2="282" stroke="#30d158" stroke-width="1.5" marker-end="url(#df-arrow-green)"/>
+
+          <!-- P3 Node: RAG Indexing -->
+          <rect x="490" y="286" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="565" y="308" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">RAG Indexing</text>
+          <text x="565" y="324" text-anchor="middle" font-size="10" fill="#86868b">SQLite FTS5 · chunk + rank</text>
+
+          <line x1="565" y1="336" x2="565" y2="358" stroke="#30d158" stroke-width="1.5" marker-end="url(#df-arrow-green)"/>
+
+          <!-- P3 Node: Persisted -->
+          <rect x="490" y="362" width="150" height="50" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="565" y="384" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Persisted</text>
+          <text x="565" y="400" text-anchor="middle" font-size="10" fill="#86868b">Evidence · RAG · Long-term</text>
+
+          <!-- ══════════════════════════════ CROSS-PIPELINE CONNECTIONS ══════════════════════════════ -->
+
+          <!-- LLM Adapter connecting P1 and P2 -->
+          <path d="M 220 310 Q 285 310 285 160 Q 285 90 355 90" fill="none" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#df-arrow)"/>
+
+          <!-- Working Memory shared between P2 and P3 -->
+          <rect x="355" y="500" width="150" height="44" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="518" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Working Memory</text>
+          <text x="430" y="532" text-anchor="middle" font-size="10" fill="#86868b">Shared context</text>
+
+          <line x1="430" y1="486" x2="430" y2="500" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- Evidence Store shared P2/P3 -->
+          <rect x="355" y="558" width="150" height="44" rx="8" fill="rgba(0,113,227,0.08)" stroke="#0071e3" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="576" text-anchor="middle" font-size="11" font-weight="600" fill="#0071e3">Evidence Store</text>
+          <text x="430" y="590" text-anchor="middle" font-size="10" fill="#86868b">MEU verified</text>
+
+          <line x1="430" y1="544" x2="430" y2="558" stroke="#0071e3" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- RAG Store shared -->
+          <rect x="355" y="616" width="150" height="44" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="634" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">RAG Store</text>
+          <text x="430" y="648" text-anchor="middle" font-size="10" fill="#86868b">Full-text search</text>
+
+          <!-- Long-term Memory shared -->
+          <rect x="355" y="674" width="150" height="44" rx="8" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1.5" filter="url(#df-shadow)"/>
+          <text x="430" y="692" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1d1f">Long-term Memory</text>
+          <text x="430" y="706" text-anchor="middle" font-size="10" fill="#86868b">Persistent JSON facts</text>
+
+          <!-- ══════════════════════════════ LEGEND ══════════════════════════════ -->
+          <rect x="640" y="560" width="200" height="160" rx="10" fill="#f5f5f7" stroke="#e8e8ed" stroke-width="1"/>
+          <text x="740" y="582" text-anchor="middle" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.05em">LEGEND</text>
+          <line x1="652" y1="592" x2="828" y2="592" stroke="#e8e8ed" stroke-width="1"/>
+
+          <line x1="660" y1="610" x2="700" y2="610" stroke="#0071e3" stroke-width="2"/>
+          <text x="710" y="614" font-size="10" fill="#86868b">Pipeline 1 — Analysis Request</text>
+
+          <line x1="660" y1="634" x2="700" y2="634" stroke="#86868b" stroke-width="2"/>
+          <text x="710" y="638" font-size="10" fill="#86868b">Pipeline 2 — Tool Calling</text>
+
+          <line x1="660" y1="658" x2="700" y2="658" stroke="#8d6ef3" stroke-width="2"/>
+          <text x="710" y="662" font-size="10" fill="#86868b">Pipeline 3 — Evidence Storage</text>
+
+          <line x1="660" y1="682" x2="700" y2="682" stroke="#30d158" stroke-width="2"/>
+          <text x="710" y="686" font-size="10" fill="#86868b">MEU Valid path</text>
+
+          <line x1="660" y1="706" x2="700" y2="706" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="710" y="710" font-size="10" fill="#86868b">Shared memory</text>
+
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PIPELINE 1: Analysis Request Flow ═══ -->
+  <section class="section section--dark" id="analysis-request">
+    <div class="container container--narrow">
+      <div class="section-header--left fade-in-up">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #0071e3; font-size: var(--text-xs); font-weight: 700; color: white;">1</span>
+          <p class="section-header__eyebrow" style="margin: 0;">Pipeline 1</p>
+        </div>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Analysis Request Flow</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: none; margin: 0 0 var(--space-8);">
+          How a single user command becomes a structured, evidence-backed analysis report.
+        </p>
+      </div>
+
+      <ol class="steps fade-in-up">
+        <li class="step">
+          <div class="step__title">User Issues Command</div>
+          <div class="step__text">The user runs <code>odin analyze https://github.com/owner/repo --workflow vulnerability_research</code> via the CLI, or POSTs to <code>/tasks</code> via the REST API. The request includes the target (local path, git URL, or archive), the named workflow to apply, and optional overrides (provider, model, skill filters).</div>
+        </li>
+        <li class="step">
+          <div class="step__title">FastAPI Server Receives and Validates</div>
+          <div class="step__text">The FastAPI server parses the request body, validates credentials (API key or bearer token), checks the target accessibility (clone if git URL, verify path if local), and creates a <code>TaskContext</code> object. The task is assigned a UUID and placed in the async task queue. A <code>202 Accepted</code> response returns the task ID immediately.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Workflow Orchestrator Plans the DAG</div>
+          <div class="step__text">The Workflow Orchestrator loads the named workflow definition from the skills registry. It resolves the dependency graph — for <code>vulnerability_research</code>, this means: <code>repo_discovery</code> (layer 1), then <code>entrypoints</code> + <code>call_graph</code> + <code>dependency_enum</code> (layer 2), then <code>auth_guard_analysis</code> + <code>data_flow</code> + <code>vuln_fingerprint</code> (layer 3), then <code>report_compiler</code> (layer 4). The DAG is topologically sorted using Kahn's algorithm to produce a layer-ordered execution plan.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Pipeline Executor Runs DAG Layers</div>
+          <div class="step__text">The Pipeline Executor iterates over each layer. Skills within the same layer run concurrently via <code>concurrent.futures.ThreadPoolExecutor</code>. Each skill receives a <code>SkillContext</code> with read access to the outputs of all upstream skills. Layer outputs become the shared inputs for the next layer. A 7-skill workflow that would take 7 × N seconds sequentially may complete in 3 × N seconds with parallel layers.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Agent Loop Monitors and Reasons</div>
+          <div class="step__text">As skills execute, the Agent Loop observes intermediate results via the Observer. The LLM Adapter assembles a context prompt from Working Memory (current findings), the active skill output, and relevant Long-term Memory entries. The LLM generates reasoning steps, MEU candidates, and tool call suggestions. The Loop Controller evaluates convergence after each skill layer completes.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Report Compiler Assembles Output</div>
+          <div class="step__text">Once all skill layers complete, the <code>report_compiler</code> skill reads all verified Evidence Store entries (those with MEU), organizes them by severity (Critical → High → Medium → Low), and formats them into Markdown with embedded file/line citations. A structured JSON manifest is generated alongside it for programmatic consumers.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Report Persisted and Returned</div>
+          <div class="step__text">The Markdown report is written to <code>.odin/audit/report-{date}.md</code>. The JSON manifest is written to <code>.odin/audit/report-{date}.json</code>. Both are stored in the task output directory. The FastAPI server marks the task as <code>completed</code> in the queue, making the report available via <code>GET /tasks/{id}/report</code>.</div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══ PIPELINE 2: Tool Calling Flow ═══ -->
+  <section class="section" id="tool-calling">
+    <div class="container container--narrow">
+      <div class="section-header--left fade-in-up">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #86868b; font-size: var(--text-xs); font-weight: 700; color: white;">2</span>
+          <p class="section-header__eyebrow" style="margin: 0;">Pipeline 2</p>
+        </div>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Tool Calling Flow</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: none; margin: 0 0 var(--space-8);">
+          How the Agent Loop decides to call a tool, how the Tool Executor runs it, and how results are written back to memory.
+        </p>
+      </div>
+
+      <ol class="steps fade-in-up">
+        <li class="step">
+          <div class="step__title">Agent Decides on Tool Call</div>
+          <div class="step__text">The LLM, given the current prompt (Working Memory + skill context), decides it needs to perform an action — for example: read a specific file, search for a function definition, or run a shell command. It outputs a structured <code>ToolCall</code> object specifying the tool name and arguments. The Agent Loop validates this against the registered skill manifest before proceeding.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Skill Loader Resolves Tool</div>
+          <div class="step__text">The Skill Loader looks up the tool name in the registry. If it's a built-in skill (e.g., <code>read_file</code>, <code>search_code</code>), the local executor is used. If it's an MCP tool, the MCP Client is invoked to route the call to the external server. The tool's input schema is validated against the LLM-supplied arguments.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Tool Executor Invokes the Tool</div>
+          <div class="step__text">The Tool Executor dispatches the call. For local file/shell operations, it uses Python's subprocess with a configurable timeout (default 30s) and memory limit. For sandboxed tools, it spawns an isolated subprocess or Docker container. For MCP tools, it sends a JSON-RPC request to the MCP server. The Observer logs the invocation start event.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Result Serialized as ToolResult</div>
+          <div class="step__text">Regardless of the underlying runtime, the result is wrapped in a normalized <code>ToolResult</code> schema: <code>stdout</code> (string), <code>stderr</code> (string), <code>exit_code</code> (int), <code>duration_ms</code> (float), and optional <code>error</code> (string). The Tool Executor truncates output at a configurable limit (default 1 MB) to prevent memory exhaustion.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Result Written Back to Working Memory</div>
+          <div class="step__text">The <code>ToolResult</code> is appended to the session's Working Memory under a keyed entry (e.g., <code>tool_call_results[{uuid}]</code>). This entry is accessible to the LLM in the next reasoning iteration. The full tool call history is also persisted to the Checkpoint snapshot for potential resume.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Long-term Memory Updated (If Relevant)</div>
+          <div class="step__text">If the tool result contains a persistent entity (e.g., a newly discovered entry point or dependency version), the Long-term Memory is updated with a new JSON fact keyed by the entity type and identifier. This enables future analysis sessions to leverage previous findings without re-discovering the same information.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Agent Loop Continues or Converges</div>
+          <div class="step__text">The Agent Loop feeds the ToolResult back into the LLM context. The LLM decides whether the result resolves the current reasoning gap (in which case it moves to the next reasoning step) or whether additional tool calls are needed. The Loop Controller checks for convergence: stable findings across two consecutive iterations. If converged or max_iter reached, the loop terminates.</div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══ PIPELINE 3: Evidence Storage Flow ═══ -->
+  <section class="section section--dark" id="evidence-storage">
+    <div class="container container--narrow">
+      <div class="section-header--left fade-in-up">
+        <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+          <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #8d6ef3; font-size: var(--text-xs); font-weight: 700; color: white;">3</span>
+          <p class="section-header__eyebrow" style="margin: 0;">Pipeline 3</p>
+        </div>
+        <h2 class="section-header__title" style="text-align:left; margin-bottom: var(--space-4);">Evidence Storage Flow</h2>
+        <p class="section-header__subtitle" style="text-align:left; max-width: none; margin: 0 0 var(--space-8);">
+          How every LLM conclusion transitions from a candidate finding to a verified, stored evidence unit — or gets flagged and excluded.
+        </p>
+      </div>
+
+      <ol class="steps fade-in-up">
+        <li class="step">
+          <div class="step__title">LLM Generates a Finding Candidate</div>
+          <div class="step__text">During reasoning, the LLM produces a conclusion — for example: "The <code>login()</code> function at <code>auth.py:42</code> has no authorization check before returning user data." This conclusion is a candidate finding. It exists only in Working Memory at this stage. The Agent Loop routes it to the MEU enforcement path for validation.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Schema Validator Checks for MEU</div>
+          <div class="step__text">The Schema Validator inspects the candidate finding. A valid MEU requires all three fields: <strong>file path</strong> (string, must exist and be readable), <strong>line range</strong> (two integers, must be within file bounds), and <strong>code snippet</strong> (string, must match the actual source lines at the specified range). The validator reads the file to cross-check the snippet. If any field is missing, malformed, or unverified, the finding is rejected.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">MEU Valid — Evidence Store Persisted</div>
+          <div class="step__text">A valid finding is wrapped in an <code>EvidenceUnit</code> and inserted into the Evidence Store (SQLite). The row includes: <code>finding_id</code> (UUID), <code>task_id</code>, <code>skill</code> (origin skill), <code>severity</code>, <code>title</code>, <code>description</code>, <code>file_path</code>, <code>line_start</code>, <code>line_end</code>, <code>snippet</code>, <code>created_at</code>, and <code>verified</code> (always <code>true</code>). The SQLite write is transactional — a failure rolls back cleanly without corrupting existing records.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">MEU Invalid — Flagged as UNVERIFIED</div>
+          <div class="step__text">A finding without a valid MEU is stored in a separate <code>unverified_findings</code> table with the same structure, but with <code>verified</code> set to <code>false</code> and a <code>rejection_reason</code> field explaining why (e.g., "file not found", "snippet mismatch", "no MEU provided"). These entries are never included in the final report but are kept for audit and evaluation purposes.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">RAG Store Indexed</div>
+          <div class="step__text">For every verified EvidenceUnit, the report_compiler chunks the finding text (title + description + snippet) and inserts it into the RAG Store (SQLite FTS5) with an FTS5 <code>INSERT</code>. The chunk is associated with the <code>task_id</code>, <code>finding_id</code>, and <code>severity</code>. This enables future natural-language queries like "SQL injection in authentication module" to retrieve relevant historical findings with source citations.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Long-term Memory Updated with Entity Fact</div>
+          <div class="step__text">After a finding is verified and stored, a summary fact is written to Long-term Memory. For a confirmed vulnerability, this might be: <code>{"type": "vuln", "file": "auth.py", "line": 42, "severity": "high", "cve": null, "task_id": "uuid"}</code>. This persists the entity across sessions so that future analysis of the same codebase can start from existing knowledge rather than re-discovering the same vulnerability.</div>
+        </li>
+        <li class="step">
+          <div class="step__title">Report Compiler Includes Only Verified Findings</div>
+          <div class="step__text">When <code>report_compiler</code> runs, it queries the Evidence Store with <code>WHERE verified = true AND task_id = :task_id</code>. Unverified findings are excluded. The report therefore contains only conclusions that pass the MEU enforcement gate — every claim is traceable to a file path, line range, and code snippet.</div>
+        </li>
+      </ol>
+
+      <!-- MEU Flow Summary Card -->
+      <div class="callout callout--success fade-in-up" style="margin-top: var(--space-10); border-color: rgba(48,209,88,0.3); background: rgba(48,209,88,0.05);">
+        <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="#30d158" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <div>
+          <strong>End-to-end guarantee:</strong> Every line in the generated report traces back to a verified EvidenceUnit in the SQLite Evidence Store. If the file changes, the snippet no longer matches — and the next run of <code>odin analyze</code> will flag the stale finding as <code>STALE_EVIDENCE</code>, requiring re-verification.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASCII Summary Table -->
+  <section class="section" id="flow-summary">
+    <div class="container container--narrow">
+      <div class="section-header fade-in-up">
+        <p class="section-header__eyebrow">Summary</p>
+        <h2 class="section-header__title">Three pipelines, one goal</h2>
+        <p class="section-header__subtitle">All three pipelines share the same memory layer and converge at the final report.</p>
+      </div>
+
+      <div class="comparison-table-wrapper fade-in-up">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Pipeline</th>
+              <th>Trigger</th>
+              <th>Key Modules</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Analysis Request</strong></td>
+              <td><code>odin analyze</code> / POST <code>/tasks</code></td>
+              <td>FastAPI → Workflow Orchestrator → Pipeline Executor → Report Compiler</td>
+              <td><code>.odin/audit/report-{date}.md</code></td>
+            </tr>
+            <tr>
+              <td><strong>Tool Calling</strong></td>
+              <td>LLM reasoning decision</td>
+              <td>Agent Loop → Skill Loader → Tool Executor → Working Memory</td>
+              <td><code>ToolResult</code> written to session memory</td>
+            </tr>
+            <tr>
+              <td><strong>Evidence Storage</strong></td>
+              <td>LLM conclusion generated</td>
+              <td>LLM → Schema Validator → Evidence Store + RAG Store</td>
+              <td>SQLite row in <code>evidence_units</code> table</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Cards -->
+  <section class="section" style="background: var(--color-bg-secondary);">
+    <div class="container">
+      <div class="doc-nav-cards stagger-children">
+        <a href="overview.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Overview</span>
+          <span class="doc-nav-card__text">System stack diagram, layer responsibilities, and end-to-end execution flow.</span>
+        </a>
+        <a href="components.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Components</span>
+          <span class="doc-nav-card__text">Detailed breakdown of every module: Tool Executor, Agent Loop, Memory, and more.</span>
+        </a>
+        <a href="../guide/core-concepts.html" class="doc-nav-card">
+          <span class="doc-nav-card__title">Core Concepts</span>
+          <span class="doc-nav-card__text">MEU model, DAG-layer parallelism, and the evidence enforcement philosophy.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

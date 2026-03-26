@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Core Concepts — Odin</title>
+  <meta name="description" content="Understand Odin's foundational concepts: MEU enforcement, Skills, Workflows, Evidence Model, DAG execution, and the Agent Loop.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="core-concepts.html" class="nav__link nav__submenu-trigger active">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="core-concepts.html" class="nav__submenu-item active">Core Concepts</a></li>
+            <li><a href="advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="core-concepts.html" style="color: var(--color-text-secondary); text-decoration: none;">Guide</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Core Concepts</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Core Concepts</h1>
+      <p class="hero__subtitle fade-in-up">The foundational ideas that power Odin's evidence-backed, parallel, autonomous analysis.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- MEU -->
+          <h2 id="meu">MEU — Minimum Evidence Unit</h2>
+          <p class="lead">Every conclusion Odin produces must be anchored to a concrete code location. A MEU is that anchor — the smallest verifiable unit of evidence.</p>
+
+          <p>Without evidence, there is no finding. Odin enforces this at the system level: the Evidence Validator rejects any claim that cannot be traced back to a specific file, line range, and snippet. This design eliminates the hallucinations that plague general-purpose AI code assistants.</p>
+
+          <p>A MEU is structured as:</p>
+          <ul>
+            <li><strong>File path</strong> — absolute or relative path within the target repository</li>
+            <li><strong>Line range</strong> — start and end line numbers</li>
+            <li><strong>Snippet</strong> — the exact code text (byte-for-byte match)</li>
+            <li><strong>Context</strong> — surrounding code for human verification</li>
+            <li><strong>Confidence</strong> — low / medium / high / verified</li>
+          </ul>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"type"</span>: <span class="token-string">"MEU"</span>,
+  <span class="token-string">"id"</span>: <span class="token-string">"meu_003"</span>,
+  <span class="token-string">"file"</span>: <span class="token-string">"src/auth.py"</span>,
+  <span class="token-string">"line_start"</span>: <span class="token-number">42</span>,
+  <span class="token-string">"line_end"</span>: <span class="token-number">58</span>,
+  <span class="token-string">"snippet"</span>: <span class="token-string">"def verify_token(token):\n    # WARNING: no expiry check\n    return jwt.decode(token, options={'verify_signature': False})"</span>,
+  <span class="token-string">"confidence"</span>: <span class="token-string">"high"</span>,
+  <span class="token-string">"skill"</span>: <span class="token-string">"auth_guard_analysis"</span>,
+  <span class="token-string">"timestamp"</span>: <span class="token-string">"2026-03-26T10:24:00Z"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Why it matters</strong><br>
+              MEU enforcement means every vulnerability claim in your final report links directly to source code. Security teams can audit findings without re-running the tool — the evidence is self-contained.
+            </div>
+          </div>
+
+          <!-- Skills -->
+          <h2 id="skills">Skills</h2>
+          <p class="lead">A Skill is an encapsulated analysis capability — like a function in a library. Each Skill handles one specific task and can be composed into any Workflow.</p>
+
+          <p>Skills are the atomic units of Odin's execution layer. Each Skill has a defined input schema, a prompt template, tool definitions, and an output schema validated against the MEU model. Twelve Skills ship built-in:</p>
+
+          <div class="fade-in-up" style="overflow-x: auto; margin-bottom: var(--space-8);">
+            <table>
+              <thead>
+                <tr>
+                  <th>Skill Name</th>
+                  <th>Category</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>repo_discovery</code></td>
+                  <td>Surface Analysis</td>
+                  <td>Clone or scan a target repository, detect language, enumerate files and directories</td>
+                </tr>
+                <tr>
+                  <td><code>entrypoints</code></td>
+                  <td>Surface Analysis</td>
+                  <td>Identify public APIs, CLI entry points, web handlers, and RPC endpoints</td>
+                </tr>
+                <tr>
+                  <td><code>call_graph</code></td>
+                  <td>Structure Analysis</td>
+                  <td>Map function-to-function call chains and build a directed graph of dependencies</td>
+                </tr>
+                <tr>
+                  <td><code>auth_guard_analysis</code></td>
+                  <td>Security Analysis</td>
+                  <td>Detect missing authentication, authorization checks, and privilege escalation paths</td>
+                </tr>
+                <tr>
+                  <td><code>vulnerability_scan</code></td>
+                  <td>Security Analysis</td>
+                  <td>Cross-reference call chains against known vulnerability patterns (CWE mapping)</td>
+                </tr>
+                <tr>
+                  <td><code>dependency_audit</code></td>
+                  <td>Dependency Analysis</td>
+                  <td>Analyze package manifests, detect known vulnerable or outdated dependencies</td>
+                </tr>
+                <tr>
+                  <td><code>taint_analysis</code></td>
+                  <td>Security Analysis</td>
+                  <td>Trace user-controlled input through sinks (SQL, command execution, file I/O)</td>
+                </tr>
+                <tr>
+                  <td><code>data_flow</code></td>
+                  <td>Structure Analysis</td>
+                  <td>Map how data moves through the codebase — from source to persistence or network</td>
+                </tr>
+                <tr>
+                  <td><code>secret_detection</code></td>
+                  <td>Security Analysis</td>
+                  <td>Scan for hardcoded credentials, API keys, tokens, and secrets in source or config</td>
+                </tr>
+                <tr>
+                  <td><code>cfg_builder</code></td>
+                  <td>Structure Analysis</td>
+                  <td>Build control flow graphs for complex functions to expose unreachable branches</td>
+                </tr>
+                <tr>
+                  <td><code>exploit_gen</code></td>
+                  <td>Exploitation</td>
+                  <td>Generate proof-of-concept payloads that exercise identified vulnerability paths</td>
+                </tr>
+                <tr>
+                  <td><code>report_gen</code></td>
+                  <td>Output</td>
+                  <td>Aggregate MEUs into a structured Markdown/JSON report with severity scoring</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Custom Skills can be registered via the <code>~/.odin/skills/</code> directory. Each is a Python class that inherits from <code>odin.skills.base.BaseSkill</code>.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">python</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-keyword">from</span> odin.skills.base <span class="token-keyword">import</span> BaseSkill
+
+<span class="token-keyword">class</span> <span class="token-class">LicenseAuditSkill</span>(BaseSkill):
+    name = <span class="token-string">"license_audit"</span>
+    description = <span class="token-string">"Detect incompatible or missing licenses in dependencies"</span>
+    input_schema = {<span class="token-string">"type"</span>: <span class="token-string">"object"</span>, <span class="token-string">"properties"</span>: {}}}
+    output_schema = {<span class="token-string">"type"</span>: <span class="token-string">"array"</span>}
+
+    <span class="token-keyword">async def</span> <span class="token-function">execute</span>(self, ctx, target):
+        deps = ctx.call_tool(<span class="token-string">"read_manifest"</span>, path=target)
+        findings = []
+        <span class="token-keyword">for</span> dep <span class="token-keyword">in</span> deps:
+            <span class="token-keyword">if</span> dep.license <span class="token-keyword">in</span> BLOCKED_LICENSES:
+                findings.append(ctx.emit_meu(
+                    file=dep.manifest,
+                    snippet=dep.license_line,
+                    confidence=<span class="token-string">"verified"</span>
+                ))
+        <span class="token-keyword">return</span> findings</code></pre>
+            </div>
+          </div>
+
+          <!-- Workflows -->
+          <h2 id="workflows">Workflows</h2>
+          <p class="lead">A Workflow is an ordered composition of Skills, defined in YAML. It describes the analysis pipeline — which Skills run, in what order, and with what dependencies.</p>
+
+          <p>Workflows turn Skills into reproducible research processes. A single YAML file defines the entire analysis pipeline, making it easy to version-control, share, and audit your methodology.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># .odin/workflows/vulnerability_research.yaml</span>
+<span class="token-keyword">name</span>: <span class="token-string">vulnerability_research</span>
+<span class="token-keyword">description</span>: <span class="token-string">"Full pipeline: surface → graph → security → report"</span>
+
+<span class="token-keyword">layers</span>:
+  - <span class="token-keyword">id</span>: layer_1
+    <span class="token-keyword">skills</span>:
+      - repo_discovery
+
+  - <span class="token-keyword">id</span>: layer_2
+    <span class="token-keyword">depends_on</span>: [layer_1]
+    <span class="token-keyword">skills</span>:
+      - entrypoints
+      - call_graph
+
+  - <span class="token-keyword">id</span>: layer_3
+    <span class="token-keyword">depends_on</span>: [layer_2]
+    <span class="token-keyword">skills</span>:
+      - auth_guard_analysis
+      - taint_analysis
+      - secret_detection
+
+  - <span class="token-keyword">id</span>: layer_4
+    <span class="token-keyword">depends_on</span>: [layer_3]
+    <span class="token-keyword">skills</span>:
+      - vulnerability_scan
+      - report_gen</code></pre>
+            </div>
+          </div>
+
+          <p>The <code>depends_on</code> field declares layer boundaries. Skills within the same layer execute in parallel (via <code>ThreadPoolExecutor</code>). Skills across layers execute sequentially. This is the DAG-layer model.</p>
+
+          <!-- Evidence Model -->
+          <h2 id="evidence-model">Evidence Model</h2>
+          <p class="lead">The Evidence Model governs how discoveries are recorded, validated, stored, and retrieved throughout the analysis lifecycle.</p>
+
+          <p>Every Skill emits findings as MEUs. Before a finding enters the Evidence Store, it passes through the Evidence Validator:</p>
+
+          <ol>
+            <li><strong>Schema check</strong> — Does the finding match the output schema for the skill that produced it?</li>
+            <li><strong>File existence</strong> — Does the referenced file actually exist in the cloned repository?</li>
+            <li><strong>Snippet verification</strong> — Does the exact snippet appear at the claimed line range?</li>
+            <li><strong>Context enrichment</strong> — Two lines of surrounding code are appended automatically for human review</li>
+            <li><strong>Confidence scoring</strong> — Each finding is tagged low / medium / high / verified</li>
+          </ol>
+
+          <div class="callout callout--success fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <div>
+              <strong>Verified findings</strong><br>
+              Findings with <code>confidence: "verified"</code> have passed all three validation checks. These are the findings included in the final report by default.
+            </div>
+          </div>
+
+          <p>Validated MEUs are persisted to <code>.odin/audit/evidence.jsonl</code> (one JSON object per line) and indexed in the SQLite FTS5 RAG store for natural-language querying via the <code>/skills</code> or <code>/workflows</code> API endpoints.</p>
+
+          <!-- DAG Execution -->
+          <h2 id="dag-execution">DAG Execution</h2>
+          <p class="lead">Odin models the analysis pipeline as a Directed Acyclic Graph (DAG). Independent Skills execute in parallel; dependent Skills wait until their prerequisites complete.</p>
+
+          <p>Traditional sequential pipelines execute Skill A, then B, then C — even when B and C don't depend on each other. Odin computes the dependency graph from the Workflow YAML and identifies "layers" of parallelizable work.</p>
+
+          <div class="arch-diagram fade-in-up" style="margin-bottom: var(--space-8);">
+            <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+              <!-- Layer labels -->
+              <text x="350" y="24" text-anchor="middle" font-family="var(--font-display)" font-size="11" font-weight="700" fill="#86868b" letter-spacing="0.06em">DAG EXECUTION</text>
+
+              <!-- Layer 1 -->
+              <rect x="260" y="40" width="180" height="48" rx="10" fill="#0071e3" fill-opacity="0.08" stroke="#0071e3" stroke-width="1.5"/>
+              <text x="350" y="58" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">repo_discovery</text>
+              <text x="350" y="74" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 1 — 1 task</text>
+
+              <!-- Arrow down -->
+              <line x1="350" y1="88" x2="350" y2="110" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+              <!-- Layer 2 -->
+              <rect x="80" y="116" width="150" height="48" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+              <text x="155" y="134" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">entrypoints</text>
+              <text x="155" y="150" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 2</text>
+
+              <rect x="260" y="116" width="150" height="48" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+              <text x="335" y="134" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">call_graph</text>
+              <text x="335" y="150" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 2</text>
+
+              <rect x="440" y="116" width="150" height="48" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+              <text x="515" y="134" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">dependency_audit</text>
+              <text x="515" y="150" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 2</text>
+
+              <!-- Connecting lines from layer 1 to layer 2 -->
+              <line x1="260" y1="80" x2="155" y2="116" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="350" y1="80" x2="335" y2="116" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="440" y1="80" x2="515" y2="116" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <!-- Arrows to layer 3 -->
+              <line x1="155" y1="164" x2="155" y2="186" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow2)"/>
+              <line x1="335" y1="164" x2="335" y2="186" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow2)"/>
+              <line x1="515" y1="164" x2="515" y2="186" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+              <!-- Layer 3 -->
+              <rect x="80" y="192" width="150" height="48" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+              <text x="155" y="210" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">auth_guard</text>
+              <text x="155" y="226" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 3</text>
+
+              <rect x="260" y="192" width="150" height="48" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+              <text x="335" y="210" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">taint_analysis</text>
+              <text x="335" y="226" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 3</text>
+
+              <rect x="440" y="192" width="150" height="48" rx="10" fill="#f5f5f7" stroke="#d2d2d7" stroke-width="1"/>
+              <text x="515" y="210" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">secret_detection</text>
+              <text x="515" y="226" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 3</text>
+
+              <!-- Connecting lines layer 2 to layer 3 -->
+              <line x1="155" y1="164" x2="155" y2="192" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="335" y1="164" x2="335" y2="192" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="515" y1="164" x2="515" y2="192" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="230" y1="140" x2="260" y2="192" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="410" y1="140" x2="440" y2="192" stroke="#d2d2d7" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <!-- Arrow to layer 4 -->
+              <line x1="350" y1="240" x2="350" y2="262" stroke="#d2d2d7" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+              <!-- Layer 4 -->
+              <rect x="260" y="268" width="180" height="40" rx="10" fill="#0071e3" fill-opacity="0.06" stroke="#0071e3" stroke-width="1.5"/>
+              <text x="350" y="286" text-anchor="middle" font-family="var(--font-display)" font-size="13" font-weight="600" fill="#1d1d1f">report_gen</text>
+              <text x="350" y="300" text-anchor="middle" font-family="var(--font-display)" font-size="10" fill="#86868b">Layer 4</text>
+
+              <!-- Arrow marker def -->
+              <defs>
+                <marker id="arrow2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="#d2d2d7"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+
+          <p>In this example, Layer 2 has three Skills that all depend only on Layer 1's output. They execute in parallel. Layer 3 then runs in parallel. Only Layer 4 (report generation) requires all prior layers to complete. An 8-step sequential pipeline completes in 4 layers.</p>
+
+          <!-- Agent Loop -->
+          <h2 id="agent-loop">Agent Loop</h2>
+          <p class="lead">The Agent Loop is the cognitive engine of Odin — a cyclical process of reasoning, tool use, and observation that drives the analysis forward.</p>
+
+          <p>Built on an LLM adapter, the Agent Loop iterates until either the workflow is complete, a maximum iteration count is reached, or a stopping condition is triggered. Each iteration follows a strict sequence:</p>
+
+          <ol>
+            <li><strong>LLM Call</strong> — The Agent sends the current state (observation summary, memory context, tool list) to the LLM and requests the next action.</li>
+            <li><strong>Tool Execution</strong> — The action (a Skill invocation or a raw tool call) is executed. Tool results are captured as structured output.</li>
+            <li><strong>Observation</strong> — The tool results are summarized as natural-language observations and added to the working memory.</li>
+            <li><strong>Loop</strong> — The updated state is fed back to step 1. The loop continues until the workflow completes or a stop condition fires.</li>
+          </ol>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">text</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment">Iteration 1</span>
+  Agent: "repo_discovery completed. 14 files found."
+  Action: invoke skill[call_graph] with files=[...14]
+  Tool: call_graph.execute() → 12 call chains
+  Observation: "Found 12 chains. auth module has 3 uncovered paths."
+
+<span class="token-comment">Iteration 2</span>
+  Agent: "Focus on auth module chains 4, 7, 9 — no guards detected."
+  Action: invoke skill[auth_guard_analysis] with chains=[4, 7, 9]
+  Tool: auth_guard_analysis.execute() → 2 MEUs emitted
+  Observation: "2 MEUs: missing role check at admin.py:142, no token expiry at auth.py:58."
+
+<span class="token-comment">Iteration 3</span>
+  Agent: "Both findings verified. Proceeding to report_gen."
+  Action: invoke skill[report_gen] with evidence=[meu_001, meu_002]
+  Tool: report_gen.execute() → report.md written
+  Observation: "Report generated with 2 verified findings."
+  <span class="token-comment">→ Loop terminates: workflow complete.</span></code></pre>
+            </div>
+          </div>
+
+          <p>The Agent Loop is instrumented with checkpointing, retry logic, and error handling. If a tool call fails, the Agent receives the error as an observation and decides whether to retry with different arguments or skip the step.</p>
+
+          <!-- Next Steps -->
+          <h2 id="next">What's Next</h2>
+          <div class="doc-nav-cards" style="margin-top: var(--space-6);">
+            <a href="advanced-usage.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Advanced Usage</span>
+              <span class="doc-nav-card__text">Custom Skills, Workflow YAML, MCP integration, and CI/CD examples.</span>
+            </a>
+            <a href="faq.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">FAQ</span>
+              <span class="doc-nav-card__text">Common questions about providers, storage, supported languages, and more.</span>
+            </a>
+            <a href="troubleshooting.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Troubleshooting</span>
+              <span class="doc-nav-card__text">Fix API key errors, timeouts, MCP issues, and memory problems.</span>
+            </a>
+            <a href="../api/cli.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">CLI Reference</span>
+              <span class="doc-nav-card__text">Full command reference for all <code>odin</code> subcommands.</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#meu" class="toc__link">MEU</a></li>
+              <li class="toc__item"><a href="#skills" class="toc__link">Skills</a></li>
+              <li class="toc__item"><a href="#workflows" class="toc__link">Workflows</a></li>
+              <li class="toc__item"><a href="#evidence-model" class="toc__link">Evidence Model</a></li>
+              <li class="toc__item"><a href="#dag-execution" class="toc__link">DAG Execution</a></li>
+              <li class="toc__item"><a href="#agent-loop" class="toc__link">Agent Loop</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="footer__link">Troubleshooting</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

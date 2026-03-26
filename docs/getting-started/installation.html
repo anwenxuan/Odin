@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation — Odin</title>
+  <meta name="description" content="Install Odin via pip, source, or uv. Supports Python 3.11+, Git, and optional Docker.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="quickstart.html" class="nav__link nav__submenu-trigger active">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="quickstart.html" style="color: var(--color-text-secondary); text-decoration: none;">Get Started</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Installation</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Installation</h1>
+      <p class="hero__subtitle fade-in-up">Get Odin running in minutes. Supports pip, uv, and source installation.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <!-- Main Content -->
+        <div class="content">
+
+          <!-- System Requirements -->
+          <h2 id="requirements">System Requirements</h2>
+          <p class="lead">Before installing, make sure your environment meets these prerequisites.</p>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8);">
+            <div class="card card--flat" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Python 3.11+</strong>
+              </div>
+              <p class="card__text">Required. Install via <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a> or pyenv.</p>
+            </div>
+            <div class="card card--flat" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <line x1="3" y1="12" x2="9" y2="12"/>
+                  <line x1="15" y1="12" x2="21" y2="12"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Git</strong>
+              </div>
+              <p class="card__text">Required for source installation. <code>brew install git</code> or <code>apt install git</code>.</p>
+            </div>
+            <div class="card card--flat" style="padding: var(--space-5);">
+              <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/>
+                  <path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/>
+                  <line x1="4" y1="12" x2="20" y2="12"/>
+                </svg>
+                <strong style="font-size: var(--text-sm);">Docker (optional)</strong>
+              </div>
+              <p class="card__text">Required only for sandbox isolation mode. <a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">Get Docker</a>.</p>
+            </div>
+          </div>
+
+          <!-- Method 1: pip -->
+          <h2 id="pip">Method 1: pip (Recommended)</h2>
+          <p>The easiest way to install Odin. Works with any Python 3.11+ environment.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">pip</span> install odin-agent</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Using a virtual environment?</strong><br>
+              It is recommended to use a virtual environment (<code>venv</code> or <code>conda</code>) to avoid dependency conflicts.
+            </div>
+          </div>
+
+          <!-- Method 2: Source -->
+          <h2 id="source">Method 2: Source (Development)</h2>
+          <p>Install from source for the latest features, or if you want to contribute to Odin.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Clone the repository</span>
+<span class="token-function">git</span> clone https://github.com/anwenxuan/Odin
+<span class="token-function">cd</span> Odin
+
+<span class="token-comment"># Install in editable mode with dev dependencies</span>
+<span class="token-function">pip</span> install -e <span class="token-string">".[dev]"</span></code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Editable install</strong><br>
+              The <code>-e</code> flag installs the package in editable mode, so changes to the source code take effect immediately without reinstalling.
+            </div>
+          </div>
+
+          <!-- Method 3: uv -->
+          <h2 id="uv">Method 3: uv (Fastest)</h2>
+          <p><a href="https://github.com/astral-sh/uv" target="_blank" rel="noopener">uv</a> is a blazing-fast Python package manager written in Rust. Use it for the quickest install.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Install globally (requires uv)</span>
+<span class="token-function">uv</span> pip install odin-agent
+
+<span class="token-comment"># Or within project</span>
+<span class="token-function">uv</span> pip install -e <span class="token-string">"."</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Verify -->
+          <h2 id="verify">Verify Installation</h2>
+          <p>After installation, verify everything is working by checking the version.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">$</span> <span class="token-function">odin</span> --version
+<span class="token-comment">odin v0.2.0</span></code></pre>
+            </div>
+          </div>
+
+          <!-- Next Steps -->
+          <h2 id="next">Next Steps</h2>
+          <div class="doc-nav-cards" style="margin-top: var(--space-6);">
+            <a href="quickstart.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Quick Start</span>
+              <span class="doc-nav-card__text">Up and running in 5 minutes — no API key required.</span>
+            </a>
+            <a href="configuration.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Configuration</span>
+              <span class="doc-nav-card__text">Set up API keys, providers, and odin.yaml.</span>
+            </a>
+          </div>
+
+          <!-- FAQ -->
+          <h2 id="faq">Common Installation Issues</h2>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-6);">
+              <h4 style="margin-bottom: var(--space-3); color: var(--color-text);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; vertical-align: middle; margin-right: var(--space-2);">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                "command not found: odin" or "No module named odin"
+              </h4>
+              <p class="card__text" style="margin-bottom: var(--space-3);">
+                Make sure your Python environment is on your <code>PATH</code>. Try running with the full path:
+              </p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__body">
+<pre><code><span class="token-function">python</span> -m odin --version</code></pre>
+                </div>
+              </div>
+              <p class="card__text" style="margin-top: var(--space-3);">
+                If this works, add <code>export PATH="$PATH:$HOME/Library/Python/X.X/bin"</code> to your shell config. Replace X.X with your Python version.
+              </p>
+            </div>
+
+            <div class="card card--flat fade-in-up" style="padding: var(--space-6);">
+              <h4 style="margin-bottom: var(--space-3); color: var(--color-text);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; vertical-align: middle; margin-right: var(--space-2);">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Dependency conflict with other packages
+              </h4>
+              <p class="card__text" style="margin-bottom: var(--space-3);">
+                Use a virtual environment to isolate Odin from other projects:
+              </p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__body">
+<pre><code><span class="token-function">python</span> -m venv odin-env
+<span class="token-function">source</span> odin-env/bin/activate
+<span class="token-function">pip</span> install odin-agent</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card--flat fade-in-up" style="padding: var(--space-6);">
+              <h4 style="margin-bottom: var(--space-3); color: var(--color-text);">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; vertical-align: middle; margin-right: var(--space-2);">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Permission denied when installing globally
+              </h4>
+              <p class="card__text" style="margin-bottom: var(--space-3);">
+                Avoid using <code>sudo pip</code>. Instead, install for the current user:
+              </p>
+              <div class="code-block" style="margin-bottom: 0;">
+                <div class="code-block__body">
+<pre><code><span class="token-function">pip</span> install odin-agent --user</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#requirements" class="toc__link">System Requirements</a></li>
+              <li class="toc__item"><a href="#pip" class="toc__link">Method 1: pip</a></li>
+              <li class="toc__item"><a href="#source" class="toc__link">Method 2: Source</a></li>
+              <li class="toc__item"><a href="#uv" class="toc__link">Method 3: uv</a></li>
+              <li class="toc__item"><a href="#verify" class="toc__link">Verify Installation</a></li>
+              <li class="toc__item"><a href="#next" class="toc__link">Next Steps</a></li>
+              <li class="toc__item"><a href="#faq" class="toc__link">Common Issues</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="installation.html" class="footer__link">Installation</a></li>
+            <li><a href="configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

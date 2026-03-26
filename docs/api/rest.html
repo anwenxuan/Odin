@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REST API — Odin</title>
+  <meta name="description" content="FastAPI REST API reference for Odin v0.2.0 — endpoints for analyze, skills, workflows, eval, and health.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="cli.html" class="nav__link nav__submenu-trigger active">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="rest.html" class="nav__submenu-item active">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="cli.html" style="color: var(--color-text-secondary); text-decoration: none;">API</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>REST API</span>
+      </div>
+      <h1 class="hero__title fade-in-up">REST API Reference</h1>
+      <p class="hero__subtitle fade-in-up">FastAPI-powered HTTP API for integrating Odin into your pipelines, UIs, and CI systems.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- Base URL & Auth -->
+          <h2 id="overview">Overview</h2>
+          <p class="lead">The Odin REST API is a FastAPI application. Start the server with <code>odin api serve</code>.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">$</span> <span class="token-function">odin</span> api serve
+<span class="token-comment">INFO:     Uvicorn running on http://localhost:8000</span>
+<span class="token-token-comment">INFO:     Documentation at http://localhost:8000/docs</span></code></pre>
+            </div>
+          </div>
+
+          <div class="comparison-table-wrapper fade-in-up">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Header</th>
+                  <th>Value</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Content-Type</code></td>
+                  <td><code>application/json</code></td>
+                  <td>Required for all request bodies</td>
+                </tr>
+                <tr>
+                  <td><code>Authorization</code></td>
+                  <td><code>Bearer &lt;token&gt;</code></td>
+                  <td>Optional. Set via <code>--api-key</code> on server start</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- POST /analyze -->
+          <h2 id="analyze">POST /analyze</h2>
+          <p class="lead">Submit a new code analysis job. Returns immediately with a job ID for polling.</p>
+
+          <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap;">
+            <span class="badge badge--v0-2" style="font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">POST</span>
+            <code style="font-family: var(--font-mono); font-size: var(--text-sm); align-self: center;">/analyze</code>
+          </div>
+
+          <h3>Request Body</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"target"</span>: <span class="token-string">"./src"</span>,
+  <span class="token-string">"provider"</span>: <span class="token-string">"openai"</span>,
+  <span class="token-string">"model"</span>: <span class="token-string">"gpt-4o-mini"</span>,
+  <span class="token-string">"workflow"</span>: <span class="token-string">"quick-audit"</span>,
+  <span class="token-string">"include"</span>: [<span class="token-string">"**/*.py"</span>],
+  <span class="token-string">"exclude"</span>: [<span class="token-string">"tests/**"</span>],
+  <span class="token-string">"timeout"</span>: <span class="token-number">300</span>,
+  <span class="token-string">"use_rag"</span>: <span class="token-builtin">true</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="comparison-table-wrapper fade-in-up">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>target</code></td>
+                  <td>string</td>
+                  <td><strong>Yes</strong></td>
+                  <td>Path or Git URL to analyze</td>
+                </tr>
+                <tr>
+                  <td><code>provider</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>LLM provider. Default: <code>mock</code></td>
+                </tr>
+                <tr>
+                  <td><code>model</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Model identifier. Default: provider default</td>
+                </tr>
+                <tr>
+                  <td><code>workflow</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Workflow name. Default: <code>deep-audit</code></td>
+                </tr>
+                <tr>
+                  <td><code>include</code></td>
+                  <td>string[]</td>
+                  <td>No</td>
+                  <td>File patterns to include (glob)</td>
+                </tr>
+                <tr>
+                  <td><code>exclude</code></td>
+                  <td>string[]</td>
+                  <td>No</td>
+                  <td>File patterns to exclude (glob)</td>
+                </tr>
+                <tr>
+                  <td><code>timeout</code></td>
+                  <td>integer</td>
+                  <td>No</td>
+                  <td>Max duration in seconds. Default: <code>300</code></td>
+                </tr>
+                <tr>
+                  <td><code>use_rag</code></td>
+                  <td>boolean</td>
+                  <td>No</td>
+                  <td>Enable RAG retrieval. Default: <code>true</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Response</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"analysis_id"</span>: <span class="token-string">"anal_01j8x2k3m4n5p6q7r8s9t0u1"</span>,
+  <span class="token-string">"status"</span>: <span class="token-string">"queued"</span>,
+  <span class="token-string">"target"</span>: <span class="token-string">"./src"</span>,
+  <span class="token-string">"workflow"</span>: <span class="token-string">"quick-audit"</span>,
+  <span class="token-string">"created_at"</span>: <span class="token-string">"2026-03-26T10:30:00Z"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- GET /analysis/{id} -->
+          <h2 id="analysis-id">GET /analysis/{id}</h2>
+          <p class="lead">Retrieve the status and results of an analysis job by its ID.</p>
+
+          <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap;">
+            <span class="badge badge--v0-2" style="font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">GET</span>
+            <code style="font-family: var(--font-mono); font-size: var(--text-sm); align-self: center;">/analysis/{id}</code>
+          </div>
+
+          <h3>Path Parameters</h3>
+          <div class="comparison-table-wrapper fade-in-up">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>id</code></td>
+                  <td>string</td>
+                  <td>The <code>analysis_id</code> returned from <code>POST /analyze</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Response — Queued / Running</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"analysis_id"</span>: <span class="token-string">"anal_01j8x2k3m4n5p6q7r8s9t0u1"</span>,
+  <span class="token-string">"status"</span>: <span class="token-string">"running"</span>,
+  <span class="token-string">"progress"</span>: <span class="token-number">0.45</span>,
+  <span class="token-string">"current_node"</span>: <span class="token-string">"skill:dependency-graph"</span>,
+  <span class="token-string">"started_at"</span>: <span class="token-string">"2026-03-26T10:30:05Z"</span>,
+  <span class="token-string">"elapsed_seconds"</span>: <span class="token-number">42</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <h3>Response — Completed</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"analysis_id"</span>: <span class="token-string">"anal_01j8x2k3m4n5p6q7r8s9t0u1"</span>,
+  <span class="token-string">"status"</span>: <span class="token-string">"completed"</span>,
+  <span class="token-string">"completed_at"</span>: <span class="token-string">"2026-03-26T10:35:12Z"</span>,
+  <span class="token-string">"elapsed_seconds"</span>: <span class="token-number">312</span>,
+  <span class="token-string">"summary"</span>: {
+    <span class="token-string">"total_findings"</span>: <span class="token-number">7</span>,
+    <span class="token-string">"critical"</span>: <span class="token-number">1</span>,
+    <span class="token-string">"high"</span>: <span class="token-number">2</span>,
+    <span class="token-string">"medium"</span>: <span class="token-number">3</span>,
+    <span class="token-string">"low"</span>: <span class="token-number">1</span>,
+    <span class="token-string">"meu_pass_rate"</span>: <span class="token-number">0.86</span>
+  },
+  <span class="token-string">"output_path"</span>: <span class="token-string">"./odin-output/anal_01j8x2k3m4n5p6q7r8s9t0u1/analysis.json"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              Poll every 5–10 seconds. The full analysis report is written to disk and referenced by <code>output_path</code>.
+            </div>
+          </div>
+
+          <!-- GET /skills -->
+          <h2 id="skills">GET /skills</h2>
+          <p class="lead">Return a list of all available skills with their metadata.</p>
+
+          <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap;">
+            <span class="badge badge--completed" style="font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">GET</span>
+            <code style="font-family: var(--font-mono); font-size: var(--text-sm); align-self: center;">/skills</code>
+          </div>
+
+          <h3>Query Parameters</h3>
+          <div class="comparison-table-wrapper fade-in-up">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>language</code></td>
+                  <td>string</td>
+                  <td>Filter by language (e.g., <code>python</code>, <code>javascript</code>)</td>
+                </tr>
+                <tr>
+                  <td><code>priority</code></td>
+                  <td>string</td>
+                  <td>Filter by priority: <code>p0</code>, <code>p1</code>, <code>p2</code></td>
+                </tr>
+                <tr>
+                  <td><code>installed_only</code></td>
+                  <td>boolean</td>
+                  <td>If <code>true</code>, return only locally installed skills</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Response</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"skills"</span>: [
+    {
+      <span class="token-string">"name"</span>: <span class="token-string">"detect-sql-injection"</span>,
+      <span class="token-string">"description"</span>: <span class="token-string">"Detects SQL injection vulnerabilities in string concatenations"</span>,
+      <span class="token-string">"language"</span>: <span class="token-string">"python"</span>,
+      <span class="token-string">"priority"</span>: <span class="token-string">"p0"</span>,
+      <span class="token-string">"trigger"</span>: <span class="token-string">"**.py"</span>,
+      <span class="token-string">"meu_required"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"installed"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"source"</span>: <span class="token-string">"builtin"</span>
+    },
+    {
+      <span class="token-string">"name"</span>: <span class="token-string">"detect-xss"</span>,
+      <span class="token-string">"description"</span>: <span class="token-string">"Detects Cross-Site Scripting in HTML/JS string handling"</span>,
+      <span class="token-string">"language"</span>: <span class="token-string">"javascript"</span>,
+      <span class="token-string">"priority"</span>: <span class="token-string">"p0"</span>,
+      <span class="token-string">"trigger"</span>: <span class="token-string">"**.{js,ts,jsx,tsx}"</span>,
+      <span class="token-string">"meu_required"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"installed"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"source"</span>: <span class="token-string">"builtin"</span>
+    }
+  ],
+  <span class="token-string">"total"</span>: <span class="token-number">12</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- GET /workflows -->
+          <h2 id="workflows">GET /workflows</h2>
+          <p class="lead">Return a list of all available workflows with their skill compositions.</p>
+
+          <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap;">
+            <span class="badge badge--completed" style="font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">GET</span>
+            <code style="font-family: var(--font-mono); font-size: var(--text-sm); align-self: center;">/workflows</code>
+          </div>
+
+          <h3>Response</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"workflows"</span>: [
+    {
+      <span class="token-string">"name"</span>: <span class="token-string">"deep-audit"</span>,
+      <span class="token-string">"description"</span>: <span class="token-string">"Comprehensive 12-skill vulnerability research with full DAG parallelization"</span>,
+      <span class="token-string">"skills"</span>: [<span class="token-string">"detect-sql-injection"</span>, <span class="token-string">"detect-xss"</span>, <span class="token-string">"detect-auth-bypass"</span>, <span class="token-string">"..."</span>],
+      <span class="token-string">"parallel"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"estimated_time"</span>: <span class="token-string">"5-15 minutes"</span>,
+      <span class="token-string">"meu_enforced"</span>: <span class="token-builtin">true</span>
+    },
+    {
+      <span class="token-string">"name"</span>: <span class="token-string">"quick-audit"</span>,
+      <span class="token-string">"description"</span>: <span class="token-string">"Fast 5-skill scan for P0 and P1 critical vulnerabilities"</span>,
+      <span class="token-string">"skills"</span>: [<span class="token-string">"detect-sql-injection"</span>, <span class="token-string">"detect-xss"</span>, <span class="token-string">"detect-rce"</span>, <span class="token-string">"detect-auth-bypass"</span>, <span class="token-string">"detect-data-exposure"</span>],
+      <span class="token-string">"parallel"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"estimated_time"</span>: <span class="token-string">"1-3 minutes"</span>,
+      <span class="token-string">"meu_enforced"</span>: <span class="token-builtin">true</span>
+    },
+    {
+      <span class="token-string">"name"</span>: <span class="token-string">"surface-scan"</span>,
+      <span class="token-string">"description"</span>: <span class="token-string">"Lightweight 3-skill surface-level check for CI pipelines"</span>,
+      <span class="token-string">"skills"</span>: [<span class="token-string">"detect-sql-injection"</span>, <span class="token-string">"detect-xss"</span>, <span class="token-string">"detect-rce"</span>],
+      <span class="token-string">"parallel"</span>: <span class="token-builtin">true</span>,
+      <span class="token-string">"estimated_time"</span>: <span class="token-string">"&lt;60 seconds"</span>,
+      <span class="token-string">"meu_enforced"</span>: <span class="token-builtin">true</span>
+    }
+  ]
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- POST /eval -->
+          <h2 id="eval">POST /eval</h2>
+          <p class="lead">Trigger a benchmark evaluation run against a dataset.</p>
+
+          <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap;">
+            <span class="badge badge--v0-2" style="font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">POST</span>
+            <code style="font-family: var(--font-mono); font-size: var(--text-sm); align-self: center;">/eval</code>
+          </div>
+
+          <h3>Request Body</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"dataset"</span>: <span class="token-string">"./benchmarks/security-benchmark-v1.json"</span>,
+  <span class="token-string">"provider"</span>: <span class="token-string">"openai"</span>,
+  <span class="token-string">"model"</span>: <span class="token-string">"gpt-4o"</span>,
+  <span class="token-string">"metrics"</span>: [<span class="token-string">"precision"</span>, <span class="token-string">"recall"</span>, <span class="token-string">"f1"</span>, <span class="token-string">"meu-pass-rate"</span>]
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="comparison-table-wrapper fade-in-up">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>dataset</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Path to dataset. Defaults to the built-in benchmark.</td>
+                </tr>
+                <tr>
+                  <td><code>provider</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Provider to use for evaluation. Default: <code>mock</code></td>
+                </tr>
+                <tr>
+                  <td><code>model</code></td>
+                  <td>string</td>
+                  <td>No</td>
+                  <td>Model to evaluate</td>
+                </tr>
+                <tr>
+                  <td><code>metrics</code></td>
+                  <td>string[]</td>
+                  <td>No</td>
+                  <td>Metrics to compute. All computed if omitted.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Response</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"eval_id"</span>: <span class="token-string">"eval_01j8y3a4b5c6d7e8f9g0h1i"</span>,
+  <span class="token-string">"status"</span>: <span class="token-string">"queued"</span>,
+  <span class="token-string">"dataset"</span>: <span class="token-string">"security-benchmark-v1"</span>,
+  <span class="token-string">"dataset_size"</span>: <span class="token-number">50</span>,
+  <span class="token-string">"metrics"</span>: [<span class="token-string">"precision"</span>, <span class="token-string">"recall"</span>, <span class="token-string">"f1"</span>, <span class="token-string">"meu-pass-rate"</span>],
+  <span class="token-string">"created_at"</span>: <span class="token-string">"2026-03-26T10:45:00Z"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- GET /health -->
+          <h2 id="health">GET /health</h2>
+          <p class="lead">Health check endpoint. Returns the server status and component health.</p>
+
+          <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-4); flex-wrap: wrap;">
+            <span class="badge badge--completed" style="font-size: var(--text-sm); padding: var(--space-2) var(--space-4);">GET</span>
+            <code style="font-family: var(--font-mono); font-size: var(--text-sm); align-self: center;">/health</code>
+          </div>
+
+          <h3>Response — Healthy</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"status"</span>: <span class="token-string">"healthy"</span>,
+  <span class="token-string">"version"</span>: <span class="token-string">"0.2.0"</span>,
+  <span class="token-string">"uptime_seconds"</span>: <span class="token-number">3724</span>,
+  <span class="token-string">"components"</span>: {
+    <span class="token-string">"llm"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span>, <span class="token-string">"provider"</span>: <span class="token-string">"openai"</span> },
+    <span class="token-string">"mcp"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span>, <span class="token-string">"connected"</span>: <span class="token-builtin">true</span> },
+    <span class="token-string">"rag"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span>, <span class="token-string">"vector_count"</span>: <span class="token-number">1420</span> },
+    <span class="token-string">"storage"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span>, <span class="token-string">"output_dir"</span>: <span class="token-string">"./odin-output"</span> }
+  }
+}</code></pre>
+            </div>
+          </div>
+
+          <h3>Response — Degraded</h3>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"status"</span>: <span class="token-string">"degraded"</span>,
+  <span class="token-string">"version"</span>: <span class="token-string">"0.2.0"</span>,
+  <span class="token-string">"uptime_seconds"</span>: <span class="token-number">184</span>,
+  <span class="token-string">"components"</span>: {
+    <span class="token-string">"llm"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span>, <span class="token-string">"provider"</span>: <span class="token-string">"openai"</span> },
+    <span class="token-string">"mcp"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"error"</span>, <span class="token-string">"message"</span>: <span class="token-string">"Connection refused"</span> },
+    <span class="token-string">"rag"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span>, <span class="token-string">"vector_count"</span>: <span class="token-number">0</span> },
+    <span class="token-string">"storage"</span>: { <span class="token-string">"status"</span>: <span class="token-string">"ok"</span> }
+  }
+}</code></pre>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#overview" class="toc__link">Overview</a></li>
+              <li class="toc__item"><a href="#analyze" class="toc__link">POST /analyze</a></li>
+              <li class="toc__item"><a href="#analysis-id" class="toc__link">GET /analysis/{id}</a></li>
+              <li class="toc__item"><a href="#skills" class="toc__link">GET /skills</a></li>
+              <li class="toc__item"><a href="#workflows" class="toc__link">GET /workflows</a></li>
+              <li class="toc__item"><a href="#eval" class="toc__link">POST /eval</a></li>
+              <li class="toc__item"><a href="#health" class="toc__link">GET /health</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="footer__link">Troubleshooting</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="rest.html" class="footer__link">REST API</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Vision</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

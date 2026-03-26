@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Usage — Odin</title>
+  <meta name="description" content="Custom Skill development, Workflow YAML authoring, MCP integration, batch analysis, and CI/CD pipelines for Odin.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="advanced-usage.html" class="nav__link nav__submenu-trigger active">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="advanced-usage.html" class="nav__submenu-item active">Advanced Usage</a></li>
+            <li><a href="faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+        <li><a href="../comparison.html" class="nav__link">Compare</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="core-concepts.html" style="color: var(--color-text-secondary); text-decoration: none;">Guide</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Advanced Usage</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Advanced Usage</h1>
+      <p class="hero__subtitle fade-in-up">Customize every layer of Odin's pipeline — from bespoke Skills to GitHub Actions integration.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- Custom Skills -->
+          <h2 id="custom-skills">Custom Skill Development</h2>
+          <p class="lead">Odin's Skill interface is deliberately minimal. Implement <code>BaseSkill</code>, define your schemas, and the Pipeline handles everything else — validation, parallel execution, and MEU collection.</p>
+
+          <h3 id="skill-structure">Skill Structure</h3>
+          <p>A Skill is a Python class with four key attributes and one required method:</p>
+          <ul>
+            <li><code>name</code> — unique identifier used in Workflow YAML</li>
+            <li><code>description</code> — human-readable summary shown in <code>odin skills list</code></li>
+            <li><code>input_schema</code> — JSON Schema for what the Skill receives</li>
+            <li><code>output_schema</code> — JSON Schema for what the Skill emits</li>
+            <li><code>execute(ctx, **kwargs)</code> — the main logic, returns a list of MEU dicts</li>
+          </ul>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">python</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># ~/.odin/skills/bandit_audit.py</span>
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Any
+<span class="token-keyword">from</span> odin.skills.base <span class="token-keyword">import</span> BaseSkill
+<span class="token-keyword">from</span> odin.core.context <span class="token-keyword">import</span> SkillContext
+
+BLOCKED_LICENSES = [<span class="token-string">"GPL-3.0"</span>, <span class="token-string">"AGPL-3.0"</span>, <span class="token-string">"LGPL-3.0"</span>]
+
+<span class="token-keyword">class</span> <span class="token-class">BanditAuditSkill</span>(BaseSkill):
+    name = <span class="token-string">"bandit_audit"</span>
+    description = (
+        <span class="token-string">"Run Bandit static analysis on Python files. "</span>
+        <span class="token-string">"Emits MEUs for each issue found with CWE mapping."</span>
+    )
+    input_schema = {
+        <span class="token-string">"type"</span>: <span class="token-string">"object"</span>,
+        <span class="token-string">"properties"</span>: {
+            <span class="token-string">"target"</span>: {<span class="token-string">"type"</span>: <span class="token-string">"string"</span>},
+            <span class="token-string">"severity"</span>: {<span class="token-string">"type"</span>: <span class="token-string">"string"</span>, <span class="token-string">"enum"</span>: [<span class="token-string">"low"</span>, <span class="token-string">"medium"</span>, <span class="token-string">"high"</span>]},
+        },
+        <span class="token-string">"required"</span>: [<span class="token-string">"target"</span>],
+    }
+    output_schema = {<span class="token-string">"type"</span>: <span class="token-string">"array"</span>, <span class="token-string">"items"</span>: {<span class="token-string">"type"</span>: <span class="token-string">"object"</span>}}
+
+    <span class="token-keyword">async def</span> <span class="token-function">execute</span>(self, ctx: SkillContext, target: str, severity: str = <span class="token-string">"medium"</span>) -> list[dict[str, Any]]:
+        result = ctx.call_tool(
+            <span class="token-string">"run_command"</span>,
+            cmd=[<span class="token-string">"bandit"</span>, <span class="token-string">"-r"</span>, target, <span class="token-string">"-f"</span>, <span class="token-string">"json"</span>, <span class="token-string">"-ll"</span>]
+        )
+
+        findings = []
+        <span class="token-keyword">for</span> issue <span class="token-keyword">in</span> result.get(<span class="token-string">"results"</span>, []):
+            <span class="token-keyword">if</span> issue[<span class="token-string">"issue_severity"</span>] != severity:
+                <span class="token-keyword">continue</span>
+            findings.append(ctx.emit_meu(
+                file=issue[<span class="token-string">"filename"</span>],
+                line_start=issue[<span class="token-string">"line_number"</span>],
+                line_end=issue[<span class="token-string">"line_number"</span>],
+                snippet=issue[<span class="token-string">"code"</span>],
+                confidence=<span class="token-string">"verified"</span>,
+                tags=[<span class="token-string">"bandit"</span>, issue[<span class="token-string">"issue_cwe"</span>]],
+            ))
+        <span class="token-keyword">return</span> findings</code></pre>
+            </div>
+          </div>
+
+          <p>Place the file in <code>~/.odin/skills/</code> (or <code>.odin/skills/</code> within a project). Odin auto-discovers and registers it on next run. No restart needed.</p>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>SkillContext</strong> gives you access to <code>ctx.call_tool()</code> for raw tool calls, <code>ctx.emit_meu()</code> for creating evidence units, and <code>ctx.working_memory</code> for sharing state across Skills in the same workflow.
+            </div>
+          </div>
+
+          <!-- Custom Workflows -->
+          <h2 id="custom-workflows">Custom Workflow YAML</h2>
+          <p class="lead">Workflow YAML files live in <code>.odin/workflows/</code>. Define your own pipeline to match your team's security posture and domain focus.</p>
+
+          <h3 id="yaml-structure">YAML Structure Reference</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># .odin/workflows/custom_secure_audit.yaml</span>
+<span class="token-comment"># Full-featured workflow with MCP, RAG context, and layered execution</span>
+
+<span class="token-keyword">name</span>: <span class="token-string">custom_secure_audit</span>
+<span class="token-keyword">description</span>: <span class="token-string">"Security audit with Bandit, secrets, and CVE cross-reference"</span>
+
+<span class="token-comment"># Optional: enrich agent context from RAG before analysis</span>
+<span class="token-keyword">rag_context</span>:
+  <span class="token-keyword">query</span>: <span class="token-string">"previous vulnerabilities in {repo_name}"</span>
+  <span class="token-keyword">top_k</span>: <span class="token-number">5</span>
+
+<span class="token-comment"># Optional: MCP tools available in this workflow</span>
+<span class="token-keyword">mcp</span>:
+  - <span class="token-string">github</span>    <span class="token-comment"># access repo metadata, issues, PR history</span>
+  - <span class="token-string">cve_db</span>    <span class="token-comment"># cross-reference dependency versions against CVE feed</span>
+
+<span class="token-comment"># DAG layers — Skills within a layer run in parallel</span>
+<span class="token-keyword">layers</span>:
+
+  <span class="token-comment"># Layer 1: Surface analysis — single task, no dependencies</span>
+  - <span class="token-keyword">id</span>: surface
+    <span class="token-keyword">skills</span>:
+      - repo_discovery
+      - detect_language          <span class="token-comment"># custom built-in Skill</span>
+
+  <span class="token-comment"># Layer 2: Dependency + secret scanning — runs after surface completes</span>
+  - <span class="token-keyword">id</span>: dependencies
+    <span class="token-keyword">depends_on</span>: [surface]
+    <span class="token-keyword">skills</span>:
+      - dependency_audit
+      - secret_detection
+      - bandit_audit             <span class="token-comment"># your custom Skill from ~/.odin/skills/</span>
+
+  <span class="token-comment"># Layer 3: Code structure analysis — runs after dependencies</span>
+  - <span class="token-keyword">id</span>: structure
+    <span class="token-keyword">depends_on</span>: [dependencies]
+    <span class="token-keyword">skills</span>:
+      - entrypoints
+      - call_graph
+      - cfg_builder              <span class="token-comment"># only for complex files (&gt;50 LOC)</span>
+
+  <span class="token-comment"># Layer 4: Security deep-dive — depends on structure layer</span>
+  - <span class="token-keyword">id</span>: security
+    <span class="token-keyword">depends_on</span>: [structure]
+    <span class="token-keyword">skills</span>:
+      - auth_guard_analysis
+      - taint_analysis
+      - vulnerability_scan       <span class="token-comment"># uses CVE context from MCP</span>
+
+  <span class="token-comment"># Layer 5: Finalize — depends on security, always runs last</span>
+  - <span class="token-keyword">id</span>: finalize
+    <span class="token-keyword">depends_on</span>: [security]
+    <span class="token-keyword">skills</span>:
+      - report_gen
+
+<span class="token-comment"># Override default confidence threshold for report inclusion</span>
+<span class="token-keyword">report</span>:
+  <span class="token-keyword">min_confidence</span>: <span class="token-string">medium</span>
+  <span class="token-keyword">format</span>: <span class="token-string">markdown</span>
+  <span class="token-keyword">output</span>: <span class="token-string">".odin/audit/{date}-report.md"</span></code></pre>
+            </div>
+          </div>
+
+          <p>Run a custom workflow with:</p>
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./my-project \
+    --workflow custom_secure_audit \
+    --provider openai</code></pre>
+            </div>
+          </div>
+
+          <!-- MCP Integration -->
+          <h2 id="mcp-integration">MCP Tool Integration</h2>
+          <p class="lead">Odin ships a built-in MCP client that can connect to any MCP-compatible server. Use it to enrich analysis with live data from GitHub, CVE databases, Jira, and more.</p>
+
+          <h3 id="mcp-config">Configuration</h3>
+          <p>Add MCP servers to your <code>odin.yaml</code>:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># odin.yaml</span>
+<span class="token-keyword">mcp</span>:
+  github:
+    <span class="token-comment"># Authenticate via GITHUB_TOKEN environment variable</span>
+    <span class="token-keyword">enabled</span>: <span class="token-keyword">true</span>
+    <span class="token-keyword">tools</span>:
+      - get_repo_metadata
+      - list_issues
+      - get_pull_requests
+
+  cve_db:
+    <span class="token-keyword">enabled</span>: <span class="token-keyword">true</span>
+    <span class="token-keyword">url</span>: <span class="token-string">"https://services.nvd.nist.gov/rest/json/cves/2.0"</span>
+    <span class="token-keyword">api_key</span>: <span class="token-string">"${NVD_API_KEY}"</span>    <span class="token-comment"># read from env</span>
+    <span class="token-keyword">tools</span>:
+      - cve_lookup
+      - cwe_details
+
+  jira:
+    <span class="token-keyword">enabled</span>: <span class="token-keyword">false</span>             <span class="token-comment"># disabled by default</span>
+    <span class="token-keyword">url</span>: <span class="token-string">"https://your-org.atlassian.net"</span>
+    <span class="token-keyword">token</span>: <span class="token-string">"${JIRA_TOKEN}"</span>
+    <span class="token-keyword">email</span>: <span class="token-string">"${JIRA_EMAIL}"</span></code></pre>
+            </div>
+          </div>
+
+          <p>Within a Skill, access MCP tools through <code>ctx.mcp_tool()</code>:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">python</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># In your Skill's execute() method:</span>
+<span class="token-comment"># Cross-reference detected dependency versions against CVEs</span>
+cve_results = ctx.mcp_tool(
+    <span class="token-string">"cve_db"</span>,
+    <span class="token-string">"cve_lookup"</span>,
+    package=dep.name,
+    version=dep.version,
+)
+
+<span class="token-comment"># Check if this repo has known CVEs mentioned in issues</span>
+github_issues = ctx.mcp_tool(
+    <span class="token-string">"github"</span>,
+    <span class="token-string">"list_issues"</span>,
+    repo=ctx.target_repo,
+    labels=[<span class="token-string">"security"</span>, <span class="token-string">"cve"</span>],
+)</code></pre>
+            </div>
+          </div>
+
+          <!-- Batch Analysis -->
+          <h2 id="batch-analysis">Batch Analysis</h2>
+          <p class="lead">Analyze multiple repositories in a single command using a targets file or a directory scan.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Analyze a directory of repositories in parallel (4 at a time)</span>
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./repos/ \
+    --workflow vulnerability_research \
+    --provider openai \
+    --parallel 4 \
+    --report-dir ./audit-results/
+
+<span class="token-comment"># Analyze a list of targets from a file (one repo URL per line)</span>
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze --targets ./repos.txt \
+    --workflow dependency_audit \
+    --provider anthropic \
+    --parallel 8 \
+    --report-dir ./audit-results/
+
+<span class="token-comment"># Run a dry-run that only lists what would be analyzed</span>
+<span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./repos/ \
+    --dry-run \
+    --workflow vulnerability_research</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--warning fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <div>
+              <strong>Rate limiting</strong><br>
+              When running batch analysis with <code>--parallel</code>, respect provider rate limits. Use <code>--parallel 1</code> for OpenAI and <code>--parallel 4</code> for Anthropic by default. Adjust with <code>--rpm</code> to set a custom requests-per-minute cap.
+            </div>
+          </div>
+
+          <!-- CI/CD Integration -->
+          <h2 id="cicd">CI/CD Integration</h2>
+          <p class="lead">Run Odin as a GitHub Actions step in your CI pipeline. It can gate merges on critical findings or just generate reports.</p>
+
+          <h3 id="github-actions">GitHub Actions</h3>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">yaml</span>
+              <button class="code-block__copy" aria-label="Copy">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># .github/workflows/security-audit.yml</span>
+<span class="token-keyword">name</span>: <span class="token-string">Security Audit</span>
+
+<span class="token-keyword">on</span>:
+  <span class="token-keyword">push</span>:
+    <span class="token-keyword">branches</span>: [main, develop]
+  <span class="token-keyword">pull_request</span>:
+    <span class="token-keyword">branches</span>: [main]
+  <span class="token-keyword">schedule</span>:
+    <span class="token-comment"># Weekly full audit on the main branch</span>
+    - <span class="token-keyword">cron</span>: <span class="token-string">"0 3 * * 1"</span>
+
+<span class="token-keyword">jobs</span>:
+  <span class="token-keyword">odin-audit</span>:
+    <span class="token-keyword">name</span>: <span class="token-string">Odin Security Audit</span>
+    <span class="token-keyword">runs-on</span>: <span class="token-string">ubuntu-latest</span>
+
+    <span class="token-keyword">steps</span>:
+      - <span class="token-keyword">name</span>: <span class="token-string">Checkout code</span>
+        <span class="token-keyword">uses</span>: actions/checkout@v4
+
+      - <span class="token-keyword">name</span>: <span class="token-string">Set up Python</span>
+        <span class="token-keyword">uses</span>: actions/setup-python@v5
+        <span class="token-keyword">with</span>:
+          <span class="token-keyword">python-version</span>: <span class="token-string">"3.11"</span>
+
+      - <span class="token-keyword">name</span>: <span class="token-string">Install Odin</span>
+        <span class="token-keyword">run</span>: |
+          <span class="token-function">pip</span> install -e .
+
+      - <span class="token-keyword">name</span>: <span class="token-string">Run Odin audit</span>
+        <span class="token-keyword">env</span>:
+          <span class="token-keyword">OPENAI_API_KEY</span>: <span class="token-string">${{ secrets.OPENAI_API_KEY }}</span>
+          <span class="token-keyword">GITHUB_TOKEN</span>: <span class="token-string">${{ secrets.GITHUB_TOKEN }}</span>
+        <span class="token-keyword">run</span>: |
+          <span class="token-function">odin</span> analyze . \
+            --workflow vulnerability_research \
+            --provider openai \
+            --output .odin/audit/report.json \
+            --fail-on high
+
+      - <span class="token-keyword">name</span>: <span class="token-string">Upload report artifact</span>
+        <span class="token-keyword">uses</span>: actions/upload-artifact@v4
+        <span class="token-keyword">if</span>: always()
+        <span class="token-keyword">with</span>:
+          <span class="token-keyword">name</span>: odin-audit-report
+          <span class="token-keyword">path</span>: .odin/audit/
+
+      - <span class="token-keyword">name</span>: <span class="token-string">Post comment on PR</span>
+        <span class="token-keyword">if</span>: github.event_name == 'pull_request'
+        <span class="token-keyword">uses</span>: actions/github-script@v7
+        <span class="token-keyword">with</span>:
+          <span class="token-keyword">script</span>: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Odin Security Report\n\nAudit complete. Check the artifact for full findings.`
+            })</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout--success fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <div>
+              <strong>Fail gates</strong><br>
+              Use <code>--fail-on high</code> (or <code>--fail-on medium</code>) to make the CI job non-zero if Odin finds findings at or above that severity. This is ideal for gating main branch merges.
+            </div>
+          </div>
+
+          <!-- Next Steps -->
+          <h2 id="next">What's Next</h2>
+          <div class="doc-nav-cards" style="margin-top: var(--space-6);">
+            <a href="core-concepts.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Core Concepts</span>
+              <span class="doc-nav-card__text">MEU model, Skill architecture, DAG execution, and the Agent Loop.</span>
+            </a>
+            <a href="faq.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">FAQ</span>
+              <span class="doc-nav-card__text">Answers to common questions about providers, storage, and language support.</span>
+            </a>
+            <a href="troubleshooting.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Troubleshooting</span>
+              <span class="doc-nav-card__text">Fix API key errors, timeouts, MCP issues, and memory problems.</span>
+            </a>
+            <a href="../api/cli.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">CLI Reference</span>
+              <span class="doc-nav-card__text">Full command reference for all <code>odin</code> subcommands.</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#custom-skills" class="toc__link">Custom Skills</a></li>
+              <li class="toc__item"><a href="#skill-structure" class="toc__link">Skill Structure</a></li>
+              <li class="toc__item"><a href="#custom-workflows" class="toc__link">Custom Workflows</a></li>
+              <li class="toc__item"><a href="#mcp-integration" class="toc__link">MCP Integration</a></li>
+              <li class="toc__item"><a href="#batch-analysis" class="toc__link">Batch Analysis</a></li>
+              <li class="toc__item"><a href="#cicd" class="toc__link">CI/CD Integration</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="troubleshooting.html" class="footer__link">Troubleshooting</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../comparison.html" class="footer__link">Comparison</a></li>
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Example — Odin</title>
+  <meta name="description" content="A complete basic example: analyze a Python project for SQL injection vulnerabilities using Odin's vulnerability_research workflow.">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__brand">
+        <svg class="nav__brand-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="13" stroke="#0071e3" stroke-width="2"/>
+          <path d="M9 14L12.5 17.5L19 10" stroke="#0071e3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Odin
+      </a>
+      <ul class="nav__links">
+        <li class="nav__submenu">
+          <a href="../getting-started/quickstart.html" class="nav__link nav__submenu-trigger">Get Started</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../getting-started/installation.html" class="nav__submenu-item">Installation</a></li>
+            <li><a href="../getting-started/quickstart.html" class="nav__submenu-item">Quick Start</a></li>
+            <li><a href="../getting-started/configuration.html" class="nav__submenu-item">Configuration</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../architecture/overview.html" class="nav__link nav__submenu-trigger">Architecture</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../architecture/overview.html" class="nav__submenu-item">Overview</a></li>
+            <li><a href="../architecture/components.html" class="nav__submenu-item">Components</a></li>
+            <li><a href="../architecture/data-flow.html" class="nav__submenu-item">Data Flow</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../guide/core-concepts.html" class="nav__link nav__submenu-trigger">Guide</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../guide/core-concepts.html" class="nav__submenu-item">Core Concepts</a></li>
+            <li><a href="../guide/advanced-usage.html" class="nav__submenu-item">Advanced Usage</a></li>
+            <li><a href="../guide/faq.html" class="nav__submenu-item">FAQ</a></li>
+            <li><a href="../guide/troubleshooting.html" class="nav__submenu-item">Troubleshooting</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="basic.html" class="nav__link nav__submenu-trigger active">Examples</a>
+          <ul class="nav__submenu-items">
+            <li><a href="basic.html" class="nav__submenu-item active">Basic Usage</a></li>
+            <li><a href="advanced.html" class="nav__submenu-item">Advanced Examples</a></li>
+            <li><a href="../development/setup.html" class="nav__submenu-item">Dev Setup</a></li>
+            <li><a href="../development/contributing.html" class="nav__submenu-item">Contributing</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../api/cli.html" class="nav__link nav__submenu-trigger">API</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../api/cli.html" class="nav__submenu-item">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="nav__submenu-item">REST API</a></li>
+          </ul>
+        </li>
+        <li class="nav__submenu">
+          <a href="../roadmap/vision.html" class="nav__link nav__submenu-trigger">Roadmap</a>
+          <ul class="nav__submenu-items">
+            <li><a href="../roadmap/vision.html" class="nav__submenu-item">Vision</a></li>
+            <li><a href="../roadmap/roadmap.html" class="nav__submenu-item">Roadmap</a></li>
+            <li><a href="../roadmap/changelog.html" class="nav__submenu-item">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../why.html" class="nav__link">Why Odin</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://github.com/anwenxuan/Odin" class="nav__gh-btn" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <button class="nav__hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero hero--sub">
+    <div class="container">
+      <div class="hero__eyebrow fade-in-up">
+        <a href="basic.html" style="color: var(--color-text-secondary); text-decoration: none;">Examples</a>
+        <span style="color: var(--color-border);"> / </span>
+        <span>Basic Usage</span>
+      </div>
+      <h1 class="hero__title fade-in-up">Basic Example</h1>
+      <p class="hero__subtitle fade-in-up">A complete walkthrough — from installation to generated security report — in under 10 minutes.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="section section--sm">
+    <div class="container">
+      <div class="doc-layout">
+        <div class="content">
+
+          <!-- Scenario -->
+          <h2 id="scenario">Scenario</h2>
+
+          <p class="lead fade-in-up">You maintain a small Python web application and want to audit it for SQL injection vulnerabilities before shipping a new release.</p>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              This example uses <strong>mock mode</strong> so you can run it without an API key. Replace <code>--provider mock</code> with <code>--provider openai</code> (and set <code>OPENAI_API_KEY</code>) for real AI-powered analysis.
+            </div>
+          </div>
+
+          <p>The target repository we'll use is a simplified Flask app with intentionally planted SQL injection patterns:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-function">git</span> clone https://github.com/anwenxuan/odin-test-repo.git
+<span class="token-function">cd</span> odin-test-repo</code></pre>
+            </div>
+          </div>
+
+          <!-- Command -->
+          <h2 id="command">The Command</h2>
+
+          <p>Run the <code>vulnerability_research</code> workflow against the repository:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-variable">$</span> <span class="token-function">odin</span> analyze ./ \
+    --workflow vulnerability_research \
+    --provider mock \
+    --skills sql_injection auth_guard \
+    --output .odin/audit \
+    --verbose</code></pre>
+            </div>
+          </div>
+
+          <!-- Full Output -->
+          <h2 id="output">Full Output</h2>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">bash</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment">╔════════════════════════════════════════════════════════════════╗</span>
+<span class="token-comment">║                         Odin v0.2.0                              ║</span>
+<span class="token-comment">║               Evidence-Backed Code Research System                  ║</span>
+<span class="token-comment">╚════════════════════════════════════════════════════════════════╝</span>
+
+<span class="token-comment">[Layer 1] repo_discovery</span>
+  <span class="token-function">✓</span> git clone / scan
+  <span class="token-comment">[  0.8s ]  18 files, 4 subdirs, 1 language detected (Python)</span>
+
+<span class="token-comment">[Layer 2] entrypoints</span>
+  <span class="token-function">✓</span> surface_analysis
+  <span class="token-comment">[  1.1s ]  4 entry points identified</span>
+  <span class="token-comment">    → app.py:42    (Flask route: /api/users)</span>
+  <span class="token-comment">    → app.py:78    (Flask route: /api/search)</span>
+  <span class="token-comment">    → app.py:103   (Flask route: /api/admin)</span>
+  <span class="token-comment">    → cli.py:12    (CLI entry: odin-cli)</span>
+
+<span class="token-comment">[Layer 2] call_graph</span>
+  <span class="token-function">✓</span> call_chain_builder
+  <span class="token-comment">[  2.3s ]  22 call chains mapped</span>
+
+<span class="token-comment">[Layer 3] auth_guard_analysis</span>
+  <span class="token-function">✓</span> pattern_match
+  <span class="token-comment">[  1.4s ]  3 auth guards detected</span>
+  <span class="token-comment">    ✓ check_admin_permission (app.py:15) — present</span>
+  <span class="token-comment">    ✓ require_api_key (app.py:22) — present</span>
+  <span class="token-comment">    ✗ require_auth on /api/users — MISSING</span>
+
+<span class="token-comment">[Layer 3] vulnerability_scan</span>
+  <span class="token-function">✓</span> sql_injection
+  <span class="token-comment">[  3.1s ]  2 potential SQL injection findings</span>
+
+<span class="token-comment">[Layer 4] report</span>
+  <span class="token-function">✓</span> generate_markdown
+  <span class="token-comment">[  0.4s ]</span>
+
+<span class="token-comment">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span class="token-comment">Analysis complete in 8.1s (mock mode — no API calls)</span>
+<span class="token-comment">4 entry points | 22 call chains | 3 auth guards</span>
+<span class="token-comment">Evidence units: 9 MEUs collected</span>
+<span class="token-comment">SQL injection findings: 2 (HIGH severity)</span>
+<span class="token-comment">Missing auth guards: 1</span>
+<span class="token-comment">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="token-comment">Report:        .odin/audit/report-2026-03-26.md</span>
+<span class="token-comment">Evidence:      .odin/audit/evidence.jsonl</span>
+<span class="token-comment">Config used:   vulnerability_research (default)</span></code></pre>
+            </div>
+          </div>
+
+          <!-- MEU Format -->
+          <h2 id="meu-format">MEU Output Format</h2>
+
+          <p>Each finding is stored as a <strong>Minimum Evidence Unit (MEU)</strong> in <code>.odin/audit/evidence.jsonl</code>. Every MEU is self-contained and traceable.</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">json</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code>{
+  <span class="token-string">"meu_id"</span>: <span class="token-string">"MEU-2026-0326-0042"</span>,
+  <span class="token-string">"skill"</span>: <span class="token-string">"sql_injection"</span>,
+  <span class="token-string">"timestamp"</span>: <span class="token-string">"2026-03-26T14:32:07Z"</span>,
+  <span class="token-string">"severity"</span>: <span class="token-string">"high"</span>,
+  <span class="token-string">"confidence"</span>: <span class="token-number">0.87</span>,
+  <span class="token-string">"location"</span>: {
+    <span class="token-string">"file"</span>: <span class="token-string">"app.py"</span>,
+    <span class="token-string">"line"</span>: <span class="token-number">42</span>,
+    <span class="token-string">"function"</span>: <span class="token-string">"get_user"</span>,
+    <span class="token-string">"endpoint"</span>: <span class="token-string">"GET /api/users"</span>
+  },
+  <span class="token-string">"evidence_snippet"</span>: <span class="token-string">"cursor.execute(f'SELECT * FROM users WHERE id = {user_id}')"</span>,
+  <span class="token-string">"call_chain"</span>: [
+    <span class="token-string">"get_user (app.py:42)"</span>,
+    <span class="token-string">"db_query (db.py:15)"</span>,
+    <span class="token-string">"cursor.execute (psycopg2:intern)"</span>
+  ],
+  <span class="token-string">"taint_path"</span>: {
+    <span class="token-string">"source"</span>: <span class="token-string">"request.args['id']"</span>,
+    <span class="token-string">"sanitizer"</span>: <span class="token-keyword">null</span>,
+    <span class="token-string">"sink"</span>: <span class="token-string">"cursor.execute"</span>
+  },
+  <span class="token-string">"recommendation"</span>: <span class="token-string">"Use parameterized queries: cursor.execute('SELECT * FROM users WHERE id = %s', (user_id,))"</span>,
+  <span class="token-string">"cwe"</span>: <span class="token-string">"CWE-89"</span>
+}</code></pre>
+            </div>
+          </div>
+
+          <h3 id="meu-fields">MEU Field Reference</h3>
+          <table class="fade-in-up">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>meu_id</code></td>
+                <td>Globally unique identifier: <code>MEU-YYYY-MMDD-NNNN</code></td>
+              </tr>
+              <tr>
+                <td><code>skill</code></td>
+                <td>Which Skill produced this finding</td>
+              </tr>
+              <tr>
+                <td><code>confidence</code></td>
+                <td>0.0 – 1.0 score; reflects certainty of the finding</td>
+              </tr>
+              <tr>
+                <td><code>severity</code></td>
+                <td>One of: critical, high, medium, low, info</td>
+              </tr>
+              <tr>
+                <td><code>call_chain</code></td>
+                <td>Full path from entry point to vulnerable sink</td>
+              </tr>
+              <tr>
+                <td><code>taint_path</code></td>
+                <td>Source → (no sanitizer) → sink triple</td>
+              </tr>
+              <tr>
+                <td><code>evidence_snippet</code></td>
+                <td>Exact code snippet cited as evidence (quoted verbatim)</td>
+              </tr>
+              <tr>
+                <td><code>cwe</code></td>
+                <td>CWE identifier (if applicable)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Report Structure -->
+          <h2 id="report-structure">Generated Report</h2>
+
+          <p>The markdown report at <code>.odin/audit/report-*.md</code> follows this structure:</p>
+
+          <div class="code-block fade-in-up">
+            <div class="code-block__header">
+              <span class="code-block__lang">markdown</span>
+              <button class="code-block__copy" aria-label="Copy command">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-block__body">
+<pre><code><span class="token-comment"># Security Audit Report</span>
+<span class="token-comment">Repository: odin-test-repo</span>
+<span class="token-comment">Date: 2026-03-26</span>
+<span class="token-comment">Workflow: vulnerability_research</span>
+<span class="token-comment">Provider: mock</span>
+
+---
+
+## Summary
+
+| Metric | Value |
+|--------|-------|
+| Entry points | 4 |
+| Call chains | 22 |
+| Auth guards found | 3 |
+| Auth guards missing | 1 |
+| **SQL injection findings** | **2 (HIGH)** |
+| Total MEUs | 9 |
+
+---
+
+## Finding #1 — SQL Injection (HIGH)
+
+**Location:** `app.py:42` — `get_user()` — `GET /api/users`
+
+**Evidence:**
+```python
+cursor.execute(f'SELECT * FROM users WHERE id = {user_id}')
+```
+
+**Taint path:** `request.args['id']` → *(no sanitizer)* → `cursor.execute`
+
+**Call chain:**
+```
+get_user (app.py:42)
+  └→ db_query (db.py:15)
+      └→ cursor.execute (psycopg2:intern)
+```
+
+**Recommendation:** Use parameterized queries:
+```python
+cursor.execute('SELECT * FROM users WHERE id = %s', (user_id,))
+```
+
+**Confidence:** 87% | **CWE:** CWE-89 | **MEU:** MEU-2026-0326-0042
+
+---
+
+## Finding #2 — Missing Authentication Guard (MEDIUM)
+
+**Location:** `app.py:78` — `GET /api/search`
+
+**Finding:** This endpoint has no authentication check.
+
+**Recommendation:** Add `@require_auth` decorator or inline auth guard.
+
+**MEU:** MEU-2026-0326-0043
+
+---
+
+## Evidence Store
+
+Full evidence units: `.odin/audit/evidence.jsonl`</code></pre>
+            </div>
+          </div>
+
+          <!-- Interpreting -->
+          <h2 id="interpreting">Interpreting Results</h2>
+
+          <div class="feature-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-8);">
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5); border-left: 3px solid var(--color-danger);">
+              <strong style="font-size: var(--text-sm); color: var(--color-danger); display: block; margin-bottom: var(--space-2);">HIGH / CRITICAL</strong>
+              <p class="card__text">Act immediately. These findings indicate exploitable vulnerabilities with high confidence. Do not ship until resolved.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5); border-left: 3px solid var(--color-warning);">
+              <strong style="font-size: var(--text-sm); color: var(--color-warning); display: block; margin-bottom: var(--space-2);">MEDIUM</strong>
+              <p class="card__text">Address before production release. Confirm via manual testing; some may be false positives in edge cases.</p>
+            </div>
+            <div class="card card--flat fade-in-up" style="padding: var(--space-5); border-left: 3px solid var(--color-text-secondary);">
+              <strong style="font-size: var(--text-sm); color: var(--color-text-secondary); display: block; margin-bottom: var(--space-2);">LOW / INFO</strong>
+              <p class="card__text">Best-practice improvements. Not urgent but recommended for defense-in-depth.</p>
+            </div>
+          </div>
+
+          <div class="callout callout--info fade-in-up">
+            <svg class="callout__icon" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <div>
+              <strong>Confidence score</strong> — Not all findings are equal. A <code>confidence: 0.87</code> finding has been validated against multiple heuristics. Low-confidence findings (<code>&lt; 0.5</code>) should be manually reviewed before acting on them.
+            </div>
+          </div>
+
+          <!-- Next Steps -->
+          <h2 id="next">What's Next</h2>
+          <div class="doc-nav-cards" style="margin-top: var(--space-6);">
+            <a href="advanced.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Advanced Examples</span>
+              <span class="doc-nav-card__text">Custom workflows, MCP integrations, and CI/CD pipelines.</span>
+            </a>
+            <a href="../guide/core-concepts.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Core Concepts</span>
+              <span class="doc-nav-card__text">Understand MEU enforcement, DAG execution, and the 12 skills.</span>
+            </a>
+            <a href="../getting-started/configuration.html" class="doc-nav-card">
+              <span class="doc-nav-card__title">Configuration</span>
+              <span class="doc-nav-card__text">Customize odin.yaml for your environment and target stacks.</span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- TOC -->
+        <aside>
+          <div class="toc">
+            <p class="toc__title">On this page</p>
+            <ul class="toc__list">
+              <li class="toc__item"><a href="#scenario" class="toc__link">Scenario</a></li>
+              <li class="toc__item"><a href="#command" class="toc__link">The Command</a></li>
+              <li class="toc__item"><a href="#output" class="toc__link">Full Output</a></li>
+              <li class="toc__item"><a href="#meu-format" class="toc__link">MEU Format</a></li>
+              <li class="toc__item"><a href="#report-structure" class="toc__link">Report Structure</a></li>
+              <li class="toc__item"><a href="#interpreting" class="toc__link">Interpreting Results</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <p class="footer__col-title">Documentation</p>
+          <ul class="footer__links">
+            <li><a href="../getting-started/quickstart.html" class="footer__link">Quick Start</a></li>
+            <li><a href="../getting-started/installation.html" class="footer__link">Installation</a></li>
+            <li><a href="../getting-started/configuration.html" class="footer__link">Configuration</a></li>
+            <li><a href="../architecture/overview.html" class="footer__link">Architecture</a></li>
+            <li><a href="../guide/core-concepts.html" class="footer__link">Core Concepts</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Community</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin" class="footer__link" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="../guide/faq.html" class="footer__link">FAQ</a></li>
+            <li><a href="../development/contributing.html" class="footer__link">Contributing</a></li>
+            <li><a href="../roadmap/changelog.html" class="footer__link">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Resources</p>
+          <ul class="footer__links">
+            <li><a href="../roadmap/vision.html" class="footer__link">Roadmap</a></li>
+            <li><a href="../api/cli.html" class="footer__link">CLI Reference</a></li>
+            <li><a href="../api/rest.html" class="footer__link">REST API</a></li>
+            <li><a href="../why.html" class="footer__link">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__col-title">Project</p>
+          <ul class="footer__links">
+            <li><a href="https://github.com/anwenxuan/Odin/issues" class="footer__link" target="_blank" rel="noopener">Issue Tracker</a></li>
+            <li><a href="https://github.com/anwenxuan/Odin/discussions" class="footer__link" target="_blank" rel="noopener">Discussions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">Odin &copy; 2026. MIT License. Built for systematic vulnerability research.</p>
+        <div class="footer__badge">
+          <span class="badge badge--v0-2">v0.2.0 Alpha</span>
+          <span class="badge badge--mit">MIT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/nav.js"></script>
+  <script src="../assets/animations.js"></script>
+</body>
+</html>
